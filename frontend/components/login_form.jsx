@@ -74,17 +74,17 @@ var LoginForm = React.createClass({
 
     let navLink;
     if (this.formType() === "login") {
-      navLink = <Link to="/signup">sign up instead</Link>;
+      navLink = <Link to="/signup">sign up</Link>;
     } else {
-      navLink = <Link to="/login">log in instead</Link>;
+      navLink = <Link to="/login">login</Link>;
     }
 
 		return (
 			<div className="login-form-container">
+
 				<form onSubmit={this.handleSubmit} className="login-form-box">
-	        Welcome to Dope Projec!
 					<br/>
-					Please { this.formType() } or { navLink }
+					{ this.formType() } or { navLink }
 
 	        { this.fieldErrors("base") }
 					<div className="login-form">
@@ -110,6 +110,7 @@ var LoginForm = React.createClass({
 						<input type="submit" value="Submit" />
 					</div>
 				</form>
+
 			</div>
 		);
 	}

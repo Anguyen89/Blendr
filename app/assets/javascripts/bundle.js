@@ -21204,13 +21204,13 @@
 	      navLink = React.createElement(
 	        Link,
 	        { to: '/signup' },
-	        'sign up instead'
+	        'sign up'
 	      );
 	    } else {
 	      navLink = React.createElement(
 	        Link,
 	        { to: '/login' },
-	        'log in instead'
+	        'login'
 	      );
 	    }
 
@@ -21220,9 +21220,7 @@
 	      React.createElement(
 	        'form',
 	        { onSubmit: this.handleSubmit, className: 'login-form-box' },
-	        'Welcome to Dope Projec!',
 	        React.createElement('br', null),
-	        'Please ',
 	        this.formType(),
 	        ' or ',
 	        navLink,
