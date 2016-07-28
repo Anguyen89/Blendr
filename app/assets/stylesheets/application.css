@@ -14,11 +14,44 @@
  *= require_self
  */
 
+ ::-webkit-scrollbar {
+     width: 12px;
+ }
+
+ ::-webkit-scrollbar-track {
+     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+     border-radius: 10px;
+ }
+
+ ::-webkit-scrollbar-thumb {
+     border-radius: 10px;
+     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+ }
+
+ body {
+  font-family: 'Abel', sans-serif;
+}
+
+.header-link {
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+}
 
 .login-form-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 1200px;
-  height: 1200px;
+  margin-top: 200px;
+}
+
+.login-form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background: white;
+}
+
+.login-input {
+  margin-left: 20px;
 }
