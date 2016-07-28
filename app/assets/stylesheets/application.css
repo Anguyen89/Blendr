@@ -13,3 +13,12 @@
  *= require_tree .
  *= require_self
  */
+
+
+.login-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1200px;
+  height: 1200px;
+}
