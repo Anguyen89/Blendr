@@ -80,8 +80,8 @@ var LoginForm = React.createClass({
     }
 
 		return (
-			<div className="login-form-container">
 
+			<div className="login-form-container">
 				<form onSubmit={this.handleSubmit} className="login-form-box">
 					<br/>
 					{ this.formType() } or { navLink }

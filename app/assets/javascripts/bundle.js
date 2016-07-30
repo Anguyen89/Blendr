@@ -33913,6 +33913,7 @@
 	var Link = __webpack_require__(173).Link;
 	var SessionStore = __webpack_require__(244);
 	var SessionActions = __webpack_require__(236);
+	var NavBar = __webpack_require__(265);
 
 	var App = React.createClass({
 	  displayName: 'App',
@@ -33923,23 +33924,24 @@
 	    SessionActions.logOut();
 	  },
 	  greeting: function greeting() {
-	    if (!["/login", "/signup"].includes(this.props.location.pathname)) {
-	      return React.createElement(
-	        'nav',
-	        { className: 'login-signup' },
-	        React.createElement(
-	          Link,
-	          { to: '/login', activeClassName: 'current' },
-	          'Login'
-	        ),
-	        ' or ',
-	        React.createElement(
-	          Link,
-	          { to: '/signup', activeClassName: 'current' },
-	          'Sign up!'
-	        )
-	      );
-	    }
+	    //
+	    // if (SessionStore.isUserLoggedIn()) {
+
+	    return React.createElement(
+	      'hgroup',
+	      { className: 'header-group' },
+	      React.createElement(NavBar, null)
+	    );
+	    // }
+	    // else if ( !["/login", "/signup"].includes(this.props.location.pathname) ) {
+	    //   return (
+	    //     <nav className="login-signup">
+	    //       <Link to="/login" activeClassName="current">Login</Link>
+	    //       &nbsp;or&nbsp;
+	    //       <Link to="/signup" activeClassName="current">Sign up!</Link>
+	    //     </nav>
+	    //   );
+	    // }
 	  },
 	  render: function render() {
 	    return React.createElement(
@@ -33965,6 +33967,56 @@
 	});
 
 	module.exports = App;
+
+/***/ },
+/* 265 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var hashHistory = __webpack_require__(173).hashHistory;
+
+	var SessionStore = __webpack_require__(244);
+	var SessionActions = __webpack_require__(236);
+
+	module.exports = React.createClass({
+	  displayName: 'exports',
+
+
+	  navRight: function navRight() {
+	    if (SessionStore.currentUser()) {
+	      return React.createElement(
+	        'div',
+	        { className: 'nav-right' },
+	        React.createElement('img', { className: 'nav-icon', onClick: this.pushToDash, src: 'http://res.cloudinary.com/dn07p1frq/image/upload/v1462225052/home_n9c9qv.png' }),
+	        React.createElement('img', { className: 'nav-icon', onClick: this.pushToExplore, src: 'http://res.cloudinary.com/dn07p1frq/image/upload/v1462225052/compass_wwlply.png' }),
+	        React.createElement('img', { className: 'nav-icon', onClick: this.pushToProfile, src: 'http://res.cloudinary.com/dn07p1frq/image/upload/v1462225784/user_tqcx1r.png' }),
+	        React.createElement('img', { className: 'nav-icon', onClick: this.logout, src: 'http://res.cloudinary.com/dn07p1frq/image/upload/v1462224009/poweroff_wmvl7k.png' })
+	      );
+	    } else {
+	      return React.createElement('div', null);
+	    }
+	  },
+
+	  logout: function logout() {
+	    SessionActions.logOut();
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'navbar' },
+	      React.createElement(
+	        'div',
+	        { className: 'nav-left' },
+	        React.createElement('img', { className: 'logo', src: 'https://secure.assets.tumblr.com/images/logo_page/img_logo_bluebg_2x.png' })
+	      ),
+	      this.navRight()
+	    );
+	  }
+
+	});
 
 /***/ }
 /******/ ]);
