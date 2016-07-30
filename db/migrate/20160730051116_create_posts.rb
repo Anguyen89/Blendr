@@ -4,8 +4,10 @@ class CreatePosts < ActiveRecord::Migration
       t.string :type, null: false, index: true
       t.string :title
       t.text :body
-      t.integer :content_id
-      t.string :content_type
+      t.integer :content_url
+      t.string :post_type
+      t.datetime :created_at
+      t.datetime :updated_at
       t.integer :author_id, null: false, index: true
 
       t.timestamps null: false

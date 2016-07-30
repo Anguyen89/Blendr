@@ -5,6 +5,11 @@ class User < ActiveRecord::Base
 
   attr_reader :password
 
+  has_many :posts,
+    foreign_key: :author_id,
+    primary_key: :id,
+    class_name: :user
+
   after_initialize :ensure_session_token
   before_validation :ensure_session_token_uniqueness
 
