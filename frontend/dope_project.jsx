@@ -17,12 +17,14 @@ var LoginForm = require('./components/login_form');
 var SessionStore = require('./stores/session_store');
 var SessionActions = require('./actions/session_actions');
 
+ var PostFeed = require('./components/posts/post_feed');
 
 var appRouter = (
   <Router history={hashHistory}>
     <Route path="/" component={App}>
-      <Route path="/login" component={ LoginForm } />
-      <Route path="/signup" component={LoginForm} />
+      <Route path="login" component={ LoginForm } />
+      <Route path="signup" component={LoginForm} />
+      <Route path="dashboard" component={PostFeed} />
     </Route>
   </Router>
 

@@ -21,6 +21,10 @@ module.exports = React.createClass({
     }
   },
 
+  pushToDash: function(){
+    hashHistory.push('/dashboard');
+  },
+
   logout: function(){
     SessionActions.logOut();
   },
