@@ -1,7 +1,7 @@
 class Post < ActiveRecord::Base
   validates :author_id, presence: true
   validate :title, if: :body_and_content_null?
-  validate :content, if: :title_and_body_null?
+  validate :content_url, if: :title_and_body_null?
   validate :body, if: :content_and_title_null?
 
   belongs_to :author,

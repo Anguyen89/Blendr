@@ -28,70 +28,11 @@
      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
  }
 
+ * {
+   border: 1px solid red;
+ }
 
-body {
-  margin: 0;
-  background: #000;
-  font-family: 'Abel', sans-serif;
-}
-video {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    z-index: -100;
-    transform: translateX(-50%) translateY(-50%);
-    background-size: cover;
-    transition: 1s opacity;
-}
-.stopfade {
-   opacity: .5;
-}
 
-h1 {
-  font-size: 3rem;
-  text-transform: uppercase;
-  margin-top: 0;
-  letter-spacing: .3rem;
-}
-#polina button {
-  display: block;
-  width: 80%;
-  padding: .4rem;
-  border: none;
-  margin: 1rem auto;
-  font-size: 1.3rem;
-  background: rgba(255,255,255,0.23);
-  color: #fff;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: .3s background;
-}
-#polina button:hover {
-   background: rgba(0,0,0,0.5);
-}
-
-a {
-  display: inline-block;
-  color: #fff;
-  text-decoration: none;
-  background:rgba(0,0,0,0.5);
-  padding: .5rem;
-  transition: .6s background;
-}
-a:hover{
-  background:rgba(0,0,0,0.9);
-}
-@media screen and (max-width: 500px) {
-  div{width:70%;}
-}
-@media screen and (max-device-width: 800px) {
-  html { background: url(//demosthenes.info/assets/images/polina.jpg) #000 no-repeat center center fixed; }
-  #bgvid { display: none; }
-}
 
 .login-signup {
   display: flex;
@@ -160,4 +101,62 @@ a:hover{
   width: 40px;
   height: 40px;
   padding: 5px;
+}
+
+.feed {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.feed-item {
+  padding: 5px;
+}
+
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  width: 500px;
+  border: 1px solid red;
+}
+
+.user-info-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+  height: 60px;
+  width: 490px;
+  padding: 5px;
+  border-bottom: 1px solid grey;
+}
+
+.user-photo {
+  margin-left: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border-top: 50px;
+}
+
+.post-author {
+  width: 100px;
+  margin-left: 20px;
+  color: blue;
+
+}
+.user-post-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-post-container {
+  display: block;
+}
+
+.user-post-image {
+  float: center;
 }

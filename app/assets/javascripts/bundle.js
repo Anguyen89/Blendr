@@ -34052,6 +34052,7 @@
 	var PostStore = __webpack_require__(267);
 	var SessionStore = __webpack_require__(236);
 	var PostActions = __webpack_require__(271);
+	var PostFeedItem = __webpack_require__(273);
 
 	var PostFeed = React.createClass({
 	  displayName: 'PostFeed',
@@ -34087,7 +34088,10 @@
 	        React.createElement(
 	          'div',
 	          { className: 'feed' },
-	          this.props.children
+	          this.props.children,
+	          posts.map(function (post) {
+	            return React.createElement(PostFeedItem, { post: post, key: post.id, className: 'feed-item' });
+	          })
 	        )
 	      );
 	    } else {
@@ -34304,6 +34308,48 @@
 	};
 
 	module.exports = PostUtils;
+
+/***/ },
+/* 273 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(1);
+
+	var PostFeedItem = React.createClass({
+	  displayName: "PostFeedItem",
+
+
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      { className: "post-container" },
+	      React.createElement(
+	        "div",
+	        { className: "user-info-container" },
+	        React.createElement("img", { className: "user-photo", src: this.props.post.author.profile_image_url }),
+	        React.createElement(
+	          "h2",
+	          { className: "post-author" },
+	          this.props.post.author.username
+	        )
+	      ),
+	      React.createElement(
+	        "div",
+	        { className: "user-post-container" },
+	        React.createElement(
+	          "div",
+	          { className: "user-post-image" },
+	          this.props.post.content_url
+	        )
+	      )
+	    );
+	  }
+
+	});
+
+	module.exports = PostFeedItem;
 
 /***/ }
 /******/ ]);

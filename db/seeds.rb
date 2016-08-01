@@ -97,13 +97,13 @@ User.create(
 Post.create!(
   post_type: "link",
   title: "Chani Nicholas: Horoscopes for April 25",
-  content_url: 'http://chaninicholas.com/2016/04/mercury-stations-retrograde-horoscopes-for-the-week-of-april-25th/',
+  content_url: 'https://cdn4.iconfinder.com/data/icons/flat-icon-set/2133/flat_icons-graficheria.it-13.png',
   author_id: 4
 )
 
 Post.create(
 post_type: "photo",
 body: 'Perith, United Kingdom',
-content_url: "https://www.europcar.com/files/live/sites/seo/files/contributed/images/location%20images/corporate%20countries/UK%20resized/uk-perth_1024x340.jpg",
+content_url: "https://cdn4.iconfinder.com/data/icons/flat-icon-set/2133/flat_icons-graficheria.it-13.png",
 author_id: 7
 )
