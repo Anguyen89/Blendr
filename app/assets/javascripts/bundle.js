@@ -65,6 +65,11 @@
 	var SessionActions = __webpack_require__(259);
 
 	var PostFeed = __webpack_require__(266);
+	var Landing = __webpack_require__(269);
+	var LandingContainer = __webpack_require__(270);
+	window.PostUtils = __webpack_require__(272);
+	window.PostActions = __webpack_require__(271);
+	window.PostStore = __webpack_require__(267);
 
 	var appRouter = React.createElement(
 	  Router,
@@ -72,8 +77,13 @@
 	  React.createElement(
 	    Route,
 	    { path: '/', component: App },
-	    React.createElement(Route, { path: 'login', component: LoginForm }),
-	    React.createElement(Route, { path: 'signup', component: LoginForm }),
+	    React.createElement(
+	      Route,
+	      { component: LandingContainer },
+	      React.createElement(IndexRoute, { component: Landing }),
+	      React.createElement(Route, { path: 'login', component: LoginForm }),
+	      React.createElement(Route, { path: 'signup', component: LoginForm })
+	    ),
 	    React.createElement(Route, { path: 'dashboard', component: PostFeed })
 	  )
 	);
@@ -34040,17 +34050,53 @@
 
 	var React = __webpack_require__(1);
 	var PostStore = __webpack_require__(267);
+	var SessionStore = __webpack_require__(236);
+	var PostActions = __webpack_require__(271);
 
 	var PostFeed = React.createClass({
 	  displayName: 'PostFeed',
 
 
+	  getInitialState: function getInitialState() {
+	    return { posts: [] };
+	  },
+
+	  componentWillMount: function componentWillMount() {
+	    this.setState({ posts: PostStore.all() });
+	  },
+
+	  componentWillUnMount: function componentWillUnMount() {
+	    this.postListener.remove();
+	  },
+
+	  componentDidMount: function componentDidMount() {
+	    PostActions.fetchAllPost();
+	    this.postListener = PostStore.addListener(this._onChange);
+	  },
+
+	  _onChange: function _onChange() {
+	    this.setState({ posts: PostStore.all() });
+	  },
+
 	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      null,
-	      'Hello from the post sotr'
-	    );
+	    var posts = this.state.posts;
+	    if (SessionStore.currentUser()) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement(
+	          'div',
+	          { className: 'feed' },
+	          this.props.children
+	        )
+	      );
+	    } else {
+	      return React.createElement(
+	        'div',
+	        null,
+	        'Loading...'
+	      );
+	    }
 	  }
 
 	});
@@ -34080,7 +34126,7 @@
 	};
 
 	PostStore.all = function () {
-	  Object.keys(_posts).map(function (key) {
+	  return Object.keys(_posts).map(function (key) {
 	    return _posts[key];
 	  });
 	};
@@ -34089,9 +34135,9 @@
 	  switch (payload.actionType) {
 	    case PostConstants.RECEIVE_ALL_POSTS:
 	      resetPosts(payload.posts);
+	      this.__emitChange();
 	      break;
 	  }
-	  this.__emitChange();
 	};
 
 	module.exports = PostStore;
@@ -34107,6 +34153,157 @@
 	  FETCH_ALL_POSTS: "FETCH_ALL_POSTS",
 	  FETCH_ONE_POST: "FETCH_ONE_POST"
 	};
+
+/***/ },
+/* 269 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var HashHistory = __webpack_require__(172).hashHistory;
+	var SessionStore = __webpack_require__(236);
+
+	var Landing = React.createClass({
+	  displayName: 'Landing',
+
+
+	  componentWillMount: function componentWillMount() {
+	    this.pushToDash();
+	  },
+
+	  componentDidMount: function componentDidMount() {
+	    this.listener = SessionStore.addListener(this.pushToDash);
+	  },
+
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.listener.remove();
+	  },
+
+	  pushToDash: function pushToDash() {
+	    if (SessionStore.currentUser()) {
+	      HashHistory.push('/dashboard');
+	    }
+	  },
+
+	  pushToSignUp: function pushToSignUp() {
+	    HashHistory.push('/signup');
+	  },
+
+	  pushToLogIn: function pushToLogIn() {
+	    HashHistory.push('/login');
+	  },
+
+	  pushToPublicFeed: function pushToPublicFeed() {
+	    HashHistory.push('/explore');
+	  },
+
+	  render: function render() {
+
+	    return React.createElement(
+	      'div',
+	      { className: 'landing' },
+	      React.createElement(
+	        'button',
+	        { className: 'landing-button', onClick: this.pushToSignUp },
+	        'Get Started'
+	      ),
+	      React.createElement(
+	        'button',
+	        { className: 'landing-button', onClick: this.pushToLogIn },
+	        'Log In'
+	      ),
+	      React.createElement(
+	        'p',
+	        { onClick: this.pushToPublicFeed },
+	        'Here\'s what\'s trending now'
+	      )
+	    );
+	  }
+	});
+
+	module.exports = Landing;
+
+/***/ },
+/* 270 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(1);
+	// var BackgroundImageSource = require('../../util/backgroundImageSource');
+
+
+	var LandingContainer = React.createClass({
+	  displayName: "LandingContainer",
+
+	  // componentWillMount: function() {
+	  //   var imgUrl = BackgroundImageSource.returnImgSource();
+	  //
+	  //   this.divStyle = {
+	  //     backgroundImage: 'url(' + imgUrl + ')',
+	  //   };
+	  // },
+
+	  render: function render() {
+
+	    return React.createElement(
+	      "div",
+	      { className: "landing-container" },
+	      this.props.children
+	    );
+	  }
+	});
+
+	module.exports = LandingContainer;
+
+/***/ },
+/* 271 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var PostUtil = __webpack_require__(272);
+	var AppDispatcher = __webpack_require__(237);
+	var PostConstants = __webpack_require__(268);
+
+	var PostActions = {
+
+	  fetchAllPost: function fetchAllPost() {
+	    PostUtil.fetchPosts(this.receiveAllPosts);
+	  },
+
+	  receiveAllPosts: function receiveAllPosts(posts) {
+	    AppDispatcher.dispatch({
+	      actionType: PostConstants.RECEIVE_ALL_POSTS,
+	      posts: posts
+	    });
+	  }
+
+	};
+
+	module.exports = PostActions;
+
+/***/ },
+/* 272 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var PostActions = __webpack_require__(271);
+
+	var PostUtils = {
+
+	  fetchPosts: function fetchPosts(cb) {
+	    $.ajax({
+	      method: "GET",
+	      url: "api/posts",
+	      success: cb
+	    });
+	  }
+	};
+
+	module.exports = PostUtils;
 
 /***/ }
 /******/ ]);

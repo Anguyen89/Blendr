@@ -19,7 +19,7 @@ var resetPosts = function(posts){
 
 
 PostStore.all = function(){
-  Object.keys(_posts).map(function(key){
+  return Object.keys(_posts).map(function(key){
     return _posts[key];
   });
 };
@@ -28,9 +28,9 @@ PostStore.__onDispatch = function(payload){
   switch(payload.actionType){
     case PostConstants.RECEIVE_ALL_POSTS:
       resetPosts(payload.posts);
+      this.__emitChange();
       break;
   }
-  this.__emitChange();
 };
 
 

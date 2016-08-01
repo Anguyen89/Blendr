@@ -18,13 +18,24 @@ var SessionStore = require('./stores/session_store');
 var SessionActions = require('./actions/session_actions');
 
  var PostFeed = require('./components/posts/post_feed');
+ var Landing = require('./components/user/landing');
+ var LandingContainer = require('./components/user/LandingContainer');
+ window.PostUtils = require('./utils/post_util');
+ window.PostActions = require('./actions/post_actions');
+ window.PostStore = require('./stores/post_store');
 
 var appRouter = (
   <Router history={hashHistory}>
     <Route path="/" component={App}>
-      <Route path="login" component={ LoginForm } />
-      <Route path="signup" component={LoginForm} />
+
+      <Route component={LandingContainer} >
+        <IndexRoute component={Landing} />
+          <Route path="login" component={ LoginForm } />
+          <Route path="signup" component={LoginForm} />
+      </Route>
+
       <Route path="dashboard" component={PostFeed} />
+
     </Route>
   </Router>
 

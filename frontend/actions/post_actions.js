@@ -1,5 +1,5 @@
 
-var PostUtil = require('../utils/post_utils');
+var PostUtil = require('../utils/post_util');
 var AppDispatcher = require('../dispatcher/dispatcher');
 var PostConstants = require('../constants/post_constants');
 
