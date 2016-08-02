@@ -5,6 +5,7 @@ var Link = require('react-router').Link;
 var SessionStore = require('../stores/session_store');
 var SessionActions = require('../actions/session_actions');
 var NavBar = require('./navBar.jsx');
+var HashHistory = require('react-router').hashHistory;
 
 var App = React.createClass({
 
@@ -15,6 +16,15 @@ var App = React.createClass({
   _handleLogOut(){
     SessionActions.logOut();
   },
+
+  pushToSignUp(){
+    HashHistory.push('/signup');
+  },
+
+  pushToLogin(){
+    HashHistory.push('/login');
+  },
+
 
   greeting() {
 
@@ -29,9 +39,10 @@ var App = React.createClass({
     else if ( !["/login", "/signup"].includes(this.props.location.pathname) ) {
       return (
         <nav className="login-signup">
-          <Link to="/login" activeClassName="current">Login</Link>
-          &nbsp;or&nbsp;
-          <Link to="/signup" activeClassName="current">Sign up!</Link>
+          <div className="landing">
+            <button className="landing-button" onClick={this.pushToSignUp}>Get Started</button>
+            <button className="landing-button" onClick={this.pushToLogin}>Log In</button>
+          </div>
         </nav>
       );
     }
@@ -41,7 +52,6 @@ var App = React.createClass({
     return (
       <div>
         <header>
-          <Link to="/" className="header-link"><h1>Dope Project</h1></Link>
           {this.greeting()}
         </header>
         {this.props.children}

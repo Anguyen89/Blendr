@@ -12,14 +12,15 @@ var IndexRoute = ReactRouter.IndexRoute;
 var hashHistory = ReactRouter.hashHistory;
 // Components
 var App = require('./components/app');
-var LoginForm = require('./components/login_form');
+var SignUp = require('./components/login_form');
+var Login = require('./components/login_form');
 //Auth
 var SessionStore = require('./stores/session_store');
 var SessionActions = require('./actions/session_actions');
 
  var PostFeed = require('./components/posts/post_feed');
- var Landing = require('./components/user/landing');
- var LandingContainer = require('./components/user/LandingContainer');
+ // var Landing = require('./components/user/landing.jsx');
+ // var LandingContainer = require('./components/user/LandingContainer.jsx');
  window.PostUtils = require('./utils/post_util');
  window.PostActions = require('./actions/post_actions');
  window.PostStore = require('./stores/post_store');
@@ -27,15 +28,9 @@ var SessionActions = require('./actions/session_actions');
 var appRouter = (
   <Router history={hashHistory}>
     <Route path="/" component={App}>
-
-      <Route component={LandingContainer} >
-        <IndexRoute component={Landing} />
-          <Route path="login" component={ LoginForm } />
-          <Route path="signup" component={LoginForm} />
-      </Route>
-
-      <Route path="dashboard" component={PostFeed} />
-
+      <IndexRoute component={PostFeed}/>
+      <Route path="signup" component={SignUp}/>
+      <Route path="login" component={Login}/>
     </Route>
   </Router>
 

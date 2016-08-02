@@ -14,149 +14,75 @@
  *= require_self
  */
 
- ::-webkit-scrollbar {
-     width: 12px;
- }
-
- ::-webkit-scrollbar-track {
-     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-     border-radius: 10px;
- }
-
- ::-webkit-scrollbar-thumb {
-     border-radius: 10px;
-     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
- }
-
- * {
-   border: 1px solid red;
- }
-
-
-
-.login-signup {
-  display: flex;
-  justify-content: center;
-}
-
-.header-link {
-  display: flex;
-  justify-content: center;
-  text-decoration: none;
-}
 
 .login-form-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 200px;
+  margin-top: 300px;
+  color: grey;
+}
+
+.login-form-box {
+  border: 1px solid blue;
+  padding: 5px;
+  border-radius: 5%;
+
 }
 
 .login-form {
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
-  background: transparent;
-  border-radius: 5px;
-  color: red;
-  font-weight: bolder;
-  padding: 20px;
-  border: 1px solid white;
 }
 
 .login-input {
-  margin-left: 20px;
+  padding-right: 5px;
+}
+
+.login-signup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: blue;
+  width: 1400px;
+  height: 900px;
+}
+
+.landing {
+  display: flex;
+  flex-direction: column;
+}
+
+.landing > button {
+  width: 100px;
+  height: 50px;
+  border-radius: 5%;
+  background: white;
 }
 
 .navbar {
   display: flex;
   justify-content: space-between;
-  background: #36465d;
-  height: 40px;
-
+  box-shadow: 0 4px 2px -2px gray;
+  padding-bottom: 5px;
 }
 
+.nav-right img {
+  width: 40px;
+  height: 35px;
+  padding: 5px;
+}
 
 .logo {
-  width: 40px;
-  height: 40px;
-}
-
-.nav-left {
-  display: flex;
-  justify-content: flex-start;
-  margin-left: 30px;
+  width: 50px;
+  height: 45px;
+  margin-left: 200px;
 }
 
 .nav-right {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-right: 30px;
-
-
-}
-
-.nav-icon {
-  width: 40px;
-  height: 40px;
-  padding: 5px;
-}
-
-.feed {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-}
-
-.feed-item {
-  padding: 5px;
-}
-
-
-.post-container {
-  display: flex;
-  flex-direction: column;
-  height: 500px;
-  width: 500px;
-  border: 1px solid red;
-}
-
-.user-info-container {
-  display: flex;
-  flex-direction: row;
-  margin-top: 5px;
-  height: 60px;
-  width: 490px;
-  padding: 5px;
-  border-bottom: 1px solid grey;
-}
-
-.user-photo {
-  margin-left: 20px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  border-top: 50px;
-}
-
-.post-author {
-  width: 100px;
-  margin-left: 20px;
-  color: blue;
-
-}
-.user-post-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.user-post-container {
-  display: block;
-}
-
-.user-post-image {
-  float: center;
+  justify-content: space-between;
+  margin-right: 150px;
 }

@@ -74,9 +74,9 @@ var LoginForm = React.createClass({
 
     let navLink;
     if (this.formType() === "login") {
-      navLink = <Link to="/signup">sign up</Link>;
+      navLink = <Link to="/signup">Sign Up</Link>;
     } else {
-      navLink = <Link to="/login">login</Link>;
+      navLink = <Link to="/login">Login</Link>;
     }
 
 		return (

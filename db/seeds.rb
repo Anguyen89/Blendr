@@ -97,13 +97,13 @@ User.create(
 Post.create!(
   post_type: "link",
   title: "Chani Nicholas: Horoscopes for April 25",
-  content_url: 'https://cdn4.iconfinder.com/data/icons/flat-icon-set/2133/flat_icons-graficheria.it-13.png',
+  content_url: 'http://res.cloudinary.com/dn07p1frq/image/upload/v1462209567/tumblr_o39q3enjbH1rvh1ydo1_1280_pifrn3.jpg',
   author_id: 4
 )
 
 Post.create(
 post_type: "photo",
 body: 'Perith, United Kingdom',
-content_url: "https://cdn4.iconfinder.com/data/icons/flat-icon-set/2133/flat_icons-graficheria.it-13.png",
+content_url: "https://www.europcar.com/files/live/sites/seo/files/contributed/images/location%20images/corporate%20countries/UK%20resized/uk-perth_1024x340.jpg",
 author_id: 7
 )

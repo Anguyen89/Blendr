@@ -6,26 +6,7 @@ var PostFeedItem = require('./post_feed_item');
 
 var PostFeed = React.createClass({
 
-  getInitialState: function(){
-    return { posts: []};
-  },
 
-  componentWillMount: function(){
-    this.setState({posts: PostStore.all()});
-  },
-
-  componentWillUnMount: function(){
-    this.postListener.remove();
-  },
-
-  componentDidMount: function(){
-    PostActions.fetchAllPost();
-    this.postListener = PostStore.addListener(this._onChange);
-  },
-
-  _onChange: function(){
-    this.setState({ posts: PostStore.all()});
-  },
 
   render: function(){
     var posts = this.state.posts;

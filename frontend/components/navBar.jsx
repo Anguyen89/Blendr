@@ -10,10 +10,9 @@ module.exports = React.createClass({
     if (SessionStore.currentUser()){
       return (
         <div className="nav-right">
-          <img className="nav-icon" onClick={this.pushToDash} src="http://res.cloudinary.com/dn07p1frq/image/upload/v1462225052/home_n9c9qv.png"></img>
-          <img className="nav-icon" onClick={this.pushToExplore} src="http://res.cloudinary.com/dn07p1frq/image/upload/v1462225052/compass_wwlply.png"></img>
-          <img className="nav-icon" onClick={this.pushToProfile} src="http://res.cloudinary.com/dn07p1frq/image/upload/v1462225784/user_tqcx1r.png"></img>
-          <img className="nav-icon" onClick={this.logout} src="http://res.cloudinary.com/dn07p1frq/image/upload/v1462224009/poweroff_wmvl7k.png"></img>
+          <img src="https://image.freepik.com/free-icon/user-male-silhouette_318-55563.png"></img>
+          <img src="http://image.flaticon.com/icons/png/512/33/33308.png"></img>
+          <img src="https://image.freepik.com/free-icon/standby--power-button_318-48023.jpg"></img>
         </div>
       );
     } else {
@@ -21,9 +20,6 @@ module.exports = React.createClass({
     }
   },
 
-  pushToDash: function(){
-    hashHistory.push('/dashboard');
-  },
 
   logout: function(){
     SessionActions.logOut();
@@ -33,7 +29,7 @@ module.exports = React.createClass({
     return (
       <div className="navbar">
         <div className="nav-left">
-          <img className="logo" src="https://secure.assets.tumblr.com/images/logo_page/img_logo_bluebg_2x.png"></img>
+          <img className="logo" src="https://image.freepik.com/free-icon/instagram-logo_318-53344.png"></img>
         </div>
         {this.navRight()}
       </div>

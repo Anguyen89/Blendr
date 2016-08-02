@@ -59,17 +59,18 @@
 	var hashHistory = ReactRouter.hashHistory;
 	// Components
 	var App = __webpack_require__(235);
-	var LoginForm = __webpack_require__(264);
+	var SignUp = __webpack_require__(264);
+	var Login = __webpack_require__(264);
 	//Auth
 	var SessionStore = __webpack_require__(236);
 	var SessionActions = __webpack_require__(259);
 
-	var PostFeed = __webpack_require__(266);
-	var Landing = __webpack_require__(269);
-	var LandingContainer = __webpack_require__(270);
-	window.PostUtils = __webpack_require__(272);
-	window.PostActions = __webpack_require__(271);
-	window.PostStore = __webpack_require__(267);
+	var PostFeed = __webpack_require__(270);
+	// var Landing = require('./components/user/landing.jsx');
+	// var LandingContainer = require('./components/user/LandingContainer.jsx');
+	window.PostUtils = __webpack_require__(266);
+	window.PostActions = __webpack_require__(267);
+	window.PostStore = __webpack_require__(269);
 
 	var appRouter = React.createElement(
 	  Router,
@@ -77,14 +78,9 @@
 	  React.createElement(
 	    Route,
 	    { path: '/', component: App },
-	    React.createElement(
-	      Route,
-	      { component: LandingContainer },
-	      React.createElement(IndexRoute, { component: Landing }),
-	      React.createElement(Route, { path: 'login', component: LoginForm }),
-	      React.createElement(Route, { path: 'signup', component: LoginForm })
-	    ),
-	    React.createElement(Route, { path: 'dashboard', component: PostFeed })
+	    React.createElement(IndexRoute, { component: PostFeed }),
+	    React.createElement(Route, { path: 'signup', component: SignUp }),
+	    React.createElement(Route, { path: 'login', component: Login })
 	  )
 	);
 
@@ -26752,6 +26748,7 @@
 	var SessionStore = __webpack_require__(236);
 	var SessionActions = __webpack_require__(259);
 	var NavBar = __webpack_require__(263);
+	var HashHistory = __webpack_require__(172).hashHistory;
 
 	var App = React.createClass({
 	  displayName: 'App',
@@ -26760,6 +26757,12 @@
 	  },
 	  _handleLogOut: function _handleLogOut() {
 	    SessionActions.logOut();
+	  },
+	  pushToSignUp: function pushToSignUp() {
+	    HashHistory.push('/signup');
+	  },
+	  pushToLogin: function pushToLogin() {
+	    HashHistory.push('/login');
 	  },
 	  greeting: function greeting() {
 
@@ -26775,15 +26778,18 @@
 	        'nav',
 	        { className: 'login-signup' },
 	        React.createElement(
-	          Link,
-	          { to: '/login', activeClassName: 'current' },
-	          'Login'
-	        ),
-	        ' or ',
-	        React.createElement(
-	          Link,
-	          { to: '/signup', activeClassName: 'current' },
-	          'Sign up!'
+	          'div',
+	          { className: 'landing' },
+	          React.createElement(
+	            'button',
+	            { className: 'landing-button', onClick: this.pushToSignUp },
+	            'Get Started'
+	          ),
+	          React.createElement(
+	            'button',
+	            { className: 'landing-button', onClick: this.pushToLogin },
+	            'Log In'
+	          )
 	        )
 	      );
 	    }
@@ -26795,15 +26801,6 @@
 	      React.createElement(
 	        'header',
 	        null,
-	        React.createElement(
-	          Link,
-	          { to: '/', className: 'header-link' },
-	          React.createElement(
-	            'h1',
-	            null,
-	            'Dope Project'
-	          )
-	        ),
 	        this.greeting()
 	      ),
 	      this.props.children
@@ -33802,18 +33799,13 @@
 	      return React.createElement(
 	        'div',
 	        { className: 'nav-right' },
-	        React.createElement('img', { className: 'nav-icon', onClick: this.pushToDash, src: 'http://res.cloudinary.com/dn07p1frq/image/upload/v1462225052/home_n9c9qv.png' }),
-	        React.createElement('img', { className: 'nav-icon', onClick: this.pushToExplore, src: 'http://res.cloudinary.com/dn07p1frq/image/upload/v1462225052/compass_wwlply.png' }),
-	        React.createElement('img', { className: 'nav-icon', onClick: this.pushToProfile, src: 'http://res.cloudinary.com/dn07p1frq/image/upload/v1462225784/user_tqcx1r.png' }),
-	        React.createElement('img', { className: 'nav-icon', onClick: this.logout, src: 'http://res.cloudinary.com/dn07p1frq/image/upload/v1462224009/poweroff_wmvl7k.png' })
+	        React.createElement('img', { src: 'https://image.freepik.com/free-icon/user-male-silhouette_318-55563.png' }),
+	        React.createElement('img', { src: 'http://image.flaticon.com/icons/png/512/33/33308.png' }),
+	        React.createElement('img', { src: 'https://image.freepik.com/free-icon/standby--power-button_318-48023.jpg' })
 	      );
 	    } else {
 	      return React.createElement('div', null);
 	    }
-	  },
-
-	  pushToDash: function pushToDash() {
-	    hashHistory.push('/dashboard');
 	  },
 
 	  logout: function logout() {
@@ -33827,7 +33819,7 @@
 	      React.createElement(
 	        'div',
 	        { className: 'nav-left' },
-	        React.createElement('img', { className: 'logo', src: 'https://secure.assets.tumblr.com/images/logo_page/img_logo_bluebg_2x.png' })
+	        React.createElement('img', { className: 'logo', src: 'https://image.freepik.com/free-icon/instagram-logo_318-53344.png' })
 	      ),
 	      this.navRight()
 	    );
@@ -33928,13 +33920,13 @@
 	      navLink = React.createElement(
 	        Link,
 	        { to: '/signup' },
-	        'sign up'
+	        'Sign Up'
 	      );
 	    } else {
 	      navLink = React.createElement(
 	        Link,
 	        { to: '/login' },
-	        'login'
+	        'Login'
 	      );
 	    }
 
@@ -34046,69 +34038,64 @@
 /* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
-	var React = __webpack_require__(1);
-	var PostStore = __webpack_require__(267);
-	var SessionStore = __webpack_require__(236);
-	var PostActions = __webpack_require__(271);
-	var PostFeedItem = __webpack_require__(273);
+	var PostActions = __webpack_require__(267);
 
-	var PostFeed = React.createClass({
-	  displayName: 'PostFeed',
+	var PostUtils = {
 
-
-	  getInitialState: function getInitialState() {
-	    return { posts: [] };
-	  },
-
-	  componentWillMount: function componentWillMount() {
-	    this.setState({ posts: PostStore.all() });
-	  },
-
-	  componentWillUnMount: function componentWillUnMount() {
-	    this.postListener.remove();
-	  },
-
-	  componentDidMount: function componentDidMount() {
-	    PostActions.fetchAllPost();
-	    this.postListener = PostStore.addListener(this._onChange);
-	  },
-
-	  _onChange: function _onChange() {
-	    this.setState({ posts: PostStore.all() });
-	  },
-
-	  render: function render() {
-	    var posts = this.state.posts;
-	    if (SessionStore.currentUser()) {
-	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement(
-	          'div',
-	          { className: 'feed' },
-	          this.props.children,
-	          posts.map(function (post) {
-	            return React.createElement(PostFeedItem, { post: post, key: post.id, className: 'feed-item' });
-	          })
-	        )
-	      );
-	    } else {
-	      return React.createElement(
-	        'div',
-	        null,
-	        'Loading...'
-	      );
-	    }
+	  fetchPosts: function fetchPosts(cb) {
+	    $.ajax({
+	      method: "GET",
+	      url: "api/posts",
+	      success: cb
+	    });
 	  }
+	};
 
-	});
-
-	module.exports = PostFeed;
+	module.exports = PostUtils;
 
 /***/ },
 /* 267 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var PostUtil = __webpack_require__(266);
+	var AppDispatcher = __webpack_require__(237);
+	var PostConstants = __webpack_require__(268);
+
+	var PostActions = {
+
+	  fetchAllPost: function fetchAllPost() {
+	    PostUtil.fetchPosts(this.receiveAllPosts);
+	  },
+
+	  receiveAllPosts: function receiveAllPosts(posts) {
+	    AppDispatcher.dispatch({
+	      actionType: PostConstants.RECEIVE_ALL_POSTS,
+	      posts: posts
+	    });
+	  }
+
+	};
+
+	module.exports = PostActions;
+
+/***/ },
+/* 268 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	module.exports = {
+	  RECEIVE_ALL_POSTS: "RECEIVE_ALL_POSTS",
+	  FETCH_ALL_POSTS: "FETCH_ALL_POSTS",
+	  FETCH_ONE_POST: "FETCH_ONE_POST"
+	};
+
+/***/ },
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34147,119 +34134,48 @@
 	module.exports = PostStore;
 
 /***/ },
-/* 268 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	module.exports = {
-	  RECEIVE_ALL_POSTS: "RECEIVE_ALL_POSTS",
-	  FETCH_ALL_POSTS: "FETCH_ALL_POSTS",
-	  FETCH_ONE_POST: "FETCH_ONE_POST"
-	};
-
-/***/ },
-/* 269 */
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var HashHistory = __webpack_require__(172).hashHistory;
+	var PostStore = __webpack_require__(269);
 	var SessionStore = __webpack_require__(236);
+	var PostActions = __webpack_require__(267);
+	var PostFeedItem = __webpack_require__(271);
 
-	var Landing = React.createClass({
-	  displayName: 'Landing',
+	var PostFeed = React.createClass({
+	  displayName: 'PostFeed',
 
 
-	  componentWillMount: function componentWillMount() {
-	    this.pushToDash();
-	  },
-
-	  componentDidMount: function componentDidMount() {
-	    this.listener = SessionStore.addListener(this.pushToDash);
-	  },
-
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.listener.remove();
-	  },
-
-	  pushToDash: function pushToDash() {
+	  render: function render() {
+	    var posts = this.state.posts;
 	    if (SessionStore.currentUser()) {
-	      HashHistory.push('/dashboard');
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement(
+	          'div',
+	          { className: 'feed' },
+	          this.props.children,
+	          posts.map(function (post) {
+	            return React.createElement(PostFeedItem, { post: post, key: post.id, className: 'feed-item' });
+	          })
+	        )
+	      );
+	    } else {
+	      return React.createElement(
+	        'div',
+	        null,
+	        'Loading...'
+	      );
 	    }
-	  },
-
-	  pushToSignUp: function pushToSignUp() {
-	    HashHistory.push('/signup');
-	  },
-
-	  pushToLogIn: function pushToLogIn() {
-	    HashHistory.push('/login');
-	  },
-
-	  pushToPublicFeed: function pushToPublicFeed() {
-	    HashHistory.push('/explore');
-	  },
-
-	  render: function render() {
-
-	    return React.createElement(
-	      'div',
-	      { className: 'landing' },
-	      React.createElement(
-	        'button',
-	        { className: 'landing-button', onClick: this.pushToSignUp },
-	        'Get Started'
-	      ),
-	      React.createElement(
-	        'button',
-	        { className: 'landing-button', onClick: this.pushToLogIn },
-	        'Log In'
-	      ),
-	      React.createElement(
-	        'p',
-	        { onClick: this.pushToPublicFeed },
-	        'Here\'s what\'s trending now'
-	      )
-	    );
 	  }
+
 	});
 
-	module.exports = Landing;
-
-/***/ },
-/* 270 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var React = __webpack_require__(1);
-	// var BackgroundImageSource = require('../../util/backgroundImageSource');
-
-
-	var LandingContainer = React.createClass({
-	  displayName: "LandingContainer",
-
-	  // componentWillMount: function() {
-	  //   var imgUrl = BackgroundImageSource.returnImgSource();
-	  //
-	  //   this.divStyle = {
-	  //     backgroundImage: 'url(' + imgUrl + ')',
-	  //   };
-	  // },
-
-	  render: function render() {
-
-	    return React.createElement(
-	      "div",
-	      { className: "landing-container" },
-	      this.props.children
-	    );
-	  }
-	});
-
-	module.exports = LandingContainer;
+	module.exports = PostFeed;
 
 /***/ },
 /* 271 */
@@ -34267,81 +34183,40 @@
 
 	'use strict';
 
-	var PostUtil = __webpack_require__(272);
-	var AppDispatcher = __webpack_require__(237);
-	var PostConstants = __webpack_require__(268);
-
-	var PostActions = {
-
-	  fetchAllPost: function fetchAllPost() {
-	    PostUtil.fetchPosts(this.receiveAllPosts);
-	  },
-
-	  receiveAllPosts: function receiveAllPosts(posts) {
-	    AppDispatcher.dispatch({
-	      actionType: PostConstants.RECEIVE_ALL_POSTS,
-	      posts: posts
-	    });
-	  }
-
-	};
-
-	module.exports = PostActions;
-
-/***/ },
-/* 272 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var PostActions = __webpack_require__(271);
-
-	var PostUtils = {
-
-	  fetchPosts: function fetchPosts(cb) {
-	    $.ajax({
-	      method: "GET",
-	      url: "api/posts",
-	      success: cb
-	    });
-	  }
-	};
-
-	module.exports = PostUtils;
-
-/***/ },
-/* 273 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
 	var React = __webpack_require__(1);
+	var HashHistory = __webpack_require__(172).hashHistory;
 
 	var PostFeedItem = React.createClass({
-	  displayName: "PostFeedItem",
+	  displayName: 'PostFeedItem',
 
+
+	  pushToProfile: function pushToProfile() {
+	    HashHistory.push('/blog');
+	  },
 
 	  render: function render() {
 	    return React.createElement(
-	      "div",
-	      { className: "post-container" },
+	      'div',
+	      { className: 'post-container' },
 	      React.createElement(
-	        "div",
-	        { className: "user-info-container" },
-	        React.createElement("img", { className: "user-photo", src: this.props.post.author.profile_image_url }),
+	        'div',
+	        { className: 'user-info-container' },
+	        React.createElement('img', { className: 'user-photo', onClick: this.pushToProfile, src: this.props.post.author.profile_image_url }),
 	        React.createElement(
-	          "h2",
-	          { className: "post-author" },
+	          'h2',
+	          { className: 'post-author' },
 	          this.props.post.author.username
 	        )
 	      ),
 	      React.createElement(
-	        "div",
-	        { className: "user-post-container" },
+	        'div',
+	        { className: 'user-post-container' },
+	        React.createElement('img', { className: 'user-post-image', src: this.props.post.content_url }),
 	        React.createElement(
-	          "div",
-	          { className: "user-post-image" },
-	          this.props.post.content_url
+	          'label',
+	          { className: 'image-description' },
+	          this.props.post.title,
+	          this.props.post.body
 	        )
 	      )
 	    );
