@@ -86,3 +86,60 @@
   justify-content: space-between;
   margin-right: 150px;
 }
+
+.feed {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 40px;
+}
+
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  -moz-box-shadow: 0 0 3px #ccc;
+  -webkit-box-shadow: 0 0 3px #ccc;
+  box-shadow: 0 0 3px #ccc;
+  margin-bottom: 10px;
+  width: 500px;
+  height: 700px;
+
+}
+
+.user-info-container {
+  display: flex;
+  height: 50px;
+  width: 500px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  padding-left: 15px;
+}
+
+.user-photo {
+  width: 50px;
+  height: 50px;
+  padding-right: 15px;
+  border-radius: 60%;
+}
+
+.user-image-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-post-image {
+  width: 500px;
+  height: 400px;
+}
+
+.user-image-description {
+  padding: 5px;
+}
+
+
+
+/** {
+  border: 1px solid red;
+}*/

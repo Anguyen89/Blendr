@@ -18,9 +18,9 @@ var PostFeedItem = React.createClass({
           <h2 className="post-author">{this.props.post.author.username}</h2>
         </div>
 
-        <div className="user-post-container">
+        <div className="user-image-container">
           <img className="user-post-image" src={this.props.post.content_url}></img>
-          <label className="image-description">{this.props.post.title}{this.props.post.body}</label>
+          <label className="user-image-description">{this.props.post.title}{this.props.post.body}</label>
         </div>
 
       </div>

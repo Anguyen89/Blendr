@@ -34147,11 +34147,24 @@
 
 	var PostFeed = React.createClass({
 	  displayName: 'PostFeed',
+	  getInitialState: function getInitialState() {
+	    return { posts: [] };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.PostStoreListener = PostStore.addListener(this._onChange);
+	    PostActions.fetchAllPost();
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.PostStoreListener.remove();
+	  },
+	  _onChange: function _onChange() {
+	    this.setState({ posts: PostStore.all() });
+	  },
 
 
 	  render: function render() {
 	    var posts = this.state.posts;
-	    if (SessionStore.currentUser()) {
+	    if (SessionStore.isUserLoggedIn()) {
 	      return React.createElement(
 	        'div',
 	        null,
@@ -34160,16 +34173,12 @@
 	          { className: 'feed' },
 	          this.props.children,
 	          posts.map(function (post) {
-	            return React.createElement(PostFeedItem, { post: post, key: post.id, className: 'feed-item' });
+	            return React.createElement(PostFeedItem, { post: post, key: post.id });
 	          })
 	        )
 	      );
 	    } else {
-	      return React.createElement(
-	        'div',
-	        null,
-	        'Loading...'
-	      );
+	      return React.createElement('div', null);
 	    }
 	  }
 
@@ -34210,11 +34219,11 @@
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'user-post-container' },
+	        { className: 'user-image-container' },
 	        React.createElement('img', { className: 'user-post-image', src: this.props.post.content_url }),
 	        React.createElement(
 	          'label',
-	          { className: 'image-description' },
+	          { className: 'user-image-description' },
 	          this.props.post.title,
 	          this.props.post.body
 	        )

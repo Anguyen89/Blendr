@@ -6,18 +6,36 @@ var PostFeedItem = require('./post_feed_item');
 
 var PostFeed = React.createClass({
 
+  getInitialState() {
+    return { posts: []};
+  },
+
+  componentDidMount(){
+    this.PostStoreListener = PostStore.addListener(this._onChange)
+    PostActions.fetchAllPost();
+  },
+
+  componentWillUnmount(){
+    this.PostStoreListener.remove();
+  },
+
+  _onChange(){
+    this.setState({posts: PostStore.all()})
+  },
+
+
 
 
   render: function(){
     var posts = this.state.posts;
-    if (SessionStore.currentUser()){
+    if (SessionStore.isUserLoggedIn()){
       return (
         <div>
           <div className="feed">
             {this.props.children}
             {posts.map(function(post){
               return (
-                <PostFeedItem post={post} key={post.id} className="feed-item"/>
+                <PostFeedItem post={post} key={post.id} />
               );
             })}
           </div>
@@ -25,7 +43,7 @@ var PostFeed = React.createClass({
       );
     } else{
       return (
-        <div>Loading...</div>
+        <div></div>
       );
     }
   }
