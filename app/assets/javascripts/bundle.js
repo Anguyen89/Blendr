@@ -33801,7 +33801,7 @@
 	        { className: 'nav-right' },
 	        React.createElement('img', { src: 'https://image.freepik.com/free-icon/user-male-silhouette_318-55563.png' }),
 	        React.createElement('img', { src: 'http://image.flaticon.com/icons/png/512/33/33308.png' }),
-	        React.createElement('img', { src: 'https://image.freepik.com/free-icon/standby--power-button_318-48023.jpg' })
+	        React.createElement('img', { onClick: this.logout, src: 'https://image.freepik.com/free-icon/standby--power-button_318-48023.jpg' })
 	      );
 	    } else {
 	      return React.createElement('div', null);
@@ -33812,6 +33812,10 @@
 	    SessionActions.logOut();
 	  },
 
+	  rootToIndex: function rootToIndex() {
+	    hashHistory.push("/");
+	  },
+
 	  render: function render() {
 	    return React.createElement(
 	      'div',
@@ -33819,7 +33823,7 @@
 	      React.createElement(
 	        'div',
 	        { className: 'nav-left' },
-	        React.createElement('img', { className: 'logo', src: 'https://image.freepik.com/free-icon/instagram-logo_318-53344.png' })
+	        React.createElement('img', { onClick: this.rootToIndex, className: 'logo', src: 'https://image.freepik.com/free-icon/instagram-logo_318-53344.png' })
 	      ),
 	      this.navRight()
 	    );
