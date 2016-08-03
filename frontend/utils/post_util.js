@@ -5,7 +5,7 @@ var PostUtils = {
   fetchPosts: function(cb){
     $.ajax({
       method: "GET",
-      url: "api/posts",
+      url: "api/pictures",
       success: cb
     });
   }
