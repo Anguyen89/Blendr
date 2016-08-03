@@ -121,3 +121,16 @@ posts = Picture.create!([
   {url: "https://images.unsplash.com/14/unsplash_5244808e6b835_1.JPG?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=12826d4d6562304e24d499cfec356281",
   user_id: 2}
 ])
+
+
+(1..User.all.length).each do |follower_id|
+  #say each user follows between 7 and 10 people
+  total_following = rand(7..10)
+
+  users = (1..User.all.length).to_a - [follower_id]
+
+  total_following.times do
+    followed_id = users.shuffle!.pop
+    Relationship.create({follower_id: follower_id, followed_id: followed_id})
+  end
+end
