@@ -65,12 +65,12 @@
 	var SessionStore = __webpack_require__(236);
 	var SessionActions = __webpack_require__(259);
 
-	var PostFeed = __webpack_require__(270);
+	var PostFeed = __webpack_require__(266);
 	// var Landing = require('./components/user/landing.jsx');
 	// var LandingContainer = require('./components/user/LandingContainer.jsx');
-	window.PostUtils = __webpack_require__(266);
-	window.PostActions = __webpack_require__(267);
-	window.PostStore = __webpack_require__(269);
+	window.PostUtils = __webpack_require__(270);
+	window.PostActions = __webpack_require__(269);
+	window.PostStore = __webpack_require__(267);
 
 	var appRouter = React.createElement(
 	  Router,
@@ -34042,111 +34042,12 @@
 /* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
-
-	var PostActions = __webpack_require__(267);
-
-	var PostUtils = {
-
-	  fetchPosts: function fetchPosts(cb) {
-	    $.ajax({
-	      method: "GET",
-	      url: "api/posts",
-	      success: cb
-	    });
-	  }
-	};
-
-	module.exports = PostUtils;
-
-/***/ },
-/* 267 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var PostUtil = __webpack_require__(266);
-	var AppDispatcher = __webpack_require__(237);
-	var PostConstants = __webpack_require__(268);
-
-	var PostActions = {
-
-	  fetchAllPost: function fetchAllPost() {
-	    PostUtil.fetchPosts(this.receiveAllPosts);
-	  },
-
-	  receiveAllPosts: function receiveAllPosts(posts) {
-	    AppDispatcher.dispatch({
-	      actionType: PostConstants.RECEIVE_ALL_POSTS,
-	      posts: posts
-	    });
-	  }
-
-	};
-
-	module.exports = PostActions;
-
-/***/ },
-/* 268 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	module.exports = {
-	  RECEIVE_ALL_POSTS: "RECEIVE_ALL_POSTS",
-	  FETCH_ALL_POSTS: "FETCH_ALL_POSTS",
-	  FETCH_ONE_POST: "FETCH_ONE_POST"
-	};
-
-/***/ },
-/* 269 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var AppDispatcher = __webpack_require__(237);
-	var PostConstants = __webpack_require__(268);
-
-	var Store = __webpack_require__(241).Store;
-
-	var PostStore = new Store(AppDispatcher);
-
-	var _posts = {};
-
-	var resetPosts = function resetPosts(posts) {
-	  _posts = {};
-	  posts.forEach(function (post) {
-	    _posts[post.id] = post;
-	  });
-	};
-
-	PostStore.all = function () {
-	  return Object.keys(_posts).map(function (key) {
-	    return _posts[key];
-	  });
-	};
-
-	PostStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case PostConstants.RECEIVE_ALL_POSTS:
-	      resetPosts(payload.posts);
-	      this.__emitChange();
-	      break;
-	  }
-	};
-
-	module.exports = PostStore;
-
-/***/ },
-/* 270 */
-/***/ function(module, exports, __webpack_require__) {
-
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var PostStore = __webpack_require__(269);
+	var PostStore = __webpack_require__(267);
 	var SessionStore = __webpack_require__(236);
-	var PostActions = __webpack_require__(267);
+	var PostActions = __webpack_require__(269);
 	var PostFeedItem = __webpack_require__(271);
 
 	var PostFeed = React.createClass({
@@ -34189,6 +34090,105 @@
 	});
 
 	module.exports = PostFeed;
+
+/***/ },
+/* 267 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var AppDispatcher = __webpack_require__(237);
+	var PostConstants = __webpack_require__(268);
+
+	var Store = __webpack_require__(241).Store;
+
+	var PostStore = new Store(AppDispatcher);
+
+	var _posts = {};
+
+	var resetPosts = function resetPosts(posts) {
+	  _posts = {};
+	  posts.forEach(function (post) {
+	    _posts[post.id] = post;
+	  });
+	};
+
+	PostStore.all = function () {
+	  return Object.keys(_posts).map(function (key) {
+	    return _posts[key];
+	  });
+	};
+
+	PostStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case PostConstants.RECEIVE_ALL_POSTS:
+	      resetPosts(payload.posts);
+	      this.__emitChange();
+	      break;
+	  }
+	};
+
+	module.exports = PostStore;
+
+/***/ },
+/* 268 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	module.exports = {
+	  RECEIVE_ALL_POSTS: "RECEIVE_ALL_POSTS",
+	  FETCH_ALL_POSTS: "FETCH_ALL_POSTS",
+	  FETCH_ONE_POST: "FETCH_ONE_POST"
+	};
+
+/***/ },
+/* 269 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var PostUtil = __webpack_require__(270);
+	var AppDispatcher = __webpack_require__(237);
+	var PostConstants = __webpack_require__(268);
+
+	var PostActions = {
+
+	  fetchAllPost: function fetchAllPost() {
+	    PostUtil.fetchPosts(this.receiveAllPosts);
+	  },
+
+	  receiveAllPosts: function receiveAllPosts(posts) {
+	    AppDispatcher.dispatch({
+	      actionType: PostConstants.RECEIVE_ALL_POSTS,
+	      posts: posts
+	    });
+	  }
+
+	};
+
+	module.exports = PostActions;
+
+/***/ },
+/* 270 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var PostActions = __webpack_require__(269);
+
+	var PostUtils = {
+
+	  fetchPosts: function fetchPosts(cb) {
+	    $.ajax({
+	      method: "GET",
+	      url: "api/posts",
+	      success: cb
+	    });
+	  }
+	};
+
+	module.exports = PostUtils;
 
 /***/ },
 /* 271 */
