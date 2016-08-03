@@ -5,16 +5,32 @@ var PostConstants = require('../constants/post_constants');
 
 var PostActions = {
 
-  fetchAllPost: function(){
-    PostUtil.fetchPosts(this.receiveAllPosts);
+  fetchPosts: function(count){
+    PostUtil.fetchPosts(count,this.receivePosts);
   },
 
-  receiveAllPosts: function(posts){
+  receivePosts: function(posts){
     AppDispatcher.dispatch({
-      actionType: PostConstants.RECEIVE_ALL_POSTS,
+      actionType: PostConstants.RECEIVE_POSTS,
       posts: posts
     });
-  }
+  },
+  fetchPost: function(postId) {
+    PostUtil.fetchPost(postId, this.receivePost);
+},
+
+  receivePost: function(post){
+    AppDispatcher.dispatch({
+      actionType: PostConstants.RECEIVE_POST,
+      post: post
+    });
+  },
+
+  createPost: function(post) {
+    PostUtil.createPost(post, this.receivePost);
+  },
+
+
 
 
 };

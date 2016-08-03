@@ -34053,21 +34053,35 @@
 	var PostFeed = React.createClass({
 	  displayName: 'PostFeed',
 	  getInitialState: function getInitialState() {
-	    return { posts: [] };
+	    return { posts: [], scrollCount: 1, time: Date.now() };
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.PostStoreListener = PostStore.addListener(this._onChange);
-	    PostActions.fetchAllPost();
+	    this.scrollListener = window.addEventListener("scroll", this.addPosts);
+	    PostActions.fetchPosts();
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.PostStoreListener.remove();
+	    window.removeEventListener("scroll", this.addPosts);
 	  },
+
+	  addPosts: function addPosts() {
+	    if (window.innerHeight + window.scrollY + 1 >= document.body.offsetHeight && this.state.time + 1000 < Date.now()) {
+	      $('.fa-spinner').show();
+
+	      this.state.scrollCount += 1;
+	      this.state.time = Date.now();
+	      PostActions.fetchPosts(this.state.scrollCount);
+	    }
+	  },
+
 	  _onChange: function _onChange() {
 	    this.setState({ posts: PostStore.all() });
 	  },
 
 
 	  render: function render() {
+
 	    var posts = this.state.posts;
 	    if (SessionStore.isUserLoggedIn()) {
 	      return React.createElement(
@@ -34121,7 +34135,7 @@
 
 	PostStore.__onDispatch = function (payload) {
 	  switch (payload.actionType) {
-	    case PostConstants.RECEIVE_ALL_POSTS:
+	    case PostConstants.RECEIVE_POSTS:
 	      resetPosts(payload.posts);
 	      this.__emitChange();
 	      break;
@@ -34137,7 +34151,9 @@
 	"use strict";
 
 	module.exports = {
-	  RECEIVE_ALL_POSTS: "RECEIVE_ALL_POSTS",
+	  RECEIVE_POSTS: "RECEIVE_POSTS",
+	  RECEIVE_POST: "RECEIVE_POST",
+	  CREATE_POST: "CREATE_POST",
 	  FETCH_ALL_POSTS: "FETCH_ALL_POSTS",
 	  FETCH_ONE_POST: "FETCH_ONE_POST"
 	};
@@ -34154,15 +34170,29 @@
 
 	var PostActions = {
 
-	  fetchAllPost: function fetchAllPost() {
-	    PostUtil.fetchPosts(this.receiveAllPosts);
+	  fetchPosts: function fetchPosts(count) {
+	    PostUtil.fetchPosts(count, this.receivePosts);
 	  },
 
-	  receiveAllPosts: function receiveAllPosts(posts) {
+	  receivePosts: function receivePosts(posts) {
 	    AppDispatcher.dispatch({
-	      actionType: PostConstants.RECEIVE_ALL_POSTS,
+	      actionType: PostConstants.RECEIVE_POSTS,
 	      posts: posts
 	    });
+	  },
+	  fetchPost: function fetchPost(postId) {
+	    PostUtil.fetchPost(postId, this.receivePost);
+	  },
+
+	  receivePost: function receivePost(post) {
+	    AppDispatcher.dispatch({
+	      actionType: PostConstants.RECEIVE_POST,
+	      post: post
+	    });
+	  },
+
+	  createPost: function createPost(post) {
+	    PostUtil.createPost(post, this.receivePost);
 	  }
 
 	};
@@ -34173,19 +34203,36 @@
 /* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var PostActions = __webpack_require__(269);
 
 	var PostUtils = {
 
-	  fetchPosts: function fetchPosts(cb) {
+	  fetchPosts: function fetchPosts(count, cb) {
 	    $.ajax({
-	      method: "GET",
-	      url: "api/pictures",
+	      url: 'api/pictures',
+	      data: { count: count },
+	      success: cb
+	    });
+	  },
+
+	  fetchPost: function fetchPost(postId, cb) {
+	    $.ajax({
+	      url: 'api/pictures/' + postId,
+	      success: cb
+	    });
+	  },
+
+	  createPost: function createPost(post, cb) {
+	    $.ajax({
+	      url: "/api/pictures/",
+	      type: "POST",
+	      data: { post: post },
 	      success: cb
 	    });
 	  }
+
 	};
 
 	module.exports = PostUtils;

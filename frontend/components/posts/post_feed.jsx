@@ -7,16 +7,28 @@ var PostFeedItem = require('./post_feed_item');
 var PostFeed = React.createClass({
 
   getInitialState() {
-    return { posts: []};
+    return { posts: [], scrollCount: 1, time: Date.now()};
   },
 
   componentDidMount(){
     this.PostStoreListener = PostStore.addListener(this._onChange)
-    PostActions.fetchAllPost();
+    this.scrollListener = window.addEventListener("scroll", this.addPosts);
+    PostActions.fetchPosts();
   },
 
   componentWillUnmount(){
     this.PostStoreListener.remove();
+     window.removeEventListener("scroll", this.addPosts);
+  },
+  addPosts: function() {
+    if (window.innerHeight + window.scrollY + 1 >= document.body.offsetHeight
+      && this.state.time + 1000 < Date.now() ) {
+        $('.fa-spinner').show();
+
+        this.state.scrollCount += 1;
+        this.state.time = Date.now();
+        PostActions.fetchPosts(this.state.scrollCount);
+      }
   },
 
   _onChange(){
@@ -27,6 +39,7 @@ var PostFeed = React.createClass({
 
 
   render: function(){
+  
     var posts = this.state.posts;
     if (SessionStore.isUserLoggedIn()){
       return (

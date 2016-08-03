@@ -26,7 +26,7 @@ PostStore.all = function(){
 
 PostStore.__onDispatch = function(payload){
   switch(payload.actionType){
-    case PostConstants.RECEIVE_ALL_POSTS:
+    case PostConstants.RECEIVE_POSTS:
       resetPosts(payload.posts);
       this.__emitChange();
       break;
