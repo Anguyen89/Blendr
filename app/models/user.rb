@@ -5,12 +5,19 @@ class User < ActiveRecord::Base
 
   attr_reader :password
 
-  has_many :pictures,
-    foreign_key: :user_id,
-    primary_key: :id,
-    class_name: :Picture
+    has_many :pictures
 
-  has_many :comments
+    has_many :comments
+    has_many :likes
+
+    has_many :active_relationships, class_name: "Relationship",
+                                    foreign_key: "follower_id",
+                                    dependent: :destroy
+    has_many :passive_relationships, class_name: "Relationship",
+                                     foreign_key: "followed_id",
+                                     dependent: :destroy
+    has_many :following, through: :active_relationships, source: :followed
+    has_many :followers, through: :passive_relationships, source: :follower
 
   after_initialize :ensure_session_token
   before_validation :ensure_session_token_uniqueness

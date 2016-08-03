@@ -139,3 +139,12 @@ posts = Picture.create!([
     Relationship.create({follower_id: follower_id, followed_id: followed_id})
   end
 end
+
+(1..User.all.length).each do |user_id|
+  #say each user likes 20 posts
+  picture_ids = (1..Picture.all.length).to_a
+  20.times do
+    picture_id = picture_ids.shuffle!.pop
+    Like.create!({user_id: user_id, picture_id: picture_ids.shuffle!.pop})
+  end
+end
