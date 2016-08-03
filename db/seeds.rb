@@ -25,6 +25,11 @@ def rand_id
   rand(1..12)
 end
 
+comments = Comment.create!([
+  {user_id: 1, picture_id: 1, body: "Test"},
+  {user_id: 1, picture_id: 2, body: "Test 2"}
+  ])
+
 posts = Picture.create!([
   {url: "https://images.unsplash.com/photo-1414005987108-a6d06de8769f?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=75231aea5223b76d20bd8a7e0777de4d",
   user_id: 1},

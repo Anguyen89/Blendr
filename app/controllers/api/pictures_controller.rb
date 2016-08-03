@@ -33,7 +33,7 @@ class Api::PicturesController < ApplicationController
 
   private
   def picture_params
-    params.require(:picture).permit(:image_url)
+    params.require(:picture).permit(:url)
   end
 
   def count

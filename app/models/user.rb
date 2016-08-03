@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
     primary_key: :id,
     class_name: :Picture
 
+  has_many :comments
+
   after_initialize :ensure_session_token
   before_validation :ensure_session_token_uniqueness
 
