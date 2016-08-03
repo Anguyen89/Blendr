@@ -14,13 +14,13 @@ var PostFeedItem = React.createClass({
       <div className="post-container">
 
         <div className="user-info-container">
-          <img className="user-photo" onClick={this.pushToProfile} src={this.props.post.user.profile_image_url}></img>
-          <h2 className="post-author">{this.props.post.user.username}</h2>
+          <img className="user-photo" onClick={this.pushToProfile} src={this.props.post.author.profile_image_url}></img>
+          <h2 className="post-author">{this.props.post.author.username}</h2>
         </div>
 
         <div className="user-image-container">
-          <img className="user-post-image" src={this.props.post.url}></img>
-
+          <img className="user-post-image" src={this.props.post.content_url}></img>
+          <label className="user-image-description">{this.props.post.title}{this.props.post.body}</label>
         </div>
 
       </div>

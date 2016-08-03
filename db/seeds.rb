@@ -7,18 +7,18 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 guest = User.create!([
-  {username: "guest", password: "password", name: "Awesome Guest", profile_picture_id: 1},
-  {username: "al_nguyen", password: "password", name: "Mo Majd", profile_picture_id: 2},
-  {username: "d_tanner", password: "password", name: "Danny Tanner", profile_picture_id: 3},
-  {username: "g_newsom", password: "password", name: "Gavin Newsom", profile_picture_id: 4},
-  {username: "oprah", password: "password", name: "Oprah Winfrey", profile_picture_id: 5},
-  {username: "terminator", password: "password", name: "Arnold Schwarzenegger", profile_picture_id: 6},
-  {username: "dannyglover", password: "password", name: "Danny Glover", profile_picture_id: 7},
-  {username: "tom_hanks", password: "password", name: "Tom Hanks", profile_picture_id: 8},
-  {username: "jgarcia", password: "password", name: "Jerry Garcia", profile_picture_id: 9},
-  {username: "CSantana", password: "password", name: "Carlos Santana", profile_picture_id: 10},
-  {username: "Twain", password: "password", name: "Mark Twain", profile_picture_id: 11},
-  {username: "lucas_george", password: "password", name: "George Lucas", profile_picture_id: 12}
+  {username: "guest", password: "password", name: "Awesome Guest", profile_picture_id: 1, picture_url: "https://s-media-cache-ak0.pinimg.com/564x/4d/3d/2b/4d3d2ba3ecc8592f8e64a54d25ca9dc7.jpg"},
+  {username: "al_nguyen", password: "password", name: "Mo Majd", profile_picture_id: 2, picture_url: "https://s-media-cache-ak0.pinimg.com/564x/4d/3d/2b/4d3d2ba3ecc8592f8e64a54d25ca9dc7.jpg"},
+  {username: "d_tanner", password: "password", name: "Danny Tanner", profile_picture_id: 3, picture_url: "https://s-media-cache-ak0.pinimg.com/564x/4d/3d/2b/4d3d2ba3ecc8592f8e64a54d25ca9dc7.jpg"},
+  {username: "g_newsom", password: "password", name: "Gavin Newsom", profile_picture_id: 4, picture_url: "https://s-media-cache-ak0.pinimg.com/564x/4d/3d/2b/4d3d2ba3ecc8592f8e64a54d25ca9dc7.jpg"},
+  {username: "oprah", password: "password", name: "Oprah Winfrey", profile_picture_id: 5, picture_url: "https://s-media-cache-ak0.pinimg.com/564x/4d/3d/2b/4d3d2ba3ecc8592f8e64a54d25ca9dc7.jpg"},
+  {username: "terminator", password: "password", name: "Arnold Schwarzenegger", profile_picture_id: 6, picture_url: "https://s-media-cache-ak0.pinimg.com/564x/4d/3d/2b/4d3d2ba3ecc8592f8e64a54d25ca9dc7.jpg"},
+  {username: "dannyglover", password: "password", name: "Danny Glover", profile_picture_id: 7, picture_url: "https://s-media-cache-ak0.pinimg.com/564x/4d/3d/2b/4d3d2ba3ecc8592f8e64a54d25ca9dc7.jpg"},
+  {username: "tom_hanks", password: "password", name: "Tom Hanks", profile_picture_id: 8, picture_url: "https://s-media-cache-ak0.pinimg.com/564x/4d/3d/2b/4d3d2ba3ecc8592f8e64a54d25ca9dc7.jpg"},
+  {username: "jgarcia", password: "password", name: "Jerry Garcia", profile_picture_id: 9, picture_url: "https://s-media-cache-ak0.pinimg.com/564x/4d/3d/2b/4d3d2ba3ecc8592f8e64a54d25ca9dc7.jpg"},
+  {username: "CSantana", password: "password", name: "Carlos Santana", profile_picture_id: 10, picture_url: "https://s-media-cache-ak0.pinimg.com/564x/4d/3d/2b/4d3d2ba3ecc8592f8e64a54d25ca9dc7.jpg"},
+  {username: "Twain", password: "password", name: "Mark Twain", profile_picture_id: 11, picture_url: "https://s-media-cache-ak0.pinimg.com/564x/4d/3d/2b/4d3d2ba3ecc8592f8e64a54d25ca9dc7.jpg"},
+  {username: "lucas_george", password: "password", name: "George Lucas", profile_picture_id: 12, picture_url: "https://s-media-cache-ak0.pinimg.com/564x/4d/3d/2b/4d3d2ba3ecc8592f8e64a54d25ca9dc7.jpg"}
 ])
 
 def rand_id
