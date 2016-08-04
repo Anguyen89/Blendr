@@ -61,20 +61,20 @@
 	var App = __webpack_require__(235);
 	var SignUp = __webpack_require__(264);
 	var Login = __webpack_require__(264);
-	var ProfileFeed = __webpack_require__(273);
+	var ProfileFeed = __webpack_require__(266);
 	//Auth
 	var SessionStore = __webpack_require__(236);
 	var SessionActions = __webpack_require__(259);
 
-	var PostFeed = __webpack_require__(266);
+	var PostFeed = __webpack_require__(273);
 	// var Landing = require('./components/user/landing.jsx');
 	// var LandingContainer = require('./components/user/LandingContainer.jsx');
-	window.PostUtils = __webpack_require__(270);
-	window.PostActions = __webpack_require__(269);
+	window.PostUtils = __webpack_require__(275);
+	window.PostActions = __webpack_require__(274);
 	window.PostStore = __webpack_require__(267);
 
-	window.ProfileActions = __webpack_require__(274);
-	window.ProfileStore = __webpack_require__(272);
+	window.ProfileActions = __webpack_require__(271);
+	window.ProfileStore = __webpack_require__(269);
 
 	var appRouter = React.createElement(
 	  Router,
@@ -34055,64 +34055,65 @@
 
 	var React = __webpack_require__(1);
 	var PostStore = __webpack_require__(267);
+	var ProfileStore = __webpack_require__(269);
+	var ProfileActions = __webpack_require__(271);
 	var SessionStore = __webpack_require__(236);
-	var PostActions = __webpack_require__(269);
-	var PostFeedItem = __webpack_require__(271);
 
-	var PostFeed = React.createClass({
-	  displayName: 'PostFeed',
+	var ProfileHeader = __webpack_require__(277);
+
+	var ProfileFeed = React.createClass({
+	  displayName: 'ProfileFeed',
+
+
+	  // getInititalState: function(){
+	  //   return { user: {}};
+	  // },
+	  //
+	  // onChange: function(){
+	  //   this.setState({ user: ProfileStore.findById(this.props.params.profileId)});
+	  // },
+
+	  getStateFromStore: function getStateFromStore() {
+	    return { user: ProfileStore.findById(this.props.params.profileId) };
+	  },
+
+	  onChange: function onChange() {
+	    this.setState(this.getStateFromStore());
+	  },
+
 	  getInitialState: function getInitialState() {
-	    return { posts: [], scrollCount: 1, time: Date.now() };
+	    return { user: {} };
 	  },
+
+	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    ProfileActions.fetchUser(newProps.params.profileId);
+	  },
+
 	  componentDidMount: function componentDidMount() {
-	    this.PostStoreListener = PostStore.addListener(this._onChange);
-	    this.scrollListener = window.addEventListener("scroll", this.addPosts);
-	    PostActions.fetchPosts();
+	    this.profileListener = ProfileStore.addListener(this.onChange);
+	    ProfileActions.fetchUser(this.props.params.profileId);
 	  },
+
 	  componentWillUnmount: function componentWillUnmount() {
-	    this.PostStoreListener.remove();
-	    window.removeEventListener("scroll", this.addPosts);
+	    this.profileListener.remove();
 	  },
-
-	  addPosts: function addPosts() {
-	    if (window.innerHeight + window.scrollY + 1 >= document.body.offsetHeight && this.state.time + 1000 < Date.now()) {
-	      $('.fa-spinner').show();
-
-	      this.state.scrollCount += 1;
-	      this.state.time = Date.now();
-	      PostActions.fetchPosts(this.state.scrollCount);
-	    }
-	  },
-
-	  _onChange: function _onChange() {
-	    this.setState({ posts: PostStore.all() });
-	  },
-
 
 	  render: function render() {
-
-	    var posts = this.state.posts;
-	    if (SessionStore.isUserLoggedIn()) {
-	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement(
-	          'div',
-	          { className: 'feed' },
-	          this.props.children,
-	          posts.map(function (post) {
-	            return React.createElement(PostFeedItem, { post: post, key: post.id });
-	          })
-	        )
-	      );
+	    var userProfile;
+	    if (SessionStore.isUserLoggedIn() || Object.keys(this.state.user) !== 0) {
+	      userProfile = React.createElement(ProfileHeader, { user: this.state.user });
 	    } else {
-	      return React.createElement('div', null);
+	      userProfile = React.createElement('div', null);
 	    }
+	    return React.createElement(
+	      'div',
+	      null,
+	      userProfile
+	    );
 	  }
-
 	});
 
-	module.exports = PostFeed;
+	module.exports = ProfileFeed;
 
 /***/ },
 /* 267 */
@@ -34178,7 +34179,176 @@
 
 	'use strict';
 
-	var PostUtil = __webpack_require__(270);
+	var AppDispatcher = __webpack_require__(237);
+	var ProfileConstants = __webpack_require__(270);
+	var SessionStore = __webpack_require__(236);
+
+	var Store = __webpack_require__(241).Store;
+
+	var ProfileStore = new Store(AppDispatcher);
+
+	var _users = {};
+
+	var resetUsers = function resetUsers(users) {
+	  _users = {};
+	  users.forEach(function (user) {
+	    _users[user.id] = user;
+	  });
+	};
+
+	var resetUser = function resetUser(user) {
+	  _users[user.id] = user;
+	};
+
+	ProfileStore.all = function () {
+	  return Object.assign({}, _users);
+	};
+
+	ProfileStore.findById = function (id) {
+	  return _users[id];
+	};
+
+	ProfileStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case ProfileConstants.RECEIVE_USER:
+	      resetUser(payload.user);
+	      this.__emitChange();
+	      break;
+	  }
+	};
+
+	module.exports = ProfileStore;
+
+/***/ },
+/* 270 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	module.exports = {
+	  RECEIVE_USER: "RECEIVE_USER",
+	  RECEIVE_USERS: "RECEIVE_USERS"
+	};
+
+/***/ },
+/* 271 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var ProfileConstants = __webpack_require__(270);
+	var ProfileUtil = __webpack_require__(272);
+	var AppDispatcher = __webpack_require__(237);
+
+	var ProfileActions = {
+
+	  fetchUser: function fetchUser(id) {
+	    ProfileUtil.fetchUser(id, this.receiveUser);
+	  },
+
+	  receiveUser: function receiveUser(user) {
+	    AppDispatcher.dispatch({
+	      actionType: ProfileConstants.RECEIVE_USER,
+	      user: user
+	    });
+	  }
+
+	};
+
+	module.exports = ProfileActions;
+
+/***/ },
+/* 272 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var ProfileUtil = {
+	  fetchUser: function fetchUser(id, cb) {
+	    $.ajax({
+	      method: "GET",
+	      url: "users/" + id,
+	      success: cb
+	    });
+	  }
+	};
+
+	module.exports = ProfileUtil;
+
+/***/ },
+/* 273 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var PostStore = __webpack_require__(267);
+	var SessionStore = __webpack_require__(236);
+	var PostActions = __webpack_require__(274);
+	var PostFeedItem = __webpack_require__(276);
+
+	var PostFeed = React.createClass({
+	  displayName: 'PostFeed',
+	  getInitialState: function getInitialState() {
+	    return { posts: [], scrollCount: 1, time: Date.now() };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.PostStoreListener = PostStore.addListener(this._onChange);
+	    this.scrollListener = window.addEventListener("scroll", this.addPosts);
+	    PostActions.fetchPosts();
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.PostStoreListener.remove();
+	    window.removeEventListener("scroll", this.addPosts);
+	  },
+
+	  addPosts: function addPosts() {
+	    if (window.innerHeight + window.scrollY + 1 >= document.body.offsetHeight && this.state.time + 1000 < Date.now()) {
+	      $('.fa-spinner').show();
+
+	      this.state.scrollCount += 1;
+	      this.state.time = Date.now();
+	      PostActions.fetchPosts(this.state.scrollCount);
+	    }
+	  },
+
+	  _onChange: function _onChange() {
+	    this.setState({ posts: PostStore.all() });
+	  },
+
+
+	  render: function render() {
+
+	    var posts = this.state.posts;
+	    if (SessionStore.isUserLoggedIn()) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement(
+	          'div',
+	          { className: 'feed' },
+	          this.props.children,
+	          posts.map(function (post) {
+	            return React.createElement(PostFeedItem, { post: post, key: post.id });
+	          })
+	        )
+	      );
+	    } else {
+	      return React.createElement('div', null);
+	    }
+	  }
+
+	});
+
+	module.exports = PostFeed;
+
+/***/ },
+/* 274 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var PostUtil = __webpack_require__(275);
 	var AppDispatcher = __webpack_require__(237);
 	var PostConstants = __webpack_require__(268);
 
@@ -34214,12 +34384,12 @@
 	module.exports = PostActions;
 
 /***/ },
-/* 270 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var PostActions = __webpack_require__(269);
+	var PostActions = __webpack_require__(274);
 
 	var PostUtils = {
 
@@ -34252,7 +34422,7 @@
 	module.exports = PostUtils;
 
 /***/ },
-/* 271 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34295,174 +34465,91 @@
 	module.exports = PostFeedItem;
 
 /***/ },
-/* 272 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var AppDispatcher = __webpack_require__(237);
-	var ProfileConstants = __webpack_require__(275);
-	var SessionStore = __webpack_require__(236);
-
-	var Store = __webpack_require__(241).Store;
-
-	var ProfileStore = new Store(AppDispatcher);
-
-	var _users = {};
-
-	var resetUsers = function resetUsers(users) {
-	  _users = {};
-	  users.forEach(function (user) {
-	    _users[user.id] = user;
-	  });
-	};
-
-	var resetUser = function resetUser(user) {
-	  _users[user.id] = user;
-	};
-
-	ProfileStore.all = function () {
-	  return Object.assign({}, _users);
-	};
-
-	ProfileStore.findById = function (id) {
-	  return _users[id];
-	};
-
-	ProfileStore.__onDispatch = function (payload) {
-	  switch (payload.actionType) {
-	    case ProfileConstants.RECEIVE_USER:
-	      resetUser(payload.user);
-	      this.__emitChange();
-	      break;
-	  }
-	};
-
-	module.exports = ProfileStore;
-
-/***/ },
-/* 273 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var PostStore = __webpack_require__(267);
-	var ProfileStore = __webpack_require__(272);
-	var ProfileActions = __webpack_require__(274);
-	var SessionStore = __webpack_require__(236);
+	var UserProfilePic = __webpack_require__(278);
+	var UserProfileInfo = __webpack_require__(279);
 
-	var ProfileFeed = React.createClass({
-	  displayName: 'ProfileFeed',
+	var ProfileHeader = React.createClass({
+	  displayName: 'ProfileHeader',
 
-
-	  // getInititalState: function(){
-	  //   return { user: {}};
-	  // },
-	  //
-	  // onChange: function(){
-	  //   this.setState({ user: ProfileStore.findById(this.props.params.profileId)});
-	  // },
-
-	  getStateFromStore: function getStateFromStore() {
-	    return { user: ProfileStore.findById(this.props.params.profileId) };
-	  },
-
-	  onChange: function onChange() {
-	    this.setState(this.getStateFromStore());
-	  },
-
-	  getInitialState: function getInitialState() {
-	    return { user: {} };
-	  },
-
-	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
-	    ProfileActions.fetchUser(newProps.params.profileId);
-	  },
-
-	  componentDidMount: function componentDidMount() {
-	    this.profileListener = ProfileStore.addListener(this.onChange);
-	    ProfileActions.fetchUser(this.props.params.profileId);
-	  },
-
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.profileListener.remove();
-	  },
 
 	  render: function render() {
-	    // var userProfile;
-	    // if (Object.keys(this.state.user) === 0){
-	    //   userProfile = (<div></div>);
-	    // }else {
-	    //   userProfile = (
-	    //     <div>{userProfile.username}</div>
-	    //   );
-	    // }
 	    return React.createElement(
 	      'div',
-	      null,
-	      this.state.user.username
+	      { className: 'profile-header' },
+	      React.createElement(UserProfilePic, { user: this.props.user }),
+	      React.createElement(UserProfileInfo, { user: this.props.user })
 	    );
 	  }
 	});
 
-	module.exports = ProfileFeed;
+	module.exports = ProfileHeader;
 
 /***/ },
-/* 274 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
-	var ProfileConstants = __webpack_require__(275);
-	var ProfileUtil = __webpack_require__(276);
-	var AppDispatcher = __webpack_require__(237);
+	var React = __webpack_require__(1);
 
-	var ProfileActions = {
+	var UserProfilePic = React.createClass({
+	  displayName: "UserProfilePic",
 
-	  fetchUser: function fetchUser(id) {
-	    ProfileUtil.fetchUser(id, this.receiveUser);
-	  },
 
-	  receiveUser: function receiveUser(user) {
-	    AppDispatcher.dispatch({
-	      actionType: ProfileConstants.RECEIVE_USER,
-	      user: user
-	    });
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      { className: "user-profile-pic-container" },
+	      React.createElement("img", { src: this.props.user.profile_picture_url })
+	    );
 	  }
 
-	};
+	});
 
-	module.exports = ProfileActions;
+	module.exports = UserProfilePic;
 
 /***/ },
-/* 275 */
-/***/ function(module, exports) {
+/* 279 */
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	module.exports = {
-	  RECEIVE_USER: "RECEIVE_USER",
-	  RECEIVE_USERS: "RECEIVE_USERS"
-	};
+	var React = __webpack_require__(1);
 
-/***/ },
-/* 276 */
-/***/ function(module, exports) {
+	var UserProfileInfo = React.createClass({
+	  displayName: "UserProfileInfo",
 
-	"use strict";
 
-	var ProfileUtil = {
-	  fetchUser: function fetchUser(id, cb) {
-	    $.ajax({
-	      method: "GET",
-	      url: "users/" + id,
-	      success: cb
-	    });
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      { className: "profile-info" },
+	      React.createElement(
+	        "div",
+	        { className: "profile-header-name" },
+	        React.createElement(
+	          "h1",
+	          null,
+	          this.props.user.name
+	        )
+	      ),
+	      React.createElement(
+	        "h3",
+	        null,
+	        "@",
+	        this.props.user.username
+	      )
+	    );
 	  }
-	};
+	});
 
-	module.exports = ProfileUtil;
+	module.exports = UserProfileInfo;
 
 /***/ }
 /******/ ]);

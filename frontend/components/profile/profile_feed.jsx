@@ -4,6 +4,8 @@ var ProfileStore = require('../../stores/profile_store');
 var ProfileActions = require('../../actions/profile_actions');
 var SessionStore = require('../../stores/session_store');
 
+var ProfileHeader = require('./profile_header');
+
 var ProfileFeed = React.createClass({
 
   // getInititalState: function(){
@@ -40,17 +42,17 @@ var ProfileFeed = React.createClass({
   },
 
   render: function(){
-    // var userProfile;
-    // if (Object.keys(this.state.user) === 0){
-    //   userProfile = (<div></div>);
-    // }else {
-    //   userProfile = (
-    //     <div>{userProfile.username}</div>
-    //   );
-    // }
+    var userProfile;
+    if (SessionStore.isUserLoggedIn() || Object.keys(this.state.user) !== 0){
+      userProfile = <ProfileHeader user={this.state.user}/>;
+    }else {
+      userProfile = (
+        <div></div>
+      );
+    }
     return (
       <div>
-        {this.state.user.username}
+        {userProfile}
       </div>
     );
   }

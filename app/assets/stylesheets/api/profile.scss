@@ -1,0 +1,32 @@
+
+.profile-header {
+  display: flex;
+  flex-direction: row;
+  width: inherit;
+  height: 300px;
+  background: #F0F8FF;
+}
+
+.user-profile-pic-container {
+  display: flex;
+  margin: 75px;
+}
+
+.user-profile-pic-container img {
+  height: 150px;
+  width: 150px;
+  border-radius: 60%;
+}
+
+.profile-info {
+  margin-left: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: sans-serif;
+}
+
+.profile-header-name {
+  font-size: 30px;
+}
