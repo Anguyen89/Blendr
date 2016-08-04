@@ -30,3 +30,18 @@
 .profile-header-name {
   font-size: 30px;
 }
+
+.profile-post-index {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.profile-post-picture {
+  padding: 5px;
+}
+
+.profile-post-picture img {
+  height: 450px;
+  width: 450px;
+}
