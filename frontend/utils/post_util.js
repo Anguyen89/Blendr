@@ -24,15 +24,8 @@ createPost: function(post, cb) {
     data: {post: post},
     success: cb
   });
-},
+}
 
-  // fetchPosts: function(cb){
-  //   $.ajax({
-  //     method: "GET",
-  //     url: "api/pictures",
-  //     success: cb
-  //   });
-  // }
 };
 
 

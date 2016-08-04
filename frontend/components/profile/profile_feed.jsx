@@ -1,10 +1,11 @@
 var React = require('react');
 var PostStore = require('../../stores/post_store');
+var ProfileStore = require('../../stores/profile_store');
 
 var ProfileFeed = React.createClass({
 
   getInititalState: function(){
-    return { post: []};
+    return { post: {}};
   },
 
   onChange: function(){
@@ -14,7 +15,7 @@ var ProfileFeed = React.createClass({
   render: function(){
     return (
       <div>
-        
+
       </div>
     );
   }

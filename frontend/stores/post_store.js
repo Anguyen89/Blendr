@@ -1,5 +1,6 @@
 var AppDispatcher = require('../dispatcher/dispatcher');
 var PostConstants = require('../constants/post_constants');
+var SessionStore = require('./session_store');
 
 var Store = require('flux/utils').Store;
 
@@ -23,6 +24,12 @@ PostStore.all = function(){
     return _posts[key];
   });
 };
+
+PostStore.getById = function(postId){
+  return _posts[postId];
+};
+
+
 
 PostStore.__onDispatch = function(payload){
   switch(payload.actionType){

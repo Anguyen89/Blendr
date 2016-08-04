@@ -1,3 +1,91 @@
 // Place all the styles related to the Api::Posts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.landing {
+  display: flex;
+  flex-direction: column;
+}
+
+.landing > button {
+  width: 100px;
+  height: 50px;
+  border-radius: 5%;
+  background: white;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 4px 2px -2px gray;
+  padding-bottom: 5px;
+}
+
+.nav-right img {
+  width: 40px;
+  height: 35px;
+  padding: 5px;
+}
+
+.logo {
+  width: 50px;
+  height: 45px;
+  margin-left: 200px;
+}
+
+.nav-right {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 150px;
+}
+
+.feed {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 40px;
+}
+
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  -moz-box-shadow: 0 0 3px #ccc;
+  -webkit-box-shadow: 0 0 3px #ccc;
+  box-shadow: 0 0 3px #ccc;
+  margin-bottom: 10px;
+  width: 500px;
+  height: 700px;
+
+}
+
+.user-info-container {
+  display: flex;
+  height: 50px;
+  width: 500px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  padding-left: 15px;
+}
+
+.user-photo {
+  width: 50px;
+  height: 50px;
+  padding-right: 15px;
+  border-radius: 60%;
+}
+
+.user-image-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-post-image {
+  width: 500px;
+  height: 400px;
+}
+
+.user-image-description {
+  padding: 5px;
+}

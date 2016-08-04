@@ -14,6 +14,7 @@ var hashHistory = ReactRouter.hashHistory;
 var App = require('./components/app');
 var SignUp = require('./components/login_form');
 var Login = require('./components/login_form');
+var ProfileFeed = require('./components/profile_feed');
 //Auth
 var SessionStore = require('./stores/session_store');
 var SessionActions = require('./actions/session_actions');
@@ -25,12 +26,14 @@ var SessionActions = require('./actions/session_actions');
  window.PostActions = require('./actions/post_actions');
  window.PostStore = require('./stores/post_store');
 
+
 var appRouter = (
   <Router history={hashHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={PostFeed}/>
       <Route path="signup" component={SignUp}/>
       <Route path="login" component={Login}/>
+      <Route path="profile/:profileId" component={ProfileFeed} />
     </Route>
   </Router>
 

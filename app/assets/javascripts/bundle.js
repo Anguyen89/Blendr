@@ -34113,6 +34113,7 @@
 
 	var AppDispatcher = __webpack_require__(237);
 	var PostConstants = __webpack_require__(268);
+	var SessionStore = __webpack_require__(236);
 
 	var Store = __webpack_require__(241).Store;
 
@@ -34131,6 +34132,10 @@
 	  return Object.keys(_posts).map(function (key) {
 	    return _posts[key];
 	  });
+	};
+
+	PostStore.getById = function (postId) {
+	  return _posts[postId];
 	};
 
 	PostStore.__onDispatch = function (payload) {
