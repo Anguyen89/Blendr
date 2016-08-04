@@ -1,5 +1,5 @@
 var AppDispatcher = require('../dispatcher/dispatcher');
-var PostConstants = require('../constants/post_constants');
+var ProfileConstants = require('../constants/profile_constants');
 var SessionStore = require('./session_store');
 
 var Store = require('flux/utils').Store;
@@ -26,6 +26,16 @@ ProfileStore.all = function() {
 ProfileStore.findById = function (id) {
   return _users[id];
 };
+
+ProfileStore.__onDispatch = function(payload){
+  switch(payload.actionType){
+    case ProfileConstants.RECEIVE_USER:
+      resetUser(payload.user);
+      this.__emitChange();
+      break;
+  }
+};
+
 
 
 module.exports = ProfileStore;

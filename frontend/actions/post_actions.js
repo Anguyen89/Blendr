@@ -28,10 +28,7 @@ var PostActions = {
 
   createPost: function(post) {
     PostUtil.createPost(post, this.receivePost);
-  },
-
-
-
+  }
 
 };
 

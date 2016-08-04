@@ -61,6 +61,7 @@
 	var App = __webpack_require__(235);
 	var SignUp = __webpack_require__(264);
 	var Login = __webpack_require__(264);
+	var ProfileFeed = __webpack_require__(273);
 	//Auth
 	var SessionStore = __webpack_require__(236);
 	var SessionActions = __webpack_require__(259);
@@ -72,6 +73,9 @@
 	window.PostActions = __webpack_require__(269);
 	window.PostStore = __webpack_require__(267);
 
+	window.ProfileActions = __webpack_require__(274);
+	window.ProfileStore = __webpack_require__(272);
+
 	var appRouter = React.createElement(
 	  Router,
 	  { history: hashHistory },
@@ -80,7 +84,8 @@
 	    { path: '/', component: App },
 	    React.createElement(IndexRoute, { component: PostFeed }),
 	    React.createElement(Route, { path: 'signup', component: SignUp }),
-	    React.createElement(Route, { path: 'login', component: Login })
+	    React.createElement(Route, { path: 'login', component: Login }),
+	    React.createElement(Route, { path: 'profile/:profileId', component: ProfileFeed })
 	  )
 	);
 
@@ -33799,7 +33804,7 @@
 	      return React.createElement(
 	        'div',
 	        { className: 'nav-right' },
-	        React.createElement('img', { src: 'https://image.freepik.com/free-icon/user-male-silhouette_318-55563.png' }),
+	        React.createElement('img', { onClick: this.rootToProfile, src: 'https://image.freepik.com/free-icon/user-male-silhouette_318-55563.png' }),
 	        React.createElement('img', { src: 'http://image.flaticon.com/icons/png/512/33/33308.png' }),
 	        React.createElement('img', { onClick: this.logout, src: 'https://image.freepik.com/free-icon/standby--power-button_318-48023.jpg' })
 	      );
@@ -33814,6 +33819,10 @@
 
 	  rootToIndex: function rootToIndex() {
 	    hashHistory.push("/");
+	  },
+
+	  rootToProfile: function rootToProfile() {
+	    hashHistory.push("profile/" + SessionStore.currentUser().id);
 	  },
 
 	  render: function render() {
@@ -34284,6 +34293,176 @@
 	});
 
 	module.exports = PostFeedItem;
+
+/***/ },
+/* 272 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var AppDispatcher = __webpack_require__(237);
+	var ProfileConstants = __webpack_require__(275);
+	var SessionStore = __webpack_require__(236);
+
+	var Store = __webpack_require__(241).Store;
+
+	var ProfileStore = new Store(AppDispatcher);
+
+	var _users = {};
+
+	var resetUsers = function resetUsers(users) {
+	  _users = {};
+	  users.forEach(function (user) {
+	    _users[user.id] = user;
+	  });
+	};
+
+	var resetUser = function resetUser(user) {
+	  _users[user.id] = user;
+	};
+
+	ProfileStore.all = function () {
+	  return Object.assign({}, _users);
+	};
+
+	ProfileStore.findById = function (id) {
+	  return _users[id];
+	};
+
+	ProfileStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case ProfileConstants.RECEIVE_USER:
+	      resetUser(payload.user);
+	      this.__emitChange();
+	      break;
+	  }
+	};
+
+	module.exports = ProfileStore;
+
+/***/ },
+/* 273 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var PostStore = __webpack_require__(267);
+	var ProfileStore = __webpack_require__(272);
+	var ProfileActions = __webpack_require__(274);
+	var SessionStore = __webpack_require__(236);
+
+	var ProfileFeed = React.createClass({
+	  displayName: 'ProfileFeed',
+
+
+	  getInititalState: function getInititalState() {
+	    return { user: {} };
+	  },
+
+	  onChange: function onChange() {
+	    this.setState({ user: ProfileStore.findById(this.props.params.profileId) });
+	  },
+
+	  // getStateFromStore: function () {
+	  //   return {user: ProfileStore.findById(this.props.params.profileId)};
+	  // },
+	  //
+	  // onChange: function () {
+	  //   this.setState(this.getStateFromStore() );
+	  // },
+	  //
+	  // getInitialState: function () {
+	  //   return { user: {} };
+	  // },
+
+	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	    ProfileActions.fetchUser(newProps.params.profileId);
+	  },
+
+	  componentDidMount: function componentDidMount() {
+	    this.profileListener = ProfileStore.addListener(this.onChange);
+	    ProfileActions.fetchUser(this.props.params.profileId);
+	  },
+
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.profileListener.remove();
+	  },
+
+	  render: function render() {
+	    // var userProfile;
+	    // if (Object.keys(this.state.user) === 0){
+	    //   userProfile = (<div></div>);
+	    // }else {
+	    //   userProfile = (
+	    //     <div>{userProfile.username}</div>
+	    //   );
+	    // }
+	    return React.createElement(
+	      'div',
+	      null,
+	      this.state.user
+	    );
+	  }
+	});
+
+	module.exports = ProfileFeed;
+
+/***/ },
+/* 274 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var ProfileConstants = __webpack_require__(275);
+	var ProfileUtil = __webpack_require__(276);
+	var AppDispatcher = __webpack_require__(237);
+
+	var ProfileActions = {
+
+	  fetchUser: function fetchUser(id) {
+	    ProfileUtil.fetchUser(id, this.receiveUser);
+	  },
+
+	  receiveUser: function receiveUser(user) {
+	    AppDispatcher.dispatch({
+	      actionType: ProfileConstants.RECEIVE_USER,
+	      user: user
+	    });
+	  }
+
+	};
+
+	module.exports = ProfileActions;
+
+/***/ },
+/* 275 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	module.exports = {
+	  RECEIVE_USER: "RECEIVE_USER",
+	  RECEIVE_USERS: "RECEIVE_USERS"
+	};
+
+/***/ },
+/* 276 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var ProfileUtil = {
+	  fetchUser: function fetchUser(id, cb) {
+	    $.ajax({
+	      method: "GET",
+	      url: "users/" + id,
+	      success: cb
+	    });
+	  }
+	};
+
+	module.exports = ProfileUtil;
 
 /***/ }
 /******/ ]);
