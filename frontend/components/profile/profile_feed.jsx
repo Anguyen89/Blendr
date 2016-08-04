@@ -5,6 +5,7 @@ var ProfileActions = require('../../actions/profile_actions');
 var SessionStore = require('../../stores/session_store');
 
 var ProfileHeader = require('./profile_header');
+var ProfilePictureIndex = require('./profile_picture_index');
 
 var ProfileFeed = React.createClass({
 
@@ -44,7 +45,12 @@ var ProfileFeed = React.createClass({
   render: function(){
     var userProfile;
     if (SessionStore.isUserLoggedIn() || Object.keys(this.state.user) !== 0){
-      userProfile = <ProfileHeader user={this.state.user}/>;
+      userProfile = (
+      <div className="profile-feed">
+        <ProfileHeader user={this.state.user}/>
+        <ProfilePictureIndex user={this.state.user}/>
+      </div>
+      );
     }else {
       userProfile = (
         <div></div>
