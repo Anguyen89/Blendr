@@ -67,8 +67,7 @@
 	var SessionActions = __webpack_require__(259);
 
 	var PostFeed = __webpack_require__(273);
-	// var Landing = require('./components/user/landing.jsx');
-	// var LandingContainer = require('./components/user/LandingContainer.jsx');
+
 	window.PostUtils = __webpack_require__(275);
 	window.PostActions = __webpack_require__(274);
 	window.PostStore = __webpack_require__(267);
@@ -34194,7 +34193,6 @@
 	var ProfileStore = new Store(AppDispatcher);
 
 	var _users = {};
-	var _pictures = [];
 
 	var resetUsers = function resetUsers(users) {
 	  _users = {};
@@ -34206,14 +34204,6 @@
 	var resetUser = function resetUser(user) {
 	  _users[user.id] = user;
 	};
-
-	// var setUserPictures = function(user){
-	//   user.pictures.forEach(function(picture){
-	//     if (picture.user_id === SessionStore.currentUser().id){
-	//       _pictures.push(picture);
-	//     }
-	//   });
-	// };
 
 	ProfileStore.all = function () {
 	  return Object.assign({}, _users);
@@ -34444,6 +34434,7 @@
 
 	var React = __webpack_require__(1);
 	var HashHistory = __webpack_require__(172).hashHistory;
+	var CommentBox = __webpack_require__(302);
 
 	var PostFeedItem = React.createClass({
 	  displayName: 'PostFeedItem',
@@ -34472,6 +34463,11 @@
 	        'div',
 	        { className: 'user-image-container' },
 	        React.createElement('img', { className: 'user-post-image', src: this.props.post.url })
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'post-comments-container' },
+	        React.createElement(CommentBox, { post: this.props.post })
 	      )
 	    );
 	  }
@@ -34583,7 +34579,7 @@
 	  render: function render() {
 
 	    var posts = this.props.user.pictures.map(function (picture) {
-	      return React.createElement(ProfilePostPicture, { picture: picture });
+	      return React.createElement(ProfilePostPicture, { picture: picture, key: picture.id });
 	    });
 
 	    return React.createElement(
@@ -36606,6 +36602,84 @@
 	  else this.add(className)
 	}
 
+
+/***/ },
+/* 302 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var CommentIndexItem = __webpack_require__(303);
+
+	var CommentIndex = React.createClass({
+	  displayName: 'CommentIndex',
+
+
+	  render: function render() {
+	    // var self = this;
+	    // var comments = this.props.post.comments.map(function(comment){
+	    //   return (
+	    //     <CommentIndexItem key={comment.id} post={self.props.post} comment={comment}/>
+	    //   );
+	    // });
+
+	    var self = this;
+	    var comments = this.props.post.comments.map(function (comment) {
+	      return React.createElement(CommentIndexItem, {
+	        key: comment.id,
+	        post: self.props.post,
+	        comment: comment });
+	    });
+
+	    return React.createElement(
+	      'div',
+	      { className: 'comment-index' },
+	      React.createElement(
+	        'h1',
+	        null,
+	        'Comments'
+	      ),
+	      comments
+	    );
+	  }
+
+	});
+
+	module.exports = CommentIndex;
+
+/***/ },
+/* 303 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(1);
+
+	var CommentIndexItem = React.createClass({
+	  displayName: "CommentIndexItem",
+
+
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      { className: "comment-index-item" },
+	      React.createElement(
+	        "div",
+	        { className: "comment-user" },
+	        this.props.comment.user
+	      ),
+	      React.createElement(
+	        "div",
+	        { className: "comment-body" },
+	        this.props.comment.body
+	      )
+	    );
+	  }
+
+	});
+
+	module.exports = CommentIndexItem;
 
 /***/ }
 /******/ ]);

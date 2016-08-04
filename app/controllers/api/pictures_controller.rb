@@ -2,12 +2,13 @@ class Api::PicturesController < ApplicationController
   def index
     # activerecord magic
     following_ids = current_user.following_ids
-
+    
     #limit to 3 pictures at a time and order descending so new posts are first
     # @pictures = Picture.where("user_id = ?",
     #         current_user.id).limit(count * 3).order('id desc')
-    @pictures = Picture.where("user_id IN (?) OR user_id = ?",
-            following_ids, current_user.id).limit(count * 3).order('id desc')
+    # @pictures = Picture.where("user_id IN (?) OR user_id = ?",
+    #         following_ids, current_user.id).limit(count * 3).order('id desc')
+    @pictures = Picture.all
   end
 
   def create

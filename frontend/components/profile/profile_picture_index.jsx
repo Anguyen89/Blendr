@@ -8,7 +8,7 @@ var ProfilePictureIndex = React.createClass({
 
   var posts =  this.props.user.pictures.map(function(picture){
       return (
-        <ProfilePostPicture picture={picture} />
+        <ProfilePostPicture picture={picture} key={picture.id}/>
       );
     });
 

@@ -7,7 +7,6 @@ var Store = require('flux/utils').Store;
 var ProfileStore = new Store(AppDispatcher);
 
 var _users = {};
-var _pictures = [];
 
 var resetUsers = function(users){
   _users = {};
@@ -20,13 +19,6 @@ var resetUser = function(user){
   _users[user.id] = user;
 };
 
-// var setUserPictures = function(user){
-//   user.pictures.forEach(function(picture){
-//     if (picture.user_id === SessionStore.currentUser().id){
-//       _pictures.push(picture);
-//     }
-//   });
-// };
 
 ProfileStore.all = function() {
   return Object.assign({}, _users);

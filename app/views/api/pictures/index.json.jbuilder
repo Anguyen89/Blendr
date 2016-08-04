@@ -20,10 +20,10 @@ json.array! @pictures do |picture|
   json.created_time_ago time
 
   json.comments picture.comments do |comment|
-  json.id comment.id
-  json.user_id comment.user_id
-  json.user comment.user.username
-  json.body comment.body
+    json.id comment.id
+    json.user_id comment.user_id
+    json.user comment.user.username
+    json.body comment.body
 end
 
 json.likes picture.likes do |like|

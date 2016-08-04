@@ -1,6 +1,6 @@
 var React = require('react');
 var HashHistory = require('react-router').hashHistory;
-
+var CommentBox = require('./comment_index');
 
 
 var PostFeedItem = React.createClass({
@@ -22,6 +22,10 @@ var PostFeedItem = React.createClass({
         <div className="user-image-container">
           <img className="user-post-image" src={this.props.post.url}></img>
 
+        </div>
+
+        <div className="post-comments-container">
+          <CommentBox post={this.props.post}/>
         </div>
 
       </div>
