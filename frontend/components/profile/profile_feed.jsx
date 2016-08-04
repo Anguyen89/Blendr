@@ -44,18 +44,16 @@ var ProfileFeed = React.createClass({
 
   render: function(){
     var userProfile;
-    if (SessionStore.isUserLoggedIn() || Object.keys(this.state.user) !== 0){
-      userProfile = (
-      <div className="profile-feed">
-        <ProfileHeader user={this.state.user}/>
-        <ProfilePictureIndex user={this.state.user}/>
-      </div>
-      );
-    }else {
-      userProfile = (
-        <div></div>
-      );
-    }
+        if (!SessionStore.isUserLoggedIn() || Object.keys(this.state.user).length === 0) {
+           userProfile = (<div/>);
+         } else {
+           userProfile = (
+             <div className="profile-feed">
+               <ProfileHeader user={this.state.user} />
+               <ProfilePictureIndex user={this.state.user} />
+             </div>
+           );
+         }
     return (
       <div>
         {userProfile}

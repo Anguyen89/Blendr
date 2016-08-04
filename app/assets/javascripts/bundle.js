@@ -34101,15 +34101,15 @@
 
 	  render: function render() {
 	    var userProfile;
-	    if (SessionStore.isUserLoggedIn() || Object.keys(this.state.user) !== 0) {
+	    if (!SessionStore.isUserLoggedIn() || Object.keys(this.state.user).length === 0) {
+	      userProfile = React.createElement('div', null);
+	    } else {
 	      userProfile = React.createElement(
 	        'div',
 	        { className: 'profile-feed' },
 	        React.createElement(ProfileHeader, { user: this.state.user }),
 	        React.createElement(ProfilePictureIndex, { user: this.state.user })
 	      );
-	    } else {
-	      userProfile = React.createElement('div', null);
 	    }
 	    return React.createElement(
 	      'div',
@@ -34207,13 +34207,13 @@
 	  _users[user.id] = user;
 	};
 
-	var setUserPictures = function setUserPictures(user) {
-	  user.pictures.forEach(function (picture) {
-	    if (picture.user_id === SessionStore.currentUser().id) {
-	      _pictures.push(picture);
-	    }
-	  });
-	};
+	// var setUserPictures = function(user){
+	//   user.pictures.forEach(function(picture){
+	//     if (picture.user_id === SessionStore.currentUser().id){
+	//       _pictures.push(picture);
+	//     }
+	//   });
+	// };
 
 	ProfileStore.all = function () {
 	  return Object.assign({}, _users);
@@ -34223,15 +34223,10 @@
 	  return _users[id];
 	};
 
-	ProfileStore.getPictures = function () {
-	  return _pictures;
-	};
-
 	ProfileStore.__onDispatch = function (payload) {
 	  switch (payload.actionType) {
 	    case ProfileConstants.RECEIVE_USER:
 	      resetUser(payload.user);
-	      setUserPictures(payload.user);
 	      this.__emitChange();
 	      break;
 	  }
@@ -34585,13 +34580,15 @@
 
 
 	  render: function render() {
-	    // var posts = this.props.user.pictures.map(function(picture){
-	    //   return <ProfilePostPicture key={picture.id} picture={picture} />;
-	    // });
+
+	    var posts = this.props.user.pictures.map(function (picture) {
+	      return React.createElement(ProfilePostPicture, { picture: picture });
+	    });
+
 	    return React.createElement(
 	      'div',
 	      { className: 'profile-post-index' },
-	      this.props.user.pictures
+	      posts
 	    );
 	  }
 	});
@@ -34640,36 +34637,6 @@
 	});
 
 	module.exports = ProfilePostPicture;
-
-	var customStyle = {
-	  overlay: {
-	    position: 'fixed',
-	    display: 'flex',
-	    justifyContent: 'center',
-	    alignItems: 'center',
-	    top: 0,
-	    left: 0,
-	    right: 0,
-	    bottom: 0,
-	    backgroundColor: 'rgba(0,0,0,0.5)'
-	  },
-	  content: {
-	    position: 'static',
-	    display: 'flex',
-	    justifyContent: 'space-around',
-	    alignItems: 'center',
-	    flexDirection: 'row',
-	    border: 'none',
-	    background: 'none',
-	    WebkitOverflowScrolling: 'touch',
-	    borderRadius: '4px',
-	    outline: 'none',
-	    padding: '0px',
-	    height: '600px',
-	    width: '935px',
-	    overflow: 'none'
-	  }
-	};
 
 /***/ },
 /* 282 */
