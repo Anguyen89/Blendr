@@ -34356,25 +34356,25 @@
 	  displayName: 'ProfileFeed',
 
 
-	  getInititalState: function getInititalState() {
-	    return { user: {} };
+	  // getInititalState: function(){
+	  //   return { user: {}};
+	  // },
+	  //
+	  // onChange: function(){
+	  //   this.setState({ user: ProfileStore.findById(this.props.params.profileId)});
+	  // },
+
+	  getStateFromStore: function getStateFromStore() {
+	    return { user: ProfileStore.findById(this.props.params.profileId) };
 	  },
 
 	  onChange: function onChange() {
-	    this.setState({ user: ProfileStore.findById(this.props.params.profileId) });
+	    this.setState(this.getStateFromStore());
 	  },
 
-	  // getStateFromStore: function () {
-	  //   return {user: ProfileStore.findById(this.props.params.profileId)};
-	  // },
-	  //
-	  // onChange: function () {
-	  //   this.setState(this.getStateFromStore() );
-	  // },
-	  //
-	  // getInitialState: function () {
-	  //   return { user: {} };
-	  // },
+	  getInitialState: function getInitialState() {
+	    return { user: {} };
+	  },
 
 	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
 	    ProfileActions.fetchUser(newProps.params.profileId);
@@ -34401,7 +34401,7 @@
 	    return React.createElement(
 	      'div',
 	      null,
-	      this.state.user
+	      this.state.user.username
 	    );
 	  }
 	});

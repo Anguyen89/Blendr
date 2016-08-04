@@ -6,25 +6,25 @@ var SessionStore = require('../../stores/session_store');
 
 var ProfileFeed = React.createClass({
 
-  getInititalState: function(){
-    return { user: {}};
-  },
-
-  onChange: function(){
-    this.setState({ user: ProfileStore.findById(this.props.params.profileId)});
-  },
-
-  // getStateFromStore: function () {
-  //   return {user: ProfileStore.findById(this.props.params.profileId)};
+  // getInititalState: function(){
+  //   return { user: {}};
   // },
   //
-  // onChange: function () {
-  //   this.setState(this.getStateFromStore() );
+  // onChange: function(){
+  //   this.setState({ user: ProfileStore.findById(this.props.params.profileId)});
   // },
-  //
-  // getInitialState: function () {
-  //   return { user: {} };
-  // },
+
+  getStateFromStore: function () {
+    return {user: ProfileStore.findById(this.props.params.profileId)};
+  },
+
+  onChange: function () {
+    this.setState(this.getStateFromStore() );
+  },
+
+  getInitialState: function () {
+    return { user: {} };
+  },
 
   componentWillReceiveProps: function(newProps){
     ProfileActions.fetchUser(newProps.params.profileId);
@@ -50,7 +50,7 @@ var ProfileFeed = React.createClass({
     // }
     return (
       <div>
-        {this.state.user}
+        {this.state.user.username}
       </div>
     );
   }
