@@ -5,8 +5,9 @@ var HashHistory = require('react-router').hashHistory;
 
 var PostFeedItem = React.createClass({
 
-  pushToProfile: function(){
-    HashHistory.push('/blog');
+  pushToProfile: function(e){
+    e.preventDefault();
+    HashHistory.push('/profile/' + this.props.userId);
   },
 
   render: function(){
@@ -14,7 +15,7 @@ var PostFeedItem = React.createClass({
       <div className="post-container">
 
         <div className="user-info-container">
-          <img className="user-photo" onClick={this.pushToProfile} src={this.props.post.user.profile_image_url}></img>
+          <img className="user-photo" onClick={this.pushToProfile} src={this.props.post.user.profile_picture_url}></img>
           <h2 className="post-author">{this.props.post.user.username}</h2>
         </div>
 

@@ -39,7 +39,7 @@ var PostFeed = React.createClass({
 
 
   render: function(){
-  
+
     var posts = this.state.posts;
     if (SessionStore.isUserLoggedIn()){
       return (
@@ -48,7 +48,7 @@ var PostFeed = React.createClass({
             {this.props.children}
             {posts.map(function(post){
               return (
-                <PostFeedItem post={post} key={post.id} />
+                <PostFeedItem post={post} userId={post.user_id} key={post.id} />
               );
             })}
           </div>

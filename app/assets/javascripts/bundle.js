@@ -34344,7 +34344,7 @@
 	          { className: 'feed' },
 	          this.props.children,
 	          posts.map(function (post) {
-	            return React.createElement(PostFeedItem, { post: post, key: post.id });
+	            return React.createElement(PostFeedItem, { post: post, userId: post.user_id, key: post.id });
 	          })
 	        )
 	      );
@@ -34449,8 +34449,9 @@
 	  displayName: 'PostFeedItem',
 
 
-	  pushToProfile: function pushToProfile() {
-	    HashHistory.push('/blog');
+	  pushToProfile: function pushToProfile(e) {
+	    e.preventDefault();
+	    HashHistory.push('/profile/' + this.props.userId);
 	  },
 
 	  render: function render() {
@@ -34460,7 +34461,7 @@
 	      React.createElement(
 	        'div',
 	        { className: 'user-info-container' },
-	        React.createElement('img', { className: 'user-photo', onClick: this.pushToProfile, src: this.props.post.user.profile_image_url }),
+	        React.createElement('img', { className: 'user-photo', onClick: this.pushToProfile, src: this.props.post.user.profile_picture_url }),
 	        React.createElement(
 	          'h2',
 	          { className: 'post-author' },
