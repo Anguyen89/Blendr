@@ -79,11 +79,13 @@
 .user-image-container {
   display: flex;
   flex-direction: column;
+  width: 500px;
+  height: 400px;
 }
 
 .user-post-image {
-  width: 500px;
-  height: 400px;
+  width: inherit;
+  height: inherit;
 }
 
 .user-image-description {
@@ -91,21 +93,32 @@
 }
 
 .post-comments-container {
-  display: flex;
-  justify-content: flex-start;
-  background: blue;
   width: 500px;
-  height: 200px;
 }
-
+// .comment-index {
+//   width: 500px;
+// }
 .comment-index > h1 {
   display: flex;
   justify-content: center;
+  font-style: italic;
+  font-weight: bolder;
+  margin-top: 5px;
 }
 
 .comment-index-item {
-  font-size: 40px;
-  background: blue;
-  width: 20px;
-  height: 20px;
+  display: flex;
+  flex-direction: row;
+  font-size: 15px;
+  padding: 0px 5px 5px 5px;
+}
+
+.comment-index-item-name{
+  margin-right: 10px;
+  margin-left: 10px;
+  font-weight: bolder;
+}
+
+.comment-index-item-body {
+  font-style: italic;
 }

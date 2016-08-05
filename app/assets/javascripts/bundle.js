@@ -36652,26 +36652,31 @@
 /* 303 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var React = __webpack_require__(1);
+	var HashHistory = __webpack_require__(172).hashHistory;
 
 	var CommentIndexItem = React.createClass({
-	  displayName: "CommentIndexItem",
+	  displayName: 'CommentIndexItem',
 
+
+	  rootToProfile: function rootToProfile() {
+	    HashHistory.push('/profile/' + this.props.comment.user_id);
+	  },
 
 	  render: function render() {
 	    return React.createElement(
-	      "div",
-	      { className: "comment-index-item" },
+	      'div',
+	      { className: 'comment-index-item' },
 	      React.createElement(
-	        "div",
-	        { className: "comment-user" },
+	        'div',
+	        { onClick: this.rootToProfile, className: 'comment-index-item-name' },
 	        this.props.comment.user
 	      ),
 	      React.createElement(
-	        "div",
-	        { className: "comment-body" },
+	        'div',
+	        { className: 'comment-index-item-body' },
 	        this.props.comment.body
 	      )
 	    );
