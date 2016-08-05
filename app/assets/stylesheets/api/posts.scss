@@ -62,11 +62,19 @@
 
 .user-info-container {
   display: flex;
+  justify-content: space-between;
+  flex-direction: row;
   height: 50px;
-  width: 500px;
+  width: 450px;
   margin-bottom: 20px;
   margin-top: 10px;
   padding-left: 15px;
+}
+
+.user-photo-name {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .user-photo {
@@ -74,6 +82,30 @@
   height: 50px;
   padding-right: 15px;
   border-radius: 60%;
+}
+
+
+.post-follow-button-container {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin-top: 10px;
+}
+
+.follow-button {
+  width: 50px;
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 20%;
+
+}
+
+// .post-author {
+//   margin-right: 300px;
+// }
+
+.follow-button {
+  border: 1px solid black;
 }
 
 .user-image-container {

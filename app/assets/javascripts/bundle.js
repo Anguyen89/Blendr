@@ -34435,6 +34435,7 @@
 	var React = __webpack_require__(1);
 	var HashHistory = __webpack_require__(172).hashHistory;
 	var CommentBox = __webpack_require__(302);
+	var SessionStore = __webpack_require__(236);
 
 	var PostFeedItem = React.createClass({
 	  displayName: 'PostFeedItem',
@@ -34446,17 +34447,36 @@
 	  },
 
 	  render: function render() {
+	    var followButton;
+	    if (SessionStore.currentUser().id !== this.props.post.user_id) {
+	      followButton = React.createElement(
+	        'button',
+	        { className: 'follow-button' },
+	        'Follow'
+	      );
+	    } else {
+	      followButton = React.createElement('div', null);
+	    }
 	    return React.createElement(
 	      'div',
 	      { className: 'post-container' },
 	      React.createElement(
 	        'div',
 	        { className: 'user-info-container' },
-	        React.createElement('img', { className: 'user-photo', onClick: this.pushToProfile, src: this.props.post.user.profile_picture_url }),
 	        React.createElement(
-	          'h2',
-	          { className: 'post-author' },
-	          this.props.post.user.username
+	          'div',
+	          { className: 'user-photo-name' },
+	          React.createElement('img', { className: 'user-photo', onClick: this.pushToProfile, src: this.props.post.user.profile_picture_url }),
+	          React.createElement(
+	            'h2',
+	            { className: 'post-author' },
+	            this.props.post.user.username
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'post_follow_button-container' },
+	          followButton
 	        )
 	      ),
 	      React.createElement(
