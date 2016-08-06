@@ -34435,7 +34435,8 @@
 	var React = __webpack_require__(1);
 	var HashHistory = __webpack_require__(172).hashHistory;
 	var CommentBox = __webpack_require__(302);
-	var SessionStore = __webpack_require__(236);
+
+	var FollowButton = __webpack_require__(305);
 
 	var PostFeedItem = React.createClass({
 	  displayName: 'PostFeedItem',
@@ -34447,16 +34448,6 @@
 	  },
 
 	  render: function render() {
-	    var followButton;
-	    if (SessionStore.currentUser().id !== this.props.post.user_id) {
-	      followButton = React.createElement(
-	        'button',
-	        { className: 'follow-button' },
-	        'Follow'
-	      );
-	    } else {
-	      followButton = React.createElement('div', null);
-	    }
 	    return React.createElement(
 	      'div',
 	      { className: 'post-container' },
@@ -34473,11 +34464,7 @@
 	            this.props.post.user.username
 	          )
 	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'post_follow_button-container' },
-	          followButton
-	        )
+	        React.createElement(FollowButton, { className: 'post_follow_button-container', post: this.props.post })
 	      ),
 	      React.createElement(
 	        'div',
@@ -36705,6 +36692,46 @@
 	});
 
 	module.exports = CommentIndexItem;
+
+/***/ },
+/* 304 */,
+/* 305 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var SessionStore = __webpack_require__(236);
+
+	var FollowButton = React.createClass({
+	  displayName: 'FollowButton',
+
+
+	  toggleButton: function toggleButton() {
+	    console.log("hello");
+	  },
+
+	  render: function render() {
+	    var followButton;
+	    if (SessionStore.currentUser().id !== this.props.post.user_id) {
+	      followButton = React.createElement(
+	        'button',
+	        { onClick: this.toggleButton, className: 'follow-button' },
+	        'Follow'
+	      );
+	    } else {
+	      followButton = React.createElement('div', null);
+	    }
+
+	    return React.createElement(
+	      'div',
+	      null,
+	      followButton
+	    );
+	  }
+	});
+
+	module.exports = FollowButton;
 
 /***/ }
 /******/ ]);

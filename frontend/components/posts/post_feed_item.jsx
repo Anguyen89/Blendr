@@ -1,7 +1,9 @@
 var React = require('react');
 var HashHistory = require('react-router').hashHistory;
 var CommentBox = require('./comment_index');
-var SessionStore = require('../../stores/session_store');
+
+
+var FollowButton = require('./post_follow_button.jsx');
 
 
 var PostFeedItem = React.createClass({
@@ -12,12 +14,6 @@ var PostFeedItem = React.createClass({
   },
 
   render: function(){
-    var followButton;
-    if (SessionStore.currentUser().id !== this.props.post.user_id){
-        followButton = (<button className="follow-button">Follow</button>);
-    }else{
-      followButton = (<div></div>);
-    }
     return (
       <div className="post-container">
 
@@ -27,7 +23,7 @@ var PostFeedItem = React.createClass({
             <h2 className="post-author">{this.props.post.user.username}</h2>
           </div>
 
-          <div className="post_follow_button-container">{followButton}</div>
+          <FollowButton className="post_follow_button-container" post={this.props.post}></FollowButton>
         </div>
 
         <div className="user-image-container">
