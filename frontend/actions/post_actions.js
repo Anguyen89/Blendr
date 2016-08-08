@@ -39,7 +39,31 @@ var PostActions = {
       actionType: PostConstants.RECEIVE_COMMENT,
       comment: comment
     });
+  },
+
+  createLike: function(like){
+    PostUtil.createLike(like, this.receiveLike);
+  },
+
+  receiveLike: function(like){
+    AppDispatcher.dispatch({
+      actionType: PostConstants.RECEIVE_LIKE,
+      like: like
+    });
+  },
+
+  removeLike: function(like){
+    PostUtil.removeLike(like, this.deleteLike);
+  },
+
+  deleteLike: function(like){
+    AppDispatcher.dispatch({
+      actionType: PostConstants.REMOVE_LIKE,
+      like: like
+    });
   }
+
+
 
 };
 

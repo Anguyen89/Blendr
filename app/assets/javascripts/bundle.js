@@ -51,6 +51,7 @@
 
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(33);
+	var Modal = __webpack_require__(279);
 	//Router
 	var ReactRouter = __webpack_require__(172);
 	var Router = ReactRouter.Router;
@@ -89,7 +90,15 @@
 	);
 
 	document.addEventListener("DOMContentLoaded", function () {
-	  ReactDOM.render(appRouter, document.getElementById('root'));
+	  var root = document.getElementById("root");
+	  var register = document.getElementById('register');
+
+	  if (root) {
+
+	    ReactDOM.render(appRouter, root);
+	  } else {
+	    ReactDOM.render(React.createElement(SignUp, null), register);
+	  }
 	});
 
 /***/ },
@@ -34148,6 +34157,30 @@
 	  post.comments.push(comment);
 	};
 
+	var setLike = function setLike(like) {
+	  var post = _posts[like.picture_id];
+	  post.likes.push(like);
+	};
+
+	var removeLike = function removeLike(like) {
+	  var post = PostStore.getById(like.post_id);
+	  var likeIdx = post.likes.indexOf(SessionStore.currentUser());
+	  post.likes.splice(likeIdx, 1);
+	  this.__emitChange();
+	};
+
+	PostStore.postIsLiked = function (post) {
+	  var currentUser = SessionStore.currentUser();
+	  var isLiked = false;
+
+	  post.likes.forEach(function (like) {
+	    if (like.user_id === currentUser.id) {
+	      isLiked = true;
+	    }
+	  });
+	  return isLiked;
+	};
+
 	PostStore.all = function () {
 	  return Object.keys(_posts).map(function (key) {
 	    return _posts[key];
@@ -34168,6 +34201,14 @@
 	      setComment(payload.comment);
 	      this.__emitChange();
 	      break;
+	    case PostConstants.RECEIVE_LIKE:
+	      setLike(payload.like);
+	      this.__emitChange();
+	      break;
+	    case PostConstants.REMOVE_LIKE:
+	      removeLike(payload.like);
+	      this.__emitChange();
+	      break;
 	  }
 	};
 
@@ -34185,7 +34226,9 @@
 	  CREATE_POST: "CREATE_POST",
 	  FETCH_ALL_POSTS: "FETCH_ALL_POSTS",
 	  FETCH_ONE_POST: "FETCH_ONE_POST",
-	  RECEIVE_COMMENT: "RECEIVE_COMMENT"
+	  RECEIVE_COMMENT: "RECEIVE_COMMENT",
+	  RECEIVE_LIKE: "RECEIVE_LIKE",
+	  REMOVE_LIKE: "REMOVE_LIKE"
 	};
 
 /***/ },
@@ -34503,13 +34546,11 @@
 	    if (this.props.user.id === SessionStore.currentUser().id) {
 	      return;
 	    } else {
-	      return React.createElement(
-	        'button',
-	        {
-	          id: 'follow-button-toggle',
-	          onClick: this._toggleFollow },
-	        buttonText
-	      );
+	      return React.createElement('input', {
+	        id: 'follow-button-toggle',
+	        type: 'checkbox',
+	        onChange: this._toggleFollow,
+	        checked: this.state.pushed });
 	    }
 	  },
 
@@ -34543,7 +34584,7 @@
 	  render: function render() {
 
 	    var posts = this.props.user.pictures.map(function (picture) {
-	      return React.createElement(ProfilePostPicture, { picture: picture, key: picture.id });
+	      return React.createElement(ProfilePostPicture, { post: picture, key: picture.id });
 	    });
 
 	    return React.createElement(
@@ -34566,38 +34607,77 @@
 	var Modal = __webpack_require__(279);
 	var PostStore = __webpack_require__(267);
 	var PostActions = __webpack_require__(299);
+	var ModalPost = __webpack_require__(310);
 
 	var ProfilePostPicture = React.createClass({
 	  displayName: 'ProfilePostPicture',
 
 
 	  getInitialState: function getInitialState() {
-	    return { pictures: [] };
+	    return { post: {}, modalOpen: false };
 	  },
 
 	  onChange: function onChange() {
-	    this.setState({ post: PostStore.getById(this.props.picture.id) });
+	    this.setState({ post: PostStore.getById(this.props.post.id) });
 	  },
 
 	  componentDidMount: function componentDidMount() {
 	    this.postListener = PostStore.addListener(this.onChange);
-	    PostActions.fetchPost(this.props.picture.id);
+	    PostActions.fetchPost(this.props.post.id);
 	  },
 
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.postListener.remove();
 	  },
 
+	  _handleClick: function _handleClick() {
+	    this.setState({ modalOpen: true });
+	  },
+
+	  closeModal: function closeModal() {
+	    this.setState({ modalOpen: false });
+	  },
+
 	  render: function render() {
 	    return React.createElement(
 	      'div',
 	      { className: 'profile-post-picture' },
-	      React.createElement('img', { src: this.props.picture.url })
+	      React.createElement('img', { src: this.props.post.url })
 	    );
 	  }
 	});
 
 	module.exports = ProfilePostPicture;
+
+	var customStyle = {
+	  overlay: {
+	    position: 'fixed',
+	    display: 'flex',
+	    justifyContent: 'center',
+	    alignItems: 'center',
+	    top: 0,
+	    left: 0,
+	    right: 0,
+	    bottom: 0,
+	    backgroundColor: 'rgba(0,0,0,0.5)'
+	  },
+	  content: {
+	    position: 'static',
+	    display: 'flex',
+	    justifyContent: 'space-around',
+	    alignItems: 'center',
+	    flexDirection: 'row',
+	    border: 'none',
+	    background: 'none',
+	    WebkitOverflowScrolling: 'touch',
+	    borderRadius: '4px',
+	    outline: 'none',
+	    padding: '0px',
+	    height: '600px',
+	    width: '935px',
+	    overflow: 'none'
+	  }
+	};
 
 /***/ },
 /* 279 */
@@ -36613,6 +36693,28 @@
 	      actionType: PostConstants.RECEIVE_COMMENT,
 	      comment: comment
 	    });
+	  },
+
+	  createLike: function createLike(like) {
+	    PostUtil.createLike(like, this.receiveLike);
+	  },
+
+	  receiveLike: function receiveLike(like) {
+	    AppDispatcher.dispatch({
+	      actionType: PostConstants.RECEIVE_LIKE,
+	      like: like
+	    });
+	  },
+
+	  removeLike: function removeLike(like) {
+	    PostUtil.removeLike(like, this.deleteLike);
+	  },
+
+	  deleteLike: function deleteLike(like) {
+	    AppDispatcher.dispatch({
+	      actionType: PostConstants.REMOVE_LIKE,
+	      like: like
+	    });
 	  }
 
 	};
@@ -36658,6 +36760,24 @@
 	      url: "api/pictures/" + comment.picture_id + "/comments",
 	      type: "POST",
 	      data: { comment: comment },
+	      success: cb
+	    });
+	  },
+
+	  createLike: function createLike(like, cb) {
+	    $.ajax({
+	      url: "api/pictures/" + like.picture_id + "/likes",
+	      type: "POST",
+	      data: { like: like },
+	      success: cb
+	    });
+	  },
+
+	  removeLike: function removeLike(like, cb) {
+	    $.ajax({
+	      url: "api/pictures/" + like.picture_id + "/likes/" + like.id,
+	      type: "DELETE",
+	      data: { like: like },
 	      success: cb
 	    });
 	  }
@@ -36942,6 +37062,7 @@
 
 	var React = __webpack_require__(1);
 	var CommentInput = __webpack_require__(308);
+	var LikeButton = __webpack_require__(309);
 
 	var CommentForm = React.createClass({
 	  displayName: 'CommentForm',
@@ -36950,8 +37071,9 @@
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      null,
-	      React.createElement(CommentInput, { post: this.props.post })
+	      { className: 'comment-form' },
+	      React.createElement(CommentInput, { post: this.props.post }),
+	      React.createElement(LikeButton, { post: this.props.post })
 	    );
 	  }
 	});
@@ -37012,6 +37134,99 @@
 	});
 
 	module.exports = CommentInput;
+
+/***/ },
+/* 309 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var PostStore = __webpack_require__(267);
+	var SessionStore = __webpack_require__(236);
+	var PostActions = __webpack_require__(299);
+
+	var LikeButton = React.createClass({
+	  displayName: 'LikeButton',
+
+
+	  getInitialState: function getInitialState() {
+	    return { liked: "" };
+	  },
+
+	  _postIsLiked: function _postIsLiked() {
+	    return PostStore.postIsLiked(this.props.post);
+	  },
+
+	  _toggleLike: function _toggleLike(e) {
+
+	    e.preventDefault();
+
+	    var likeData = {
+	      user_id: SessionStore.currentUser().id,
+	      picture_id: this.props.post.id
+	    };
+
+	    if (this._postIsLiked()) {
+	      PostActions.removeLike(likeData);
+	    } else {
+	      PostActions.createLike(likeData);
+	    }
+	    this.setState({ liked: PostStore.postIsLiked(this.props.post) });
+	  },
+	  //
+	  //   render: function() {
+	  //   var className = this._isLiked() ? "fa fa-heart fa-2x filled-heart" :
+	  //                                      "fa fa-heart-o fa-2x empty-heart";
+	  //   return (
+	  //     <div className="like-button">
+	  //       <i onClick={this._toggleLike} className={className}></i>
+	  //     </div>
+	  //   );
+	  // }
+
+	  render: function render() {
+	    var buttonText = this._postIsLiked() ? "UnLike" : "Like";
+	    return React.createElement(
+	      'div',
+	      { className: 'like_button-container' },
+	      React.createElement(
+	        'button',
+	        { onClick: this._toggleLike, className: 'like-button' },
+	        buttonText
+	      )
+	    );
+	  }
+	});
+
+	module.exports = LikeButton;
+
+/***/ },
+/* 310 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var ProfileHeader = __webpack_require__(273);
+	var CommentBox = __webpack_require__(306);
+
+	var ModalPost = React.createClass({
+	  displayName: 'ModalPost',
+
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'modal-post-container' },
+	      React.createElement(ProfileHeader, { user: this.props.post }),
+	      React.createElement(CommentBox, { post: this.props.post })
+	    );
+	  }
+
+	});
+
+	module.exports = ModalPost;
 
 /***/ }
 /******/ ]);

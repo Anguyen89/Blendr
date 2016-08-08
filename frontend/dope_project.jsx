@@ -4,6 +4,7 @@
 //React
 var React = require('react');
 var ReactDOM = require('react-dom');
+var Modal = require('react-modal');
 //Router
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
@@ -42,5 +43,14 @@ var SessionActions = require('./actions/session_actions');
  );
 
 document.addEventListener("DOMContentLoaded", function(){
-  ReactDOM.render(appRouter, document.getElementById('root'));
+  var root = document.getElementById("root");
+  var register = document.getElementById('register');
+
+  if (root){
+
+    ReactDOM.render(appRouter, root);
+  } else {
+    ReactDOM.render(<SignUp/>, register);
+  }
+
 });

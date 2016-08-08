@@ -43,11 +43,11 @@ var FollowButton = React.createClass({
     return;
   } else {
     return (
-      <button
+      <input
              id="follow-button-toggle"
-             onClick={this._toggleFollow}>
-             {buttonText}
-           </button>
+             type='checkbox'
+             onChange={this._toggleFollow}
+             checked={this.state.pushed}/>
     );
   }
 },

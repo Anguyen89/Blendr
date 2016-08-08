@@ -23,6 +23,32 @@ var setComment = function(comment){
   post.comments.push(comment);
 };
 
+var setLike = function(like){
+  var post = _posts[like.picture_id];
+  post.likes.push(like);
+};
+
+
+var removeLike = function(like){
+  var post = PostStore.getById(like.post_id);
+  var likeIdx = post.likes.indexOf(SessionStore.currentUser());
+  post.likes.splice(likeIdx, 1);
+  this.__emitChange();
+};
+
+PostStore.postIsLiked = function(post){
+  var currentUser = SessionStore.currentUser();
+  var isLiked = false;
+
+  post.likes.forEach(function(like){
+    if(like.user_id === currentUser.id){
+      isLiked = true;
+    }
+  });
+  return isLiked;
+
+};
+
 
 PostStore.all = function(){
   return Object.keys(_posts).map(function(key){
@@ -44,6 +70,14 @@ PostStore.__onDispatch = function(payload){
       break;
     case PostConstants.RECEIVE_COMMENT:
       setComment(payload.comment);
+      this.__emitChange();
+      break;
+    case PostConstants.RECEIVE_LIKE:
+      setLike(payload.like);
+      this.__emitChange();
+      break;
+    case PostConstants.REMOVE_LIKE:
+      removeLike(payload.like);
       this.__emitChange();
       break;
   }

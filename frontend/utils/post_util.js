@@ -33,6 +33,24 @@ createComment: function(comment, cb){
     data: {comment: comment},
     success: cb
   });
+},
+
+createLike: function(like, cb){
+  $.ajax({
+    url: "api/pictures/" + like.picture_id + "/likes",
+    type: "POST",
+    data: {like: like},
+    success: cb
+  });
+},
+
+removeLike: function(like, cb){
+  $.ajax({
+    url: "api/pictures/" + like.picture_id + "/likes/" + like.id,
+    type: "DELETE",
+    data: {like: like},
+    success: cb
+  });
 }
 
 };

@@ -134,6 +134,41 @@
   font-weight: bold;
 }
 
+.comment-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-direction: row;
+  margin-left: 10px;
+  padding-top: 10px;
+}
+
+.like-button {
+  margin-left: -80px;
+}
+
+// .like-button {
+//   height: 30px;
+//   width: 32px;
+//   cursor: pointer;
+//   -webkit-transition: all .2s ease-in-out;
+//   transition: all .2s ease-in-out;
+// }
+//
+// .like-button:hover {
+//   -webkit-transform: scale(1.2);
+//   transform: scale(1.2);
+// }
+//
+// .filled-heart {
+//   color: red;
+// }
+//
+// .empty-heart {
+//   color: gray;
+// }
+
+
 .comment-box {
   display: flex;
   flex-direction: column;
