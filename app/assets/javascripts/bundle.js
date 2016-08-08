@@ -36765,6 +36765,7 @@
 
 	var React = __webpack_require__(1);
 	var CommentIndexItem = __webpack_require__(304);
+	var LikeCount = __webpack_require__(305);
 
 	var CommentIndex = React.createClass({
 	  displayName: 'CommentIndex',
@@ -36790,9 +36791,14 @@
 	      'div',
 	      { className: 'comment-index' },
 	      React.createElement(
-	        'h1',
-	        null,
-	        'Comments'
+	        'div',
+	        { className: 'comment-index-header' },
+	        React.createElement(
+	          'h1',
+	          null,
+	          'Comments'
+	        ),
+	        React.createElement(LikeCount, { post: this.props.post })
 	      ),
 	      comments
 	    );
@@ -36839,6 +36845,38 @@
 	});
 
 	module.exports = CommentIndexItem;
+
+/***/ },
+/* 305 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(1);
+
+	var LikeCount = React.createClass({
+	  displayName: "LikeCount",
+
+
+	  likeCount: function likeCount() {
+	    if (this.props.post.likes < 1) {
+	      return "0 likes";
+	    } else {
+	      return this.props.post.likes.length + " likes";
+	    }
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      null,
+	      this.likeCount()
+	    );
+	  }
+
+	});
+
+	module.exports = LikeCount;
 
 /***/ }
 /******/ ]);

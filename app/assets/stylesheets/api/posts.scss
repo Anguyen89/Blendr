@@ -108,12 +108,23 @@
 // .comment-index {
 //   width: 500px;
 // }
-.comment-index > h1 {
+// .comment-index > h1 {
+//   display: flex;
+//   justify-content: center;
+//   font-style: italic;
+//   font-weight: bolder;
+//   margin-top: 5px;
+// }
+
+.comment-index-header{
   display: flex;
-  justify-content: center;
-  font-style: italic;
-  font-weight: bolder;
-  margin-top: 5px;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-right: 30px;
+}
+
+.comment-index-header h1 {
+  margin-right: 150px;
 }
 
 .comment-index-item {
