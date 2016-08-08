@@ -17,9 +17,7 @@ var Upload = React.createClass({
 
   render: function(){
     return (
-      <i onClick={this.upload} className="create-post-button">
-
-      </i>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Aiga_uparrow_inv.svg/500px-Aiga_uparrow_inv.svg.png" onClick={this.upload}></img>
     );
   }
 });
