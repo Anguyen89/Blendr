@@ -34143,6 +34143,11 @@
 	  });
 	};
 
+	var setComment = function setComment(comment) {
+	  var post = _posts[comment.picture_id];
+	  post.comments.push(comment);
+	};
+
 	PostStore.all = function () {
 	  return Object.keys(_posts).map(function (key) {
 	    return _posts[key];
@@ -34157,6 +34162,10 @@
 	  switch (payload.actionType) {
 	    case PostConstants.RECEIVE_POSTS:
 	      resetPosts(payload.posts);
+	      this.__emitChange();
+	      break;
+	    case PostConstants.RECEIVE_COMMENT:
+	      setComment(payload.comment);
 	      this.__emitChange();
 	      break;
 	  }
@@ -34175,7 +34184,8 @@
 	  RECEIVE_POST: "RECEIVE_POST",
 	  CREATE_POST: "CREATE_POST",
 	  FETCH_ALL_POSTS: "FETCH_ALL_POSTS",
-	  FETCH_ONE_POST: "FETCH_ONE_POST"
+	  FETCH_ONE_POST: "FETCH_ONE_POST",
+	  RECEIVE_COMMENT: "RECEIVE_COMMENT"
 	};
 
 /***/ },
@@ -36592,6 +36602,17 @@
 
 	  createPost: function createPost(post) {
 	    PostUtil.createPost(post, this.receivePost);
+	  },
+
+	  createComment: function createComment(comment) {
+	    PostUtil.createComment(comment, this.receiveComment);
+	  },
+
+	  receiveComment: function receiveComment(comment) {
+	    AppDispatcher.dispatch({
+	      actionType: PostConstants.RECEIVE_COMMENT,
+	      comment: comment
+	    });
 	  }
 
 	};
@@ -36628,6 +36649,15 @@
 	      url: "/api/pictures/",
 	      type: "POST",
 	      data: { post: post },
+	      success: cb
+	    });
+	  },
+
+	  createComment: function createComment(comment, cb) {
+	    $.ajax({
+	      url: "api/pictures/" + comment.picture_id + "/comments",
+	      type: "POST",
+	      data: { comment: comment },
 	      success: cb
 	    });
 	  }
@@ -36711,7 +36741,7 @@
 
 	var React = __webpack_require__(1);
 	var HashHistory = __webpack_require__(172).hashHistory;
-	var CommentBox = __webpack_require__(303);
+	var CommentBox = __webpack_require__(306);
 
 	var PostFeedItem = React.createClass({
 	  displayName: 'PostFeedItem',
@@ -36869,7 +36899,7 @@
 	  render: function render() {
 	    return React.createElement(
 	      "div",
-	      null,
+	      { className: "like-count" },
 	      this.likeCount()
 	    );
 	  }
@@ -36877,6 +36907,111 @@
 	});
 
 	module.exports = LikeCount;
+
+/***/ },
+/* 306 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var CommentIndex = __webpack_require__(303);
+	var CommentForm = __webpack_require__(307);
+
+	var CommentBox = React.createClass({
+	  displayName: 'CommentBox',
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'comment-box' },
+	      React.createElement(CommentIndex, { post: this.props.post }),
+	      React.createElement(CommentForm, { post: this.props.post })
+	    );
+	  }
+	});
+
+	module.exports = CommentBox;
+
+/***/ },
+/* 307 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var CommentInput = __webpack_require__(308);
+
+	var CommentForm = React.createClass({
+	  displayName: 'CommentForm',
+
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(CommentInput, { post: this.props.post })
+	    );
+	  }
+	});
+
+	module.exports = CommentForm;
+
+/***/ },
+/* 308 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var SessionStore = __webpack_require__(236);
+	var PostActions = __webpack_require__(299);
+
+	var CommentInput = React.createClass({
+	  displayName: 'CommentInput',
+
+
+	  getInitialState: function getInitialState() {
+	    return { body: "" };
+	  },
+
+	  handleSubmit: function handleSubmit(e) {
+	    e.preventDefault();
+
+	    var commentData = {
+	      user_id: SessionStore.currentUser().id,
+	      picture_id: this.props.post.id,
+	      body: this.state.body
+	    };
+
+	    PostActions.createComment(commentData);
+	    this.setState({ body: "" });
+	  },
+
+	  handleBodyChange: function handleBodyChange(e) {
+	    this.setState({ body: e.target.value });
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(
+	        'form',
+	        { onSubmit: this.handleSubmit },
+	        React.createElement('input', { type: 'text',
+	          className: 'comment-input',
+	          placeholder: 'Add Comment',
+	          onChange: this.handleBodyChange,
+	          value: this.state.body })
+	      )
+	    );
+	  }
+
+	});
+
+	module.exports = CommentInput;
 
 /***/ }
 /******/ ]);

@@ -24,6 +24,15 @@ createPost: function(post, cb) {
     data: {post: post},
     success: cb
   });
+},
+
+createComment: function(comment, cb){
+  $.ajax({
+    url: "api/pictures/" + comment.picture_id + "/comments",
+    type: "POST",
+    data: {comment: comment},
+    success: cb
+  });
 }
 
 };

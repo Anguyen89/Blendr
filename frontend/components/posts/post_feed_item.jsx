@@ -1,6 +1,6 @@
 var React = require('react');
 var HashHistory = require('react-router').hashHistory;
-var CommentBox = require('./comment_index');
+var CommentBox = require('./comment_box');
 
 
 

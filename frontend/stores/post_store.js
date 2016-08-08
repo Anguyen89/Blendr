@@ -18,6 +18,11 @@ var resetPosts = function(posts){
   });
 };
 
+var setComment = function(comment){
+  var post = _posts[comment.picture_id];
+  post.comments.push(comment);
+};
+
 
 PostStore.all = function(){
   return Object.keys(_posts).map(function(key){
@@ -35,6 +40,10 @@ PostStore.__onDispatch = function(payload){
   switch(payload.actionType){
     case PostConstants.RECEIVE_POSTS:
       resetPosts(payload.posts);
+      this.__emitChange();
+      break;
+    case PostConstants.RECEIVE_COMMENT:
+      setComment(payload.comment);
       this.__emitChange();
       break;
   }

@@ -28,6 +28,17 @@ var PostActions = {
 
   createPost: function(post) {
     PostUtil.createPost(post, this.receivePost);
+  },
+
+  createComment: function(comment){
+    PostUtil.createComment(comment, this.receiveComment);
+  },
+
+  receiveComment: function(comment){
+    AppDispatcher.dispatch({
+      actionType: PostConstants.RECEIVE_COMMENT,
+      comment: comment
+    });
   }
 
 };

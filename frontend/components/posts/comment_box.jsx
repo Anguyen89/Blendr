@@ -1,6 +1,7 @@
 var React = require('react');
 
 var CommentIndex = require('./comment_index');
+var CommentForm = require('./comment_form');
 
 
 var CommentBox = React.createClass({
@@ -8,6 +9,7 @@ var CommentBox = React.createClass({
     return(
     <div className="comment-box">
       <CommentIndex post={this.props.post}/>
+      <CommentForm post={this.props.post}/>
     </div>
     );
   }

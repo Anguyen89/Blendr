@@ -125,6 +125,19 @@
 
 .comment-index-header h1 {
   margin-right: 150px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.like-count {
+  font-style: italic;
+  font-weight: bold;
+}
+
+.comment-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .comment-index-item {
@@ -142,4 +155,9 @@
 
 .comment-index-item-body {
   font-style: italic;
+}
+
+.comment-input {
+  width: 500px;
+  height: 10px;
 }
