@@ -34208,12 +34208,14 @@
 	var addFollower = function addFollower(relationship) {
 	  var user = _users[relationship.followed_id];
 	  user.followers.push(SessionStore.currentUser());
+	  this.__emitChange();
 	};
 
 	var removeFollower = function removeFollower(relationship) {
 	  var user = ProfileStore.findById(relationship.followed_id);
 	  var followerIdx = user.followers.indexOf(SessionStore.currentUser());
 	  user.followers.splice(followerIdx, 1);
+	  this.__emitChange();
 	};
 
 	ProfileStore.userIsFollowed = function (user) {
@@ -34244,11 +34246,9 @@
 	      break;
 	    case ProfileConstants.RECEIVE_FOLLOW:
 	      addFollower(payload.relationship);
-	      this.__emitChange();
 	      break;
 	    case ProfileConstants.REMOVE_FOLLOW:
 	      removeFollower(payload.relationship);
-	      this.__emitChange();
 	      break;
 	  }
 	};
@@ -34280,17 +34280,14 @@
 
 	module.exports = {
 	  createFollow: function createFollow(relationship) {
-	    console.log("inside createFollow");
 	    ProfileUtil.createFollow(relationship, this.receiveFollow);
 	  },
 
 	  deleteFollow: function deleteFollow(relationship) {
-	    console.log("inside delete follow");
 	    ProfileUtil.deleteFollow(relationship, this.removeFollow);
 	  },
 
 	  receiveFollow: function receiveFollow(relationship) {
-	    console.log("dispatching the follow");
 	    AppDispatcher.dispatch({
 	      actionType: ProfileConstants.FOLLOW_RECEIVED,
 	      relationship: relationship
@@ -34337,7 +34334,6 @@
 	  },
 
 	  createFollow: function createFollow(relationship, cb) {
-	    console.log("create follow in backend");
 	    $.ajax({
 	      url: "api/relationships",
 	      type: "POST",
@@ -34462,9 +34458,11 @@
 	  displayName: 'FollowButton',
 
 
-	  _toggleFollow: function _toggleFollow() {
+	  getInitialState: function getInitialState() {
+	    return { pushed: this.userIsFollowed() };
+	  },
 
-	    console.log(ProfileActions.sayHello());
+	  _toggleFollow: function _toggleFollow() {
 
 	    var relationshipData = {
 	      follower_id: SessionStore.currentUser().id,
@@ -34476,6 +34474,8 @@
 	    } else {
 	      ProfileActions.createFollow(relationshipData);
 	    }
+
+	    this.setState({ pushed: this.userIsFollowed() });
 	  },
 
 	  userIsFollowed: function userIsFollowed() {
@@ -34484,18 +34484,22 @@
 
 	  _buttonDisplay: function _buttonDisplay() {
 	    var buttonText;
-	    if (this.userIsFollowed()) {
-	      buttonText = "unfollow";
+
+	    if (this.state.pushed === true) {
+	      buttonText = "UnFollow";
 	    } else {
-	      buttonText = "follow";
+	      buttonText = "Follow";
 	    }
 	    if (this.props.user.id === SessionStore.currentUser().id) {
 	      return;
 	    } else {
-	      return React.createElement('input', { type: 'button',
-	        onClick: this._toggleFollow,
-	        value: buttonText,
-	        className: 'follow-button' });
+	      return React.createElement(
+	        'button',
+	        {
+	          id: 'follow-button-toggle',
+	          onClick: this._toggleFollow },
+	        buttonText
+	      );
 	    }
 	  },
 

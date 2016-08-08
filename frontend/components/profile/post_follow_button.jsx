@@ -6,9 +6,11 @@ var ProfileStore = require('../../stores/profile_store');
 
 var FollowButton = React.createClass({
 
-  _toggleFollow: function(){
+  getInitialState: function(){
+    return { pushed: this.userIsFollowed()};
+  },
 
-    console.log(ProfileActions.sayHello());
+  _toggleFollow: function(){
 
     var relationshipData = {
       follower_id: SessionStore.currentUser().id,
@@ -20,6 +22,9 @@ var FollowButton = React.createClass({
     } else {
       ProfileActions.createFollow(relationshipData);
     }
+
+    this.setState({ pushed: this.userIsFollowed()});
+
   },
 
   userIsFollowed: function() {
@@ -27,20 +32,22 @@ var FollowButton = React.createClass({
   },
 
   _buttonDisplay: function (){
-  var buttonText;
-  if (this.userIsFollowed()){
-    buttonText = "unfollow";
-  }else{
-    buttonText = "follow";
-  }
+    var buttonText;
+
+    if (this.state.pushed === true){
+      buttonText = "UnFollow";
+    }else{
+      buttonText = "Follow";
+    }
   if (this.props.user.id === SessionStore.currentUser().id) {
     return;
   } else {
     return (
-      <input type="button"
-             onClick={this._toggleFollow}
-             value={buttonText}
-             className="follow-button"/>
+      <button
+             id="follow-button-toggle"
+             onClick={this._toggleFollow}>
+             {buttonText}
+           </button>
     );
   }
 },
