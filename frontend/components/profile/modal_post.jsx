@@ -1,5 +1,5 @@
 var React = require('react');
-var ProfileHeader = require('./profile_header');
+var PostHeader = require('../posts/post_header');
 var CommentBox = require('../posts/comment_box');
 
 var ModalPost = React.createClass({
@@ -7,7 +7,7 @@ var ModalPost = React.createClass({
   render: function(){
     return(
       <div className="modal-post-container">
-        <ProfileHeader user={this.props.post}/>
+        <PostHeader post={this.props.post}/>
         <CommentBox post={this.props.post}/>
       </div>
     );
@@ -16,3 +16,5 @@ var ModalPost = React.createClass({
 });
 
 module.exports = ModalPost;
+
+//remove if unused

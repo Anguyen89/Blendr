@@ -90,15 +90,9 @@
 	);
 
 	document.addEventListener("DOMContentLoaded", function () {
-	  var root = document.getElementById("root");
-	  var register = document.getElementById('register');
 
-	  if (root) {
-
-	    ReactDOM.render(appRouter, root);
-	  } else {
-	    ReactDOM.render(React.createElement(SignUp, null), register);
-	  }
+	  Modal.setAppElement(document.body);
+	  ReactDOM.render(appRouter, document.getElementById('root'));
 	});
 
 /***/ },
@@ -33802,6 +33796,7 @@
 
 	var SessionStore = __webpack_require__(236);
 	var SessionActions = __webpack_require__(259);
+	var Upload = __webpack_require__(312);
 
 	module.exports = React.createClass({
 	  displayName: 'exports',
@@ -34511,9 +34506,9 @@
 	  displayName: 'FollowButton',
 
 
-	  getInitialState: function getInitialState() {
-	    return { pushed: this.userIsFollowed() };
-	  },
+	  // getInitialState: function(){
+	  //   return { pushed: this.userIsFollowed()};
+	  // },
 
 	  _toggleFollow: function _toggleFollow() {
 
@@ -34527,8 +34522,8 @@
 	    } else {
 	      ProfileActions.createFollow(relationshipData);
 	    }
-
-	    this.setState({ pushed: this.userIsFollowed() });
+	    //
+	    // this.setState({ pushed: this.userIsFollowed()});
 	  },
 
 	  userIsFollowed: function userIsFollowed() {
@@ -34536,13 +34531,13 @@
 	  },
 
 	  _buttonDisplay: function _buttonDisplay() {
-	    var buttonText;
-
-	    if (this.state.pushed === true) {
-	      buttonText = "UnFollow";
-	    } else {
-	      buttonText = "Follow";
-	    }
+	    // var buttonText;
+	    //
+	    // if (this.state.pushed === true){
+	    //   buttonText = "UnFollow";
+	    // }else{
+	    //   buttonText = "Follow";
+	    // }
 	    if (this.props.user.id === SessionStore.currentUser().id) {
 	      return;
 	    } else {
@@ -34550,7 +34545,7 @@
 	        id: 'follow-button-toggle',
 	        type: 'checkbox',
 	        onChange: this._toggleFollow,
-	        checked: this.state.pushed });
+	        checked: this.userIsFollowed() });
 	    }
 	  },
 
@@ -34614,7 +34609,7 @@
 
 
 	  getInitialState: function getInitialState() {
-	    return { post: {}, modalOpen: false };
+	    return { modalOpen: false };
 	  },
 
 	  onChange: function onChange() {
@@ -34638,11 +34633,25 @@
 	    this.setState({ modalOpen: false });
 	  },
 
+	  // <ModalPost post={this.props.post} /> add to the modal to display user info
+
 	  render: function render() {
 	    return React.createElement(
 	      'div',
 	      { className: 'profile-post-picture' },
-	      React.createElement('img', { src: this.props.post.url })
+	      React.createElement('img', { onClick: this._handleClick, src: this.props.post.url }),
+	      React.createElement(
+	        Modal,
+	        {
+	          isOpen: this.state.modalOpen,
+	          onRequestClose: this.closeModal,
+	          style: customStyle },
+	        React.createElement(
+	          'div',
+	          { className: 'modal-picture' },
+	          React.createElement('img', { src: this.props.post.url })
+	        )
+	      )
 	    );
 	  }
 	});
@@ -37208,7 +37217,7 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var ProfileHeader = __webpack_require__(273);
+	var PostHeader = __webpack_require__(311);
 	var CommentBox = __webpack_require__(306);
 
 	var ModalPost = React.createClass({
@@ -37219,7 +37228,7 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'modal-post-container' },
-	      React.createElement(ProfileHeader, { user: this.props.post }),
+	      React.createElement(PostHeader, { post: this.props.post }),
 	      React.createElement(CommentBox, { post: this.props.post })
 	    );
 	  }
@@ -37227,6 +37236,88 @@
 	});
 
 	module.exports = ModalPost;
+
+	//remove if unused
+
+/***/ },
+/* 311 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var UserProfilePic = __webpack_require__(274);
+	var UserProfileInfo = __webpack_require__(275);
+
+	var PostHeader = React.createClass({
+	  displayName: 'PostHeader',
+
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'post-header' },
+	      React.createElement(
+	        'div',
+	        { className: 'modal-pic-url' },
+	        React.createElement('img', { src: this.props.post.user })
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'profile-info' },
+	        React.createElement(
+	          'div',
+	          { className: 'profile-header-name' },
+	          React.createElement(
+	            'h1',
+	            null,
+	            this.props.post.user_id
+	          )
+	        ),
+	        React.createElement(
+	          'h3',
+	          null,
+	          '@',
+	          this.props.post.user_id
+	        )
+	      )
+	    );
+	  }
+	});
+
+	module.exports = PostHeader;
+
+	//delete if unused
+
+/***/ },
+/* 312 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var PostActions = __webpack_require__(299);
+
+	var Upload = React.createClass({
+	  displayName: 'Upload',
+
+	  upload: function upload(e) {
+	    e.preventDefault();
+
+	    cloudinary.openUploadWidget(window.cloudinary_options, function (error, images) {
+	      if (error, images) {
+	        var picture = { url: images[0].url };
+	        PostActions.createPost(picture);
+	      }
+	    });
+	  },
+
+	  render: function render() {
+	    return React.createElement('i', { onClick: this.upload, className: 'create-post-button' });
+	  }
+	});
+
+	module.exports = Upload;
 
 /***/ }
 /******/ ]);

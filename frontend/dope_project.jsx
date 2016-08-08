@@ -43,14 +43,9 @@ var SessionActions = require('./actions/session_actions');
  );
 
 document.addEventListener("DOMContentLoaded", function(){
-  var root = document.getElementById("root");
-  var register = document.getElementById('register');
 
-  if (root){
-
-    ReactDOM.render(appRouter, root);
-  } else {
-    ReactDOM.render(<SignUp/>, register);
+    Modal.setAppElement(document.body);
+    ReactDOM.render(appRouter, document.getElementById('root'));
   }
 
-});
+);

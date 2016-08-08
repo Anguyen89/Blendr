@@ -3,6 +3,7 @@ json.url @picture.url
 json.user_id @picture.user_id
 json.user @picture.user
 
+
 json.comments @picture.comments do |comment|
   json.id comment.id
   json.user_id comment.user_id

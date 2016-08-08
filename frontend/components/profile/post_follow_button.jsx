@@ -6,9 +6,9 @@ var ProfileStore = require('../../stores/profile_store');
 
 var FollowButton = React.createClass({
 
-  getInitialState: function(){
-    return { pushed: this.userIsFollowed()};
-  },
+  // getInitialState: function(){
+  //   return { pushed: this.userIsFollowed()};
+  // },
 
   _toggleFollow: function(){
 
@@ -22,8 +22,8 @@ var FollowButton = React.createClass({
     } else {
       ProfileActions.createFollow(relationshipData);
     }
-
-    this.setState({ pushed: this.userIsFollowed()});
+    //
+    // this.setState({ pushed: this.userIsFollowed()});
 
   },
 
@@ -32,13 +32,13 @@ var FollowButton = React.createClass({
   },
 
   _buttonDisplay: function (){
-    var buttonText;
-
-    if (this.state.pushed === true){
-      buttonText = "UnFollow";
-    }else{
-      buttonText = "Follow";
-    }
+    // var buttonText;
+    //
+    // if (this.state.pushed === true){
+    //   buttonText = "UnFollow";
+    // }else{
+    //   buttonText = "Follow";
+    // }
   if (this.props.user.id === SessionStore.currentUser().id) {
     return;
   } else {
@@ -47,7 +47,7 @@ var FollowButton = React.createClass({
              id="follow-button-toggle"
              type='checkbox'
              onChange={this._toggleFollow}
-             checked={this.state.pushed}/>
+             checked={this.userIsFollowed()}/>
     );
   }
 },

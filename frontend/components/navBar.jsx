@@ -3,6 +3,7 @@ var hashHistory = require('react-router').hashHistory;
 
 var SessionStore = require('../stores/session_store');
 var SessionActions = require('../actions/session_actions');
+var Upload = require('./upload');
 
 module.exports = React.createClass({
 

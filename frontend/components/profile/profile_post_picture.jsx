@@ -7,7 +7,7 @@ var ModalPost = require('./modal_post');
 var ProfilePostPicture = React.createClass({
 
   getInitialState: function () {
-    return { post: {}, modalOpen: false };
+    return { modalOpen: false };
   },
 
   onChange: function() {
@@ -32,12 +32,23 @@ var ProfilePostPicture = React.createClass({
   },
 
 
+            // <ModalPost post={this.props.post} /> add to the modal to display user info
 
   render: function() {
     return (
       <div className="profile-post-picture">
-        <img src={this.props.post.url} />
+        <img onClick={this._handleClick} src={this.props.post.url} />
 
+          <Modal
+            isOpen={this.state.modalOpen}
+            onRequestClose={this.closeModal}
+            style={customStyle}>
+
+            <div className="modal-picture">
+              <img src={this.props.post.url} />
+            </div>
+
+          </Modal>
       </div>
     );
   }
