@@ -11,7 +11,7 @@ var FollowButton = React.createClass({
 
     var relationshipData = {
       follower_id: SessionStore.currentUser().id,
-      followed_id: this.props.user.id,
+      followed_id: this.props.user.id
     };
 
     if (this.userIsFollowed()){

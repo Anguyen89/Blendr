@@ -25,7 +25,7 @@ var addFollower = function(relationship){
 };
 
 var removeFollower = function(relationship) {
-  var user = this.findById(relationship.followed_id);
+  var user = ProfileStore.findById(relationship.followed_id);
   var followerIdx = user.followers.indexOf(SessionStore.currentUser() );
   user.followers.splice(followerIdx, 1);
 };
