@@ -66,10 +66,10 @@
 	var SessionStore = __webpack_require__(236);
 	var SessionActions = __webpack_require__(259);
 
-	var PostFeed = __webpack_require__(273);
+	var PostFeed = __webpack_require__(301);
 
-	window.PostUtils = __webpack_require__(275);
-	window.PostActions = __webpack_require__(274);
+	window.PostUtils = __webpack_require__(300);
+	window.PostActions = __webpack_require__(299);
 	window.PostStore = __webpack_require__(267);
 
 	window.ProfileActions = __webpack_require__(271);
@@ -34058,8 +34058,8 @@
 	var ProfileActions = __webpack_require__(271);
 	var SessionStore = __webpack_require__(236);
 
-	var ProfileHeader = __webpack_require__(277);
-	var ProfilePictureIndex = __webpack_require__(280);
+	var ProfileHeader = __webpack_require__(273);
+	var ProfilePictureIndex = __webpack_require__(277);
 
 	var ProfileFeed = React.createClass({
 	  displayName: 'ProfileFeed',
@@ -34278,7 +34278,31 @@
 	var ProfileUtil = __webpack_require__(272);
 	var AppDispatcher = __webpack_require__(237);
 
-	var ProfileActions = {
+	module.exports = {
+	  createFollow: function createFollow(relationship) {
+	    console.log("inside createFollow");
+	    ProfileUtil.createFollow(relationship, this.receiveFollow);
+	  },
+
+	  deleteFollow: function deleteFollow(relationship) {
+	    console.log("inside delete follow");
+	    ProfileUtil.deleteFollow(relationship, this.removeFollow);
+	  },
+
+	  receiveFollow: function receiveFollow(relationship) {
+	    console.log("dispatching the follow");
+	    AppDispatcher.dispatch({
+	      actionType: ProfileConstants.FOLLOW_RECEIVED,
+	      relationship: relationship
+	    });
+	  },
+
+	  removeFollow: function removeFollow(relationship) {
+	    AppDispatcher.dispatch({
+	      actionType: ProfileConstants.FOLLOW_REMOVED,
+	      relationship: relationship
+	    });
+	  },
 
 	  fetchUser: function fetchUser(id) {
 	    ProfileUtil.fetchUser(id, this.receiveUser);
@@ -34291,31 +34315,11 @@
 	    });
 	  },
 
-	  createFollow: function createFollow(relationship) {
-	    ProfileUtil.createFollow(relationship, this.receiveFollow);
-	  },
-
-	  deleteFollow: function deleteFollow(relationship) {
-	    ProfileUtil.deleteFollow(relationship, this.removeFollow);
-	  },
-
-	  receiveFollow: function receiveFollow(relationship) {
-	    AppDispatcher.dispatch({
-	      actionType: ProfileConstants.FOLLOW_RECEIVED,
-	      relationship: relationship
-	    });
-	  },
-
-	  removeFollow: function removeFollow(relationship) {
-	    AppDispatcher.dispatch({
-	      actionType: ProfileConstants.FOLLOW_REMOVED,
-	      relationship: relationship
-	    });
+	  sayHello: function sayHello() {
+	    return console.log("hello");
 	  }
 
 	};
-
-	module.exports = ProfileActions;
 
 /***/ },
 /* 272 */
@@ -34333,6 +34337,7 @@
 	  },
 
 	  createFollow: function createFollow(relationship, cb) {
+	    console.log("create follow in backend");
 	    $.ajax({
 	      url: "api/relationships",
 	      type: "POST",
@@ -34360,209 +34365,9 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var PostStore = __webpack_require__(267);
-	var SessionStore = __webpack_require__(236);
-	var PostActions = __webpack_require__(274);
-	var PostFeedItem = __webpack_require__(276);
-
-	var PostFeed = React.createClass({
-	  displayName: 'PostFeed',
-	  getInitialState: function getInitialState() {
-	    return { posts: [], scrollCount: 1, time: Date.now() };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.PostStoreListener = PostStore.addListener(this._onChange);
-	    this.scrollListener = window.addEventListener("scroll", this.addPosts);
-	    PostActions.fetchPosts();
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.PostStoreListener.remove();
-	    window.removeEventListener("scroll", this.addPosts);
-	  },
-
-	  addPosts: function addPosts() {
-	    if (window.innerHeight + window.scrollY + 1 >= document.body.offsetHeight && this.state.time + 1000 < Date.now()) {
-	      $('.fa-spinner').show();
-
-	      this.state.scrollCount += 1;
-	      this.state.time = Date.now();
-	      PostActions.fetchPosts(this.state.scrollCount);
-	    }
-	  },
-
-	  _onChange: function _onChange() {
-	    this.setState({ posts: PostStore.all() });
-	  },
-
-
-	  render: function render() {
-
-	    var posts = this.state.posts;
-	    if (SessionStore.isUserLoggedIn()) {
-	      return React.createElement(
-	        'div',
-	        null,
-	        React.createElement(
-	          'div',
-	          { className: 'feed' },
-	          this.props.children,
-	          posts.map(function (post) {
-	            return React.createElement(PostFeedItem, { post: post, userId: post.user_id, key: post.id });
-	          })
-	        )
-	      );
-	    } else {
-	      return React.createElement('div', null);
-	    }
-	  }
-
-	});
-
-	module.exports = PostFeed;
-
-/***/ },
-/* 274 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var PostUtil = __webpack_require__(275);
-	var AppDispatcher = __webpack_require__(237);
-	var PostConstants = __webpack_require__(268);
-
-	var PostActions = {
-
-	  fetchPosts: function fetchPosts(count) {
-	    PostUtil.fetchPosts(count, this.receivePosts);
-	  },
-
-	  receivePosts: function receivePosts(posts) {
-	    AppDispatcher.dispatch({
-	      actionType: PostConstants.RECEIVE_POSTS,
-	      posts: posts
-	    });
-	  },
-	  fetchPost: function fetchPost(postId) {
-	    PostUtil.fetchPost(postId, this.receivePost);
-	  },
-
-	  receivePost: function receivePost(post) {
-	    AppDispatcher.dispatch({
-	      actionType: PostConstants.RECEIVE_POST,
-	      post: post
-	    });
-	  },
-
-	  createPost: function createPost(post) {
-	    PostUtil.createPost(post, this.receivePost);
-	  }
-
-	};
-
-	module.exports = PostActions;
-
-/***/ },
-/* 275 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var PostActions = __webpack_require__(274);
-
-	var PostUtils = {
-
-	  fetchPosts: function fetchPosts(count, cb) {
-	    $.ajax({
-	      url: 'api/pictures',
-	      data: { count: count },
-	      success: cb
-	    });
-	  },
-
-	  fetchPost: function fetchPost(postId, cb) {
-	    $.ajax({
-	      url: 'api/pictures/' + postId,
-	      success: cb
-	    });
-	  },
-
-	  createPost: function createPost(post, cb) {
-	    $.ajax({
-	      url: "/api/pictures/",
-	      type: "POST",
-	      data: { post: post },
-	      success: cb
-	    });
-	  }
-
-	};
-
-	module.exports = PostUtils;
-
-/***/ },
-/* 276 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-	var HashHistory = __webpack_require__(172).hashHistory;
-	var CommentBox = __webpack_require__(302);
-
-	var PostFeedItem = React.createClass({
-	  displayName: 'PostFeedItem',
-
-
-	  pushToProfile: function pushToProfile(e) {
-	    e.preventDefault();
-	    HashHistory.push('/profile/' + this.props.userId);
-	  },
-
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      { className: 'post-container' },
-	      React.createElement(
-	        'div',
-	        { className: 'user-info-container' },
-	        React.createElement(
-	          'div',
-	          { className: 'user-photo-name' },
-	          React.createElement('img', { className: 'user-photo', onClick: this.pushToProfile, src: this.props.post.user.profile_picture_url }),
-	          React.createElement(
-	            'h2',
-	            { className: 'post-author' },
-	            this.props.post.user.username
-	          )
-	        )
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'user-image-container' },
-	        React.createElement('img', { className: 'user-post-image', src: this.props.post.url })
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'post-comments-container' },
-	        React.createElement(CommentBox, { post: this.props.post })
-	      )
-	    );
-	  }
-
-	});
-
-	module.exports = PostFeedItem;
-
-/***/ },
-/* 277 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-	var UserProfilePic = __webpack_require__(278);
-	var UserProfileInfo = __webpack_require__(279);
-	var FollowButton = __webpack_require__(306);
+	var UserProfilePic = __webpack_require__(274);
+	var UserProfileInfo = __webpack_require__(275);
+	var FollowButton = __webpack_require__(276);
 
 	var ProfileHeader = React.createClass({
 	  displayName: 'ProfileHeader',
@@ -34582,7 +34387,7 @@
 	module.exports = ProfileHeader;
 
 /***/ },
-/* 278 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -34606,7 +34411,7 @@
 	module.exports = UserProfilePic;
 
 /***/ },
-/* 279 */
+/* 275 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -34643,13 +34448,79 @@
 	module.exports = UserProfileInfo;
 
 /***/ },
-/* 280 */
+/* 276 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var ProfilePostPicture = __webpack_require__(281);
+	var SessionStore = __webpack_require__(236);
+	var ProfileActions = __webpack_require__(271);
+	var ProfileStore = __webpack_require__(269);
+
+	var FollowButton = React.createClass({
+	  displayName: 'FollowButton',
+
+
+	  _toggleFollow: function _toggleFollow() {
+
+	    console.log(ProfileActions.sayHello());
+
+	    var relationshipData = {
+	      follower_id: SessionStore.currentUser().id,
+	      followed_id: this.props.user.id
+	    };
+
+	    if (this.userIsFollowed()) {
+	      ProfileActions.deleteFollow(relationshipData);
+	    } else {
+	      ProfileActions.createFollow(relationshipData);
+	    }
+	  },
+
+	  userIsFollowed: function userIsFollowed() {
+	    return ProfileStore.userIsFollowed(this.props.user);
+	  },
+
+	  _buttonDisplay: function _buttonDisplay() {
+	    var buttonText;
+	    if (this.userIsFollowed()) {
+	      buttonText = "unfollow";
+	    } else {
+	      buttonText = "follow";
+	    }
+	    if (this.props.user.id === SessionStore.currentUser().id) {
+	      return;
+	    } else {
+	      return React.createElement('input', { type: 'button',
+	        onClick: this._toggleFollow,
+	        value: buttonText,
+	        className: 'follow-button' });
+	    }
+	  },
+
+	  render: function render() {
+
+	    return React.createElement(
+	      'div',
+	      { className: 'follow-button-container' },
+	      this._buttonDisplay()
+	    );
+	  }
+	});
+
+	//need to implement the actions utils for this to work.
+
+	module.exports = FollowButton;
+
+/***/ },
+/* 277 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var ProfilePostPicture = __webpack_require__(278);
 
 	var ProfilePictureIndex = React.createClass({
 	  displayName: 'ProfilePictureIndex',
@@ -34672,15 +34543,15 @@
 	module.exports = ProfilePictureIndex;
 
 /***/ },
-/* 281 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var Modal = __webpack_require__(282);
+	var Modal = __webpack_require__(279);
 	var PostStore = __webpack_require__(267);
-	var PostActions = __webpack_require__(274);
+	var PostActions = __webpack_require__(299);
 
 	var ProfilePostPicture = React.createClass({
 	  displayName: 'ProfilePostPicture',
@@ -34715,25 +34586,25 @@
 	module.exports = ProfilePostPicture;
 
 /***/ },
-/* 282 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(283);
+	module.exports = __webpack_require__(280);
 
 
 
 /***/ },
-/* 283 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(33);
-	var ExecutionEnvironment = __webpack_require__(284);
-	var ModalPortal = React.createFactory(__webpack_require__(285));
-	var ariaAppHider = __webpack_require__(300);
-	var elementClass = __webpack_require__(301);
+	var ExecutionEnvironment = __webpack_require__(281);
+	var ModalPortal = React.createFactory(__webpack_require__(282));
+	var ariaAppHider = __webpack_require__(297);
+	var elementClass = __webpack_require__(298);
 	var renderSubtreeIntoContainer = __webpack_require__(33).unstable_renderSubtreeIntoContainer;
-	var Assign = __webpack_require__(289);
+	var Assign = __webpack_require__(286);
 
 	var SafeHTMLElement = ExecutionEnvironment.canUseDOM ? window.HTMLElement : {};
 	var AppElement = ExecutionEnvironment.canUseDOM ? document.body : {appendChild: function() {}};
@@ -34841,7 +34712,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 284 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -34886,14 +34757,14 @@
 
 
 /***/ },
-/* 285 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
 	var div = React.DOM.div;
-	var focusManager = __webpack_require__(286);
-	var scopeTab = __webpack_require__(288);
-	var Assign = __webpack_require__(289);
+	var focusManager = __webpack_require__(283);
+	var scopeTab = __webpack_require__(285);
+	var Assign = __webpack_require__(286);
 
 	// so that our CSS is statically analyzable
 	var CLASS_NAMES = {
@@ -35084,10 +34955,10 @@
 
 
 /***/ },
-/* 286 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var findTabbable = __webpack_require__(287);
+	var findTabbable = __webpack_require__(284);
 	var modalElement = null;
 	var focusLaterElement = null;
 	var needToFocus = false;
@@ -35158,7 +35029,7 @@
 
 
 /***/ },
-/* 287 */
+/* 284 */
 /***/ function(module, exports) {
 
 	/*!
@@ -35214,10 +35085,10 @@
 
 
 /***/ },
-/* 288 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var findTabbable = __webpack_require__(287);
+	var findTabbable = __webpack_require__(284);
 
 	module.exports = function(node, event) {
 	  var tabbable = findTabbable(node);
@@ -35239,7 +35110,7 @@
 
 
 /***/ },
-/* 289 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -35250,9 +35121,9 @@
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var baseAssign = __webpack_require__(290),
-	    createAssigner = __webpack_require__(296),
-	    keys = __webpack_require__(292);
+	var baseAssign = __webpack_require__(287),
+	    createAssigner = __webpack_require__(293),
+	    keys = __webpack_require__(289);
 
 	/**
 	 * A specialized version of `_.assign` for customizing assigned values without
@@ -35325,7 +35196,7 @@
 
 
 /***/ },
-/* 290 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -35336,8 +35207,8 @@
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var baseCopy = __webpack_require__(291),
-	    keys = __webpack_require__(292);
+	var baseCopy = __webpack_require__(288),
+	    keys = __webpack_require__(289);
 
 	/**
 	 * The base implementation of `_.assign` without support for argument juggling,
@@ -35358,7 +35229,7 @@
 
 
 /***/ },
-/* 291 */
+/* 288 */
 /***/ function(module, exports) {
 
 	/**
@@ -35396,7 +35267,7 @@
 
 
 /***/ },
-/* 292 */
+/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -35407,9 +35278,9 @@
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var getNative = __webpack_require__(293),
-	    isArguments = __webpack_require__(294),
-	    isArray = __webpack_require__(295);
+	var getNative = __webpack_require__(290),
+	    isArguments = __webpack_require__(291),
+	    isArray = __webpack_require__(292);
 
 	/** Used to detect unsigned integer values. */
 	var reIsUint = /^\d+$/;
@@ -35638,7 +35509,7 @@
 
 
 /***/ },
-/* 293 */
+/* 290 */
 /***/ function(module, exports) {
 
 	/**
@@ -35781,7 +35652,7 @@
 
 
 /***/ },
-/* 294 */
+/* 291 */
 /***/ function(module, exports) {
 
 	/**
@@ -36044,7 +35915,7 @@
 
 
 /***/ },
-/* 295 */
+/* 292 */
 /***/ function(module, exports) {
 
 	/**
@@ -36230,7 +36101,7 @@
 
 
 /***/ },
-/* 296 */
+/* 293 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -36241,9 +36112,9 @@
 	 * Copyright 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
 	 * Available under MIT license <https://lodash.com/license>
 	 */
-	var bindCallback = __webpack_require__(297),
-	    isIterateeCall = __webpack_require__(298),
-	    restParam = __webpack_require__(299);
+	var bindCallback = __webpack_require__(294),
+	    isIterateeCall = __webpack_require__(295),
+	    restParam = __webpack_require__(296);
 
 	/**
 	 * Creates a function that assigns properties of source object(s) to a given
@@ -36288,7 +36159,7 @@
 
 
 /***/ },
-/* 297 */
+/* 294 */
 /***/ function(module, exports) {
 
 	/**
@@ -36359,7 +36230,7 @@
 
 
 /***/ },
-/* 298 */
+/* 295 */
 /***/ function(module, exports) {
 
 	/**
@@ -36497,7 +36368,7 @@
 
 
 /***/ },
-/* 299 */
+/* 296 */
 /***/ function(module, exports) {
 
 	/**
@@ -36570,7 +36441,7 @@
 
 
 /***/ },
-/* 300 */
+/* 297 */
 /***/ function(module, exports) {
 
 	var _element = typeof document !== 'undefined' ? document.body : null;
@@ -36618,7 +36489,7 @@
 
 
 /***/ },
-/* 301 */
+/* 298 */
 /***/ function(module, exports) {
 
 	module.exports = function(opts) {
@@ -36683,13 +36554,213 @@
 
 
 /***/ },
+/* 299 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var PostUtil = __webpack_require__(300);
+	var AppDispatcher = __webpack_require__(237);
+	var PostConstants = __webpack_require__(268);
+
+	var PostActions = {
+
+	  fetchPosts: function fetchPosts(count) {
+	    PostUtil.fetchPosts(count, this.receivePosts);
+	  },
+
+	  receivePosts: function receivePosts(posts) {
+	    AppDispatcher.dispatch({
+	      actionType: PostConstants.RECEIVE_POSTS,
+	      posts: posts
+	    });
+	  },
+	  fetchPost: function fetchPost(postId) {
+	    PostUtil.fetchPost(postId, this.receivePost);
+	  },
+
+	  receivePost: function receivePost(post) {
+	    AppDispatcher.dispatch({
+	      actionType: PostConstants.RECEIVE_POST,
+	      post: post
+	    });
+	  },
+
+	  createPost: function createPost(post) {
+	    PostUtil.createPost(post, this.receivePost);
+	  }
+
+	};
+
+	module.exports = PostActions;
+
+/***/ },
+/* 300 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var PostActions = __webpack_require__(299);
+
+	var PostUtils = {
+
+	  fetchPosts: function fetchPosts(count, cb) {
+	    $.ajax({
+	      url: 'api/pictures',
+	      data: { count: count },
+	      success: cb
+	    });
+	  },
+
+	  fetchPost: function fetchPost(postId, cb) {
+	    $.ajax({
+	      url: 'api/pictures/' + postId,
+	      success: cb
+	    });
+	  },
+
+	  createPost: function createPost(post, cb) {
+	    $.ajax({
+	      url: "/api/pictures/",
+	      type: "POST",
+	      data: { post: post },
+	      success: cb
+	    });
+	  }
+
+	};
+
+	module.exports = PostUtils;
+
+/***/ },
+/* 301 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var PostStore = __webpack_require__(267);
+	var SessionStore = __webpack_require__(236);
+	var PostActions = __webpack_require__(299);
+	var PostFeedItem = __webpack_require__(302);
+
+	var PostFeed = React.createClass({
+	  displayName: 'PostFeed',
+	  getInitialState: function getInitialState() {
+	    return { posts: [], scrollCount: 1, time: Date.now() };
+	  },
+	  componentDidMount: function componentDidMount() {
+	    this.PostStoreListener = PostStore.addListener(this._onChange);
+	    this.scrollListener = window.addEventListener("scroll", this.addPosts);
+	    PostActions.fetchPosts();
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.PostStoreListener.remove();
+	    window.removeEventListener("scroll", this.addPosts);
+	  },
+
+	  addPosts: function addPosts() {
+	    if (window.innerHeight + window.scrollY + 1 >= document.body.offsetHeight && this.state.time + 1000 < Date.now()) {
+	      $('.fa-spinner').show();
+
+	      this.state.scrollCount += 1;
+	      this.state.time = Date.now();
+	      PostActions.fetchPosts(this.state.scrollCount);
+	    }
+	  },
+
+	  _onChange: function _onChange() {
+	    this.setState({ posts: PostStore.all() });
+	  },
+
+
+	  render: function render() {
+
+	    var posts = this.state.posts;
+	    if (SessionStore.isUserLoggedIn()) {
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement(
+	          'div',
+	          { className: 'feed' },
+	          this.props.children,
+	          posts.map(function (post) {
+	            return React.createElement(PostFeedItem, { post: post, userId: post.user_id, key: post.id });
+	          })
+	        )
+	      );
+	    } else {
+	      return React.createElement('div', null);
+	    }
+	  }
+
+	});
+
+	module.exports = PostFeed;
+
+/***/ },
 /* 302 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var CommentIndexItem = __webpack_require__(303);
+	var HashHistory = __webpack_require__(172).hashHistory;
+	var CommentBox = __webpack_require__(303);
+
+	var PostFeedItem = React.createClass({
+	  displayName: 'PostFeedItem',
+
+
+	  pushToProfile: function pushToProfile(e) {
+	    e.preventDefault();
+	    HashHistory.push('/profile/' + this.props.userId);
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'post-container' },
+	      React.createElement(
+	        'div',
+	        { className: 'user-info-container' },
+	        React.createElement(
+	          'div',
+	          { className: 'user-photo-name' },
+	          React.createElement('img', { className: 'user-photo', onClick: this.pushToProfile, src: this.props.post.user.profile_picture_url }),
+	          React.createElement(
+	            'h2',
+	            { className: 'post-author' },
+	            this.props.post.user.username
+	          )
+	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'user-image-container' },
+	        React.createElement('img', { className: 'user-post-image', src: this.props.post.url })
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'post-comments-container' },
+	        React.createElement(CommentBox, { post: this.props.post })
+	      )
+	    );
+	  }
+
+	});
+
+	module.exports = PostFeedItem;
+
+/***/ },
+/* 303 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var CommentIndexItem = __webpack_require__(304);
 
 	var CommentIndex = React.createClass({
 	  displayName: 'CommentIndex',
@@ -36728,7 +36799,7 @@
 	module.exports = CommentIndex;
 
 /***/ },
-/* 303 */
+/* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36764,72 +36835,6 @@
 	});
 
 	module.exports = CommentIndexItem;
-
-/***/ },
-/* 304 */,
-/* 305 */,
-/* 306 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-	var SessionStore = __webpack_require__(236);
-	var ProfileActions = '../../actions/profile_actions';
-	var ProfileStore = __webpack_require__(269);
-
-	var FollowButton = React.createClass({
-	  displayName: 'FollowButton',
-
-
-	  _toggleFollow: function _toggleFollow() {
-
-	    var relationshipData = {
-	      follower_id: SessionStore.currentUser().id,
-	      followed_id: this.props.user.id
-	    };
-
-	    if (this.userIsFollowed()) {
-	      ProfileActions.deleteFollow(relationshipData);
-	    } else {
-	      ProfileActions.createFollow(relationshipData);
-	    }
-	  },
-
-	  userIsFollowed: function userIsFollowed() {
-	    return ProfileStore.userIsFollowed(this.props.user);
-	  },
-
-	  _buttonDisplay: function _buttonDisplay() {
-	    var buttonText;
-	    if (this.userIsFollowed()) {
-	      buttonText = "unfollow";
-	    } else {
-	      buttonText = "follow";
-	    }
-	    if (this.props.user.id === SessionStore.currentUser().id) {
-	      return;
-	    } else {
-	      return React.createElement('input', { type: 'button',
-	        onClick: this._toggleFollow,
-	        value: buttonText,
-	        className: 'follow-button' });
-	    }
-	  },
-
-	  render: function render() {
-
-	    return React.createElement(
-	      'div',
-	      { className: 'follow-button-container' },
-	      this._buttonDisplay()
-	    );
-	  }
-	});
-
-	//need to implement the actions utils for this to work.
-
-	module.exports = FollowButton;
 
 /***/ }
 /******/ ]);

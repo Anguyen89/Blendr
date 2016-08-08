@@ -1,13 +1,14 @@
 var React = require('react');
 var SessionStore = require('../../stores/session_store');
-var ProfileActions = ('../../actions/profile_actions');
+var ProfileActions = require('../../actions/profile_actions');
 var ProfileStore = require('../../stores/profile_store');
+
 
 var FollowButton = React.createClass({
 
-
-
   _toggleFollow: function(){
+
+    console.log(ProfileActions.sayHello());
 
     var relationshipData = {
       follower_id: SessionStore.currentUser().id,

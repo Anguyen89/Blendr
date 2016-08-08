@@ -9,6 +9,7 @@ var ProfileUtil = {
   },
 
   createFollow: function(relationship, cb){
+    console.log("create follow in backend");
     $.ajax({
       url: "api/relationships",
       type: "POST",
