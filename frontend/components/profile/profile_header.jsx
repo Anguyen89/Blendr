@@ -1,6 +1,8 @@
 var React = require('react');
 var UserProfilePic = require('./user_profile_pic');
 var UserProfileInfo = require('./user_profile_info');
+var FollowButton = require('./post_follow_button.jsx');
+
 
 var ProfileHeader = React.createClass({
 
@@ -9,6 +11,7 @@ var ProfileHeader = React.createClass({
       <div className="profile-header">
         <UserProfilePic user={this.props.user}/>
         <UserProfileInfo user={this.props.user}/>
+        <FollowButton user={this.props.user}/>
       </div>
     );
   }

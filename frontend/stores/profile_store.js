@@ -19,6 +19,29 @@ var resetUser = function(user){
   _users[user.id] = user;
 };
 
+var addFollower = function(relationship){
+  var user = _users[relationship.followed_id];
+  user.followers.push(SessionStore.currentUser());
+};
+
+var removeFollower = function(relationship) {
+  var user = this.findById(relationship.followed_id);
+  var followerIdx = user.followers.indexOf(SessionStore.currentUser() );
+  user.followers.splice(followerIdx, 1);
+};
+
+ProfileStore.userIsFollowed = function(user) {
+  var currentUser = SessionStore.currentUser();
+  var isFollowed = false;
+
+  user.followers.forEach(function(follower) {
+    if (follower.id === currentUser.id) {
+      isFollowed = true;
+    }
+  });
+  return isFollowed;
+};
+
 
 ProfileStore.all = function() {
   return Object.assign({}, _users);
@@ -33,6 +56,14 @@ ProfileStore.__onDispatch = function(payload){
   switch(payload.actionType){
     case ProfileConstants.RECEIVE_USER:
       resetUser(payload.user);
+      this.__emitChange();
+      break;
+    case ProfileConstants.RECEIVE_FOLLOW:
+      addFollower(payload.relationship);
+      this.__emitChange();
+      break;
+    case ProfileConstants.REMOVE_FOLLOW:
+      removeFollower(payload.relationship);
       this.__emitChange();
       break;
   }

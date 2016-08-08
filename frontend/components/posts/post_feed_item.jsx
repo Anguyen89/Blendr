@@ -3,7 +3,7 @@ var HashHistory = require('react-router').hashHistory;
 var CommentBox = require('./comment_index');
 
 
-var FollowButton = require('./post_follow_button.jsx');
+
 
 
 var PostFeedItem = React.createClass({
@@ -22,8 +22,6 @@ var PostFeedItem = React.createClass({
             <img className="user-photo" onClick={this.pushToProfile} src={this.props.post.user.profile_picture_url}></img>
             <h2 className="post-author">{this.props.post.user.username}</h2>
           </div>
-
-          <FollowButton className="post_follow_button-container" post={this.props.post}></FollowButton>
         </div>
 
         <div className="user-image-container">

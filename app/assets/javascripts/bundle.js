@@ -34205,6 +34205,29 @@
 	  _users[user.id] = user;
 	};
 
+	var addFollower = function addFollower(relationship) {
+	  var user = _users[relationship.followed_id];
+	  user.followers.push(SessionStore.currentUser());
+	};
+
+	var removeFollower = function removeFollower(relationship) {
+	  var user = this.findById(relationship.followed_id);
+	  var followerIdx = user.followers.indexOf(SessionStore.currentUser());
+	  user.followers.splice(followerIdx, 1);
+	};
+
+	ProfileStore.userIsFollowed = function (user) {
+	  var currentUser = SessionStore.currentUser();
+	  var isFollowed = false;
+
+	  user.followers.forEach(function (follower) {
+	    if (follower.id === currentUser.id) {
+	      isFollowed = true;
+	    }
+	  });
+	  return isFollowed;
+	};
+
 	ProfileStore.all = function () {
 	  return Object.assign({}, _users);
 	};
@@ -34217,6 +34240,14 @@
 	  switch (payload.actionType) {
 	    case ProfileConstants.RECEIVE_USER:
 	      resetUser(payload.user);
+	      this.__emitChange();
+	      break;
+	    case ProfileConstants.RECEIVE_FOLLOW:
+	      addFollower(payload.relationship);
+	      this.__emitChange();
+	      break;
+	    case ProfileConstants.REMOVE_FOLLOW:
+	      removeFollower(payload.relationship);
 	      this.__emitChange();
 	      break;
 	  }
@@ -34232,7 +34263,9 @@
 
 	module.exports = {
 	  RECEIVE_USER: "RECEIVE_USER",
-	  RECEIVE_USERS: "RECEIVE_USERS"
+	  RECEIVE_USERS: "RECEIVE_USERS",
+	  FOLLOW_RECEIVED: "FOLLOW_RECEIVED",
+	  FOLLOW_REMOVED: "FOLLOW_REMOVED"
 	};
 
 /***/ },
@@ -34256,6 +34289,28 @@
 	      actionType: ProfileConstants.RECEIVE_USER,
 	      user: user
 	    });
+	  },
+
+	  createFollow: function createFollow(relationship) {
+	    ProfileUtil.createFollow(relationship, this.receiveFollow);
+	  },
+
+	  deleteFollow: function deleteFollow(relationship) {
+	    ProfileUtil.deleteFollow(relationship, this.removeFollow);
+	  },
+
+	  receiveFollow: function receiveFollow(relationship) {
+	    AppDispatcher.dispatch({
+	      actionType: ProfileConstants.FOLLOW_RECEIVED,
+	      relationship: relationship
+	    });
+	  },
+
+	  removeFollow: function removeFollow(relationship) {
+	    AppDispatcher.dispatch({
+	      actionType: ProfileConstants.FOLLOW_REMOVED,
+	      relationship: relationship
+	    });
 	  }
 
 	};
@@ -34273,6 +34328,24 @@
 	    $.ajax({
 	      method: "GET",
 	      url: "users/" + id,
+	      success: cb
+	    });
+	  },
+
+	  createFollow: function createFollow(relationship, cb) {
+	    $.ajax({
+	      url: "api/relationships",
+	      type: "POST",
+	      data: { relationship: relationship },
+	      success: cb
+	    });
+	  },
+
+	  deleteFollow: function deleteFollow(relationship, cb) {
+	    $.ajax({
+	      url: "api/relationships/" + relationship.id,
+	      type: "DELETE",
+	      data: { relationship: relationship },
 	      success: cb
 	    });
 	  }
@@ -34436,8 +34509,6 @@
 	var HashHistory = __webpack_require__(172).hashHistory;
 	var CommentBox = __webpack_require__(302);
 
-	var FollowButton = __webpack_require__(305);
-
 	var PostFeedItem = React.createClass({
 	  displayName: 'PostFeedItem',
 
@@ -34463,8 +34534,7 @@
 	            { className: 'post-author' },
 	            this.props.post.user.username
 	          )
-	        ),
-	        React.createElement(FollowButton, { className: 'post_follow_button-container', post: this.props.post })
+	        )
 	      ),
 	      React.createElement(
 	        'div',
@@ -34492,6 +34562,7 @@
 	var React = __webpack_require__(1);
 	var UserProfilePic = __webpack_require__(278);
 	var UserProfileInfo = __webpack_require__(279);
+	var FollowButton = __webpack_require__(306);
 
 	var ProfileHeader = React.createClass({
 	  displayName: 'ProfileHeader',
@@ -34502,7 +34573,8 @@
 	      'div',
 	      { className: 'profile-header' },
 	      React.createElement(UserProfilePic, { user: this.props.user }),
-	      React.createElement(UserProfileInfo, { user: this.props.user })
+	      React.createElement(UserProfileInfo, { user: this.props.user }),
+	      React.createElement(FollowButton, { user: this.props.user })
 	    );
 	  }
 	});
@@ -36695,41 +36767,67 @@
 
 /***/ },
 /* 304 */,
-/* 305 */
+/* 305 */,
+/* 306 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var React = __webpack_require__(1);
 	var SessionStore = __webpack_require__(236);
+	var ProfileActions = '../../actions/profile_actions';
+	var ProfileStore = __webpack_require__(269);
 
 	var FollowButton = React.createClass({
 	  displayName: 'FollowButton',
 
 
-	  toggleButton: function toggleButton() {
-	    console.log("hello");
+	  _toggleFollow: function _toggleFollow() {
+
+	    var relationshipData = {
+	      follower_id: SessionStore.currentUser().id,
+	      followed_id: this.props.user.id
+	    };
+
+	    if (this.userIsFollowed()) {
+	      ProfileActions.deleteFollow(relationshipData);
+	    } else {
+	      ProfileActions.createFollow(relationshipData);
+	    }
+	  },
+
+	  userIsFollowed: function userIsFollowed() {
+	    return ProfileStore.userIsFollowed(this.props.user);
+	  },
+
+	  _buttonDisplay: function _buttonDisplay() {
+	    var buttonText;
+	    if (this.userIsFollowed()) {
+	      buttonText = "unfollow";
+	    } else {
+	      buttonText = "follow";
+	    }
+	    if (this.props.user.id === SessionStore.currentUser().id) {
+	      return;
+	    } else {
+	      return React.createElement('input', { type: 'button',
+	        onClick: this._toggleFollow,
+	        value: buttonText,
+	        className: 'follow-button' });
+	    }
 	  },
 
 	  render: function render() {
-	    var followButton;
-	    if (SessionStore.currentUser().id !== this.props.post.user_id) {
-	      followButton = React.createElement(
-	        'button',
-	        { onClick: this.toggleButton, className: 'follow-button' },
-	        'Follow'
-	      );
-	    } else {
-	      followButton = React.createElement('div', null);
-	    }
 
 	    return React.createElement(
 	      'div',
-	      null,
-	      followButton
+	      { className: 'follow-button-container' },
+	      this._buttonDisplay()
 	    );
 	  }
 	});
+
+	//need to implement the actions utils for this to work.
 
 	module.exports = FollowButton;
 
