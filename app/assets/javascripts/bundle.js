@@ -34148,6 +34148,10 @@
 	  });
 	};
 
+	var addPost = function addPost(post) {
+	  _posts[post.id] = post;
+	};
+
 	var setComment = function setComment(comment) {
 	  var post = _posts[comment.picture_id];
 	  post.comments.push(comment);
@@ -34191,6 +34195,10 @@
 	  switch (payload.actionType) {
 	    case PostConstants.RECEIVE_POSTS:
 	      resetPosts(payload.posts);
+	      this.__emitChange();
+	      break;
+	    case PostConstants.RECEIVE_POST:
+	      addPost(payload.post);
 	      this.__emitChange();
 	      break;
 	    case PostConstants.RECEIVE_COMMENT:
@@ -36757,10 +36765,11 @@
 	  },
 
 	  createPost: function createPost(post, cb) {
+	    console.log(post);
 	    $.ajax({
-	      url: "/api/pictures/",
+	      url: "api/pictures",
 	      type: "POST",
-	      data: { post: post },
+	      data: { picture: post },
 	      success: cb
 	    });
 	  },

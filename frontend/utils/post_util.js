@@ -18,10 +18,11 @@ fetchPost: function(postId, cb) {
 },
 
 createPost: function(post, cb) {
+  console.log(post);
   $.ajax({
-    url: "/api/pictures/",
+    url: "api/pictures",
     type: "POST",
-    data: {post: post},
+    data: {picture: post},
     success: cb
   });
 },

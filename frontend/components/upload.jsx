@@ -2,6 +2,7 @@ var React = require('react');
 var PostActions = require('../actions/post_actions');
 
 
+
 var Upload = React.createClass({
   upload: function(e){
     e.preventDefault();

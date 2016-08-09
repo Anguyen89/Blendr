@@ -18,6 +18,10 @@ var resetPosts = function(posts){
   });
 };
 
+var addPost = function(post){
+  _posts[post.id] = post;
+};
+
 var setComment = function(comment){
   var post = _posts[comment.picture_id];
   post.comments.push(comment);
@@ -66,6 +70,10 @@ PostStore.__onDispatch = function(payload){
   switch(payload.actionType){
     case PostConstants.RECEIVE_POSTS:
       resetPosts(payload.posts);
+      this.__emitChange();
+      break;
+    case PostConstants.RECEIVE_POST:
+      addPost(payload.post);
       this.__emitChange();
       break;
     case PostConstants.RECEIVE_COMMENT:
