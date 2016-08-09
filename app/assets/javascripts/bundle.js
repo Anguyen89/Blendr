@@ -33807,9 +33807,8 @@
 	      return React.createElement(
 	        'div',
 	        { className: 'nav-right' },
-	        React.createElement(Upload, null),
 	        React.createElement('img', { onClick: this.rootToProfile, src: 'https://image.freepik.com/free-icon/user-male-silhouette_318-55563.png' }),
-	        React.createElement('img', { src: 'http://image.flaticon.com/icons/png/512/33/33308.png' }),
+	        React.createElement(Upload, null),
 	        React.createElement('img', { onClick: this.logout, src: 'https://image.freepik.com/free-icon/standby--power-button_318-48023.jpg' })
 	      );
 	    } else {

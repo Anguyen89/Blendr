@@ -11,9 +11,8 @@ module.exports = React.createClass({
     if (SessionStore.currentUser()){
       return (
         <div className="nav-right">
-          <Upload/>
           <img onClick={this.rootToProfile} src="https://image.freepik.com/free-icon/user-male-silhouette_318-55563.png"></img>
-          <img src="http://image.flaticon.com/icons/png/512/33/33308.png"></img>
+          <Upload/>
           <img onClick={this.logout} src="https://image.freepik.com/free-icon/standby--power-button_318-48023.jpg"></img>
         </div>
       );
