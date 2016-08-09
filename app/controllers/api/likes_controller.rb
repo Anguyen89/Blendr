@@ -5,10 +5,10 @@ class Api::LikesController < ApplicationController
     @like.user = current_user
 
     if @like.save
-      render :show
+      render :create
     else
       @errors = @like.errors.full_messages
-      render "api/shared/error", status: 422
+      render json: @like.errors.full_messages, status: 422
     end
   end
 
@@ -22,7 +22,7 @@ class Api::LikesController < ApplicationController
       render :show
     else
       @errors = @like.errors.full_messages
-      render "api/shared/error", status: 422
+      render json: @like.errors.full_messages, status: 422
     end
   end
 

@@ -1,3 +1,35 @@
 // Place all the styles related to the api::likes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+
+.like-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  margin-left: -75px;
+}
+
+.like-container:hover {
+  cursor: pointer;
+}
+
+.like-container #filled {
+  color: #ff8080;
+}
+
+.like-container #unfilled {
+  color: lightgrey;
+}
+
+.like-container #unfilled:hover {
+  color: #ff8080;
+  transition: 0.3s;
+}
+
+.like-container #unfilled:not(:hover) {
+  color: #lightgrey;
+  transition: 0.3s;
+}

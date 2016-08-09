@@ -33,11 +33,26 @@ var setLike = function(like){
 };
 
 
-var removeLike = function(like){
-  var post = PostStore.getById(like.post_id);
-  var likeIdx = post.likes.indexOf(SessionStore.currentUser());
-  post.likes.splice(likeIdx, 1);
-  this.__emitChange();
+// var removeLike = function(like){
+//   var post = PostStore.getById(like.picture_id);
+//   var likeIdx = post.likes.indexOf(SessionStore.currentUser());
+//   post.likes.splice(likeIdx, 1);
+// };
+
+
+
+var removeLike = function(like) {
+  console.log(like.picture_id);
+  console.log(_posts);
+  var allLikes = _posts[like.picture_id].likes.slice();
+  var idx;
+  for (var i=0; i<allLikes.length ; i++) {
+    if (allLikes[i].id === like.id) {
+      idx = i;
+      allLikes.splice(idx,1);
+    }
+    _posts[like.picture_id].likes = allLikes;
+  }
 };
 
 PostStore.postIsLiked = function(post){

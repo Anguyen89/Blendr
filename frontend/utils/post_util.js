@@ -35,24 +35,42 @@ createComment: function(comment, cb){
     success: cb
   });
 },
+//
+// createLike: function(like, cb){
+//   $.ajax({
+//     url: "api/pictures/" + like.picture_id + "/likes",
+//     type: "POST",
+//     data: {like: like},
+//     success: cb
+//   });
+// },
 
 createLike: function(like, cb){
+  console.log(like);
   $.ajax({
-    url: "api/pictures/" + like.picture_id + "/likes",
+    url: "api/likes",
     type: "POST",
     data: {like: like},
     success: cb
   });
 },
 
-removeLike: function(like, cb){
-  $.ajax({
-    url: "api/pictures/" + like.picture_id + "/likes/" + like.id,
-    type: "DELETE",
-    data: {like: like},
-    success: cb
-  });
-}
+// removeLike: function(like, cb){
+//   $.ajax({
+//     url: "api/pictures/" + like.picture_id + "/likes/" + like.id,
+//     type: "DELETE",
+//     data: {like: like},
+//     success: cb
+//   });
+// }
+
+removeLike: function (like, cb) {
+    $.ajax({
+      url: "api/likes/" + like.id,
+      type: "DELETE",
+      success: cb
+    });
+  }
 
 };
 

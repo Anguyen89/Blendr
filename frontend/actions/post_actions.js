@@ -53,7 +53,7 @@ var PostActions = {
   },
 
   removeLike: function(like){
-    PostUtil.removeLike(like, this.deleteLike);
+    PostUtil.removeLike(like);
   },
 
   deleteLike: function(like){
