@@ -36706,115 +36706,105 @@
 	var ProfileActions = __webpack_require__(294);
 	var ProfileStore = __webpack_require__(292);
 
-	var FollowButton = React.createClass({
-	  displayName: 'FollowButton',
-
-
-	  handleFollow: function handleFollow() {
-	    var followData = {
-	      follower_id: SessionStore.currentUser().id,
-	      followed_id: this.props.user.id
-	    };
-
-	    ProfileActions.createFollow(followData);
-	  },
-
-	  handleUnfollow: function handleUnfollow() {
-	    var user = this.props.user;
-	    var currentUser = SessionStore.currentUser();
-	    var userFollower;
-	    var self = this;
-
-	    user.followers.forEach(function (followedUser) {
-	      if (followedUser.id === currentUser.id) {
-	        userFollower = followedUser;
-	      }
-	    });
-
-	    ProfileActions.deleteFollow(userFollower);
-	  },
-
-	  render: function render() {
-	    var self = this;
-	    var user = this.props.user;
-	    var currentUser = SessionStore.currentUser();
-	    var followButton = React.createElement(
-	      'div',
-	      { className: 'follow-button', onClick: this.handleFollow },
-	      'Follow'
-	    );
-	    if (SessionStore.currentUser()) {
-	      user.followers.forEach(function (followed_user) {
-	        if (followed_user.id === currentUser.id) {
-	          followButton = React.createElement(
-	            'div',
-	            { className: 'unfollow-button', onClick: self.handleUnfollow },
-	            'Followed'
-	          );
-	        }
-	      });
-
-	      if (SessionStore.currentUser().id === self.props.user.id) {
-	        followButton = React.createElement('div', null);
-	      }
-
-	      return React.createElement(
-	        'div',
-	        null,
-	        followButton
-	      );
-	    } else {
-	      return React.createElement('div', null);
-	    }
-	  }
-	});
-
-	module.exports = FollowButton;
-
 	// var FollowButton = React.createClass({
 	//
-	//   _toggleFollow: function() {
-	//     var relationshipData = {
+	//   handleFollow: function(){
+	//     var followData = {
 	//       follower_id: SessionStore.currentUser().id,
 	//       followed_id: this.props.user.id
 	//     };
 	//
-	//     if (this.userIsFollowed()) {
-	//       ProfileActions.deleteFollow(relationshipData);
-	//     } else {
-	//       ProfileActions.createFollow(relationshipData);
-	//     }
+	//     ProfileActions.createFollow(followData);
 	//   },
 	//
-	//   userIsFollowed: function() {
-	//     return ProfileStore.userIsFollowed(this.props.user);
+	//   handleUnfollow: function(){
+	//     var user = this.props.user;
+	//     var currentUser = SessionStore.currentUser();
+	//     var userFollower;
+	//     var self = this;
+	//
+	//
+	//     user.followers.forEach(function(followedUser){
+	//       if (followedUser.id === currentUser.id){
+	//         userFollower = followedUser;
+	//       }
+	//     });
+	//
+	//     ProfileActions.deleteFollow(userFollower);
 	//   },
 	//
-	//   _buttonDisplay: function (){
-	//     if (this.props.user.id === SessionStore.currentUser().id) {
-	//       //don't render anything if user is at their own page
-	//       return;
-	//     } else {
-	//       return (
-	//         <input type="checkbox"
-	//                checked={this.userIsFollowed()}
-	//                onChange={this._toggleFollow}
-	//                className="follow-button"/>
-	//       );
-	//     }
-	//   },
+	//   render: function(){
+	//     var self = this;
+	//     var user = this.props.user;
+	//     var currentUser = SessionStore.currentUser();
+	//        var followButton = <div className="follow-button" onClick={this.handleFollow}>Follow</div>;
+	//        if (SessionStore.currentUser()) {
+	//          user.followers.forEach(function(followed_user){
+	//            if (followed_user.id === currentUser.id) {
+	//              followButton = <div className="unfollow-button" onClick={self.handleUnfollow}>Followed</div>;
+	//              }
+	//            });
 	//
-	//   render: function() {
-	//     return (
-	//       <div className="follow-button-container">
-	//         {this._buttonDisplay()}
-	//       </div>
-	//     );
-	//   }
+	//            if (SessionStore.currentUser().id === self.props.user.id) {
+	//              followButton = <div/>;
+	//            }
 	//
+	//            return <div>{followButton}</div>;
+	//        } else {
+	//          return <div/>;
+	//        }
+	//      }
 	// });
 	//
+	//
+	//
 	// module.exports = FollowButton;
+
+
+	var FollowButton = React.createClass({
+	  displayName: 'FollowButton',
+
+
+	  _toggleFollow: function _toggleFollow() {
+	    var relationshipData = {
+	      follower_id: SessionStore.currentUser().id,
+	      followed_id: this.props.user.id
+	    };
+
+	    if (this.userIsFollowed()) {
+	      ProfileActions.deleteFollow(relationshipData);
+	    } else {
+	      ProfileActions.createFollow(relationshipData);
+	    }
+	  },
+
+	  userIsFollowed: function userIsFollowed() {
+	    return ProfileStore.userIsFollowed(this.props.user);
+	  },
+
+	  _buttonDisplay: function _buttonDisplay() {
+	    if (this.props.user.id === SessionStore.currentUser().id) {
+	      //don't render anything if user is at their own page
+	      return;
+	    } else {
+	      return React.createElement('input', { type: 'checkbox',
+	        checked: this.userIsFollowed(),
+	        onChange: this._toggleFollow,
+	        className: 'follow-button' });
+	    }
+	  },
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'follow-button-container' },
+	      this._buttonDisplay()
+	    );
+	  }
+
+	});
+
+	module.exports = FollowButton;
 
 /***/ },
 /* 300 */
