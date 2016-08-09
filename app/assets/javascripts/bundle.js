@@ -34488,10 +34488,36 @@
 	        )
 	      ),
 	      React.createElement(
-	        "h3",
-	        null,
-	        "@",
-	        this.props.user.username
+	        "div",
+	        { className: "profile-header-username" },
+	        React.createElement(
+	          "h3",
+	          null,
+	          "@",
+	          this.props.user.username
+	        )
+	      ),
+	      React.createElement(
+	        "div",
+	        { className: "profile-header-stats" },
+	        React.createElement(
+	          "h4",
+	          null,
+	          this.props.user.followers.length,
+	          " followers"
+	        ),
+	        React.createElement(
+	          "h4",
+	          null,
+	          this.props.user.following.length,
+	          " following"
+	        ),
+	        React.createElement(
+	          "h4",
+	          null,
+	          this.props.user.pictures.length,
+	          " posts"
+	        )
 	      )
 	    );
 	  }

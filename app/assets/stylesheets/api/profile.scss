@@ -32,6 +32,16 @@
   font-size: 30px;
 }
 
+.profile-header-stats {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.profile-header-stats h4 {
+  padding: 5px;
+}
+
 .profile-post-index {
   display: flex;
   flex-wrap: wrap;
