@@ -11,6 +11,9 @@ class Api::UsersController < ApplicationController
     end
   end
 
+  def show
+  end
+
 
   private
 

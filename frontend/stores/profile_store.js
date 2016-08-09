@@ -22,14 +22,12 @@ var resetUser = function(user){
 var addFollower = function(relationship){
   var user = _users[relationship.followed_id];
   user.followers.push(SessionStore.currentUser());
-  this.__emitChange();
 };
 
 var removeFollower = function(relationship) {
   var user = ProfileStore.findById(relationship.followed_id);
   var followerIdx = user.followers.indexOf(SessionStore.currentUser() );
   user.followers.splice(followerIdx, 1);
-  this.__emitChange();
 };
 
 ProfileStore.userIsFollowed = function(user) {
@@ -60,11 +58,17 @@ ProfileStore.__onDispatch = function(payload){
       resetUser(payload.user);
       this.__emitChange();
       break;
-    case ProfileConstants.RECEIVE_FOLLOW:
-      addFollower(payload.relationship);
+    case ProfileConstants.RECEIVE_USERS:
+      resetUsers(payload.users);
+      this.__emitChange();
       break;
-    case ProfileConstants.REMOVE_FOLLOW:
+    case ProfileConstants.FOLLOW_RECEIVED:
+      addFollower(payload.relationship);
+      this.__emitChange();
+      break;
+    case ProfileConstants.FOLLOW_REMOVED:
       removeFollower(payload.relationship);
+      this.__emitChange();
       break;
   }
 };

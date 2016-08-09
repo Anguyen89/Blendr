@@ -20,8 +20,8 @@ var ProfileUtil = {
   deleteFollow: function(relationship, cb){
     $.ajax({
       url: "api/relationships/" + relationship.id,
-      type: "DELETE",
       data: {relationship: relationship},
+      type: "DELETE",
       success: cb
     });
   }

@@ -35,10 +35,7 @@ module.exports = {
       actionType: ProfileConstants.RECEIVE_USER,
       user: user
     });
-  },
-
-  sayHello: function(){
-    return console.log("hello");
   }
+
 
 };
