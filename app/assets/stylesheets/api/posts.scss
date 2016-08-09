@@ -102,34 +102,12 @@
   padding: 5px;
 }
 
-// .post-comments-container {
-//   display: flex;
-//   justify-content: space-between;
-//   flex-direction: column;
-//   width: 500px;
-// }
-// .comment-index {
-//   width: 500px;
-// }
-// .comment-index > h1 {
-//   display: flex;
-//   justify-content: center;
-//   font-style: italic;
-//   font-weight: bolder;
-//   margin-top: 5px;
-// }
 
-.comment-index-header{
+.comment-index-like{
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   margin-right: 30px;
-}
-
-.comment-index-header h1 {
-  margin-right: 150px;
-  font-weight: bold;
-  font-style: italic;
 }
 
 .like-count {
@@ -150,26 +128,6 @@
   margin-left: -80px;
 }
 
-// .like-button {
-//   height: 30px;
-//   width: 32px;
-//   cursor: pointer;
-//   -webkit-transition: all .2s ease-in-out;
-//   transition: all .2s ease-in-out;
-// }
-//
-// .like-button:hover {
-//   -webkit-transform: scale(1.2);
-//   transform: scale(1.2);
-// }
-//
-// .filled-heart {
-//   color: red;
-// }
-//
-// .empty-heart {
-//   color: gray;
-// }
 
 
 .comment-box {
@@ -200,4 +158,22 @@
 .comment-input {
   width: 500px;
   height: 10px;
+}
+
+.comment-header-container h1 {
+  display: flex;
+  justify-content: center;
+  font-weight: bolder;
+  font-style: italic;
+  padding-top: 5px;
+}
+
+.comment-header-likes {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20px;
+}
+
+.comment-index-container {
+  overflow-y: scroll
 }

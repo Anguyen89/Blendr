@@ -36933,7 +36933,6 @@
 
 	var React = __webpack_require__(1);
 	var CommentIndexItem = __webpack_require__(304);
-	var LikeCount = __webpack_require__(305);
 
 	var CommentIndex = React.createClass({
 	  displayName: 'CommentIndex',
@@ -36957,17 +36956,7 @@
 
 	    return React.createElement(
 	      'div',
-	      { className: 'comment-index' },
-	      React.createElement(
-	        'div',
-	        { className: 'comment-index-header' },
-	        React.createElement(
-	          'h1',
-	          null,
-	          'Comments'
-	        ),
-	        React.createElement(LikeCount, { post: this.props.post })
-	      ),
+	      { className: 'comment-index-container' },
 	      comments
 	    );
 	  }
@@ -37056,6 +37045,7 @@
 
 	var CommentIndex = __webpack_require__(303);
 	var CommentForm = __webpack_require__(307);
+	var CommentIndexHeader = __webpack_require__(313);
 
 	var CommentBox = React.createClass({
 	  displayName: 'CommentBox',
@@ -37064,6 +37054,7 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'comment-box' },
+	      React.createElement(CommentIndexHeader, { post: this.props.post }),
 	      React.createElement(CommentIndex, { post: this.props.post }),
 	      React.createElement(CommentForm, { post: this.props.post })
 	    );
@@ -37327,6 +37318,40 @@
 	});
 
 	module.exports = Upload;
+
+/***/ },
+/* 313 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var LikeCount = __webpack_require__(305);
+
+	var CommentIndexHeader = React.createClass({
+	  displayName: 'CommentIndexHeader',
+
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'comment-header-container' },
+	      React.createElement(
+	        'h1',
+	        null,
+	        'Comments'
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'comment-header-likes' },
+	        React.createElement(LikeCount, { post: this.props.post })
+	      )
+	    );
+	  }
+
+	});
+
+	module.exports = CommentIndexHeader;
 
 /***/ }
 /******/ ]);

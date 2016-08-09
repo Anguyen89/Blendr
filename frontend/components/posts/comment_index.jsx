@@ -1,6 +1,5 @@
 var React = require('react');
 var CommentIndexItem = require('./comment_index_item');
-var LikeCount = require('./like_count');
 
 var CommentIndex = React.createClass({
 
@@ -23,11 +22,7 @@ var CommentIndex = React.createClass({
 });
 
     return (
-      <div className="comment-index">
-        <div className="comment-index-header">
-          <h1>Comments</h1>
-          <LikeCount post={this.props.post}/>
-        </div>
+      <div className="comment-index-container">
         {comments}
       </div>
     );
