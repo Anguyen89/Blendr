@@ -9,6 +9,7 @@ var ProfileUtil = {
   },
 
   createFollow: function(relationship, cb){
+
     $.ajax({
       url: "api/relationships",
       type: "POST",
