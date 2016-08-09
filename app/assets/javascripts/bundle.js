@@ -36789,8 +36789,7 @@
 	    } else {
 	      return React.createElement('input', { type: 'checkbox',
 	        checked: this.userIsFollowed(),
-	        onChange: this._toggleFollow,
-	        className: 'follow-button' });
+	        onChange: this._toggleFollow });
 	    }
 	  },
 
