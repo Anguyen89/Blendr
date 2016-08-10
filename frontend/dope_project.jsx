@@ -22,12 +22,6 @@ var SessionActions = require('./actions/session_actions');
 
  var PostFeed = require('./components/posts/post_feed');
 
- window.PostUtils = require('./utils/post_util.js');
- window.PostActions = require('./actions/post_actions');
- window.PostStore = require('./stores/post_store');
-
-  window.ProfileActions = require('./actions/profile_actions');
-  window.ProfileStore = require('./stores/profile_store');
 
 
  var appRouter = (

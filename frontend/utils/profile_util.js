@@ -25,6 +25,15 @@ var ProfileUtil = {
       type: "DELETE",
       success: cb
     });
+  },
+
+  updateProfile: function(picture, currentUser, cb){
+    $.ajax({
+      url: "users/" + currentUser.id,
+      data: {user: picture},
+      type: "PATCH",
+      success: cb
+    });
   }
 };
 

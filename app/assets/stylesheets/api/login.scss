@@ -29,9 +29,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: blue;
-  width: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   height: 1100px;
+  background-image: url('http://orig00.deviantart.net/1f3d/f/2015/046/5/5/extrasolar_comet___4k_high_res_remake_by_nirklars-d8i4foj.png')
 }
 
 .landing button {

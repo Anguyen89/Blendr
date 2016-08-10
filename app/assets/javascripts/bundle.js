@@ -69,13 +69,6 @@
 
 	var PostFeed = __webpack_require__(312);
 
-	window.PostUtils = __webpack_require__(286);
-	window.PostActions = __webpack_require__(285);
-	window.PostStore = __webpack_require__(291);
-
-	window.ProfileActions = __webpack_require__(294);
-	window.ProfileStore = __webpack_require__(292);
-
 	var appRouter = React.createElement(
 	  Router,
 	  { history: hashHistory },
@@ -36427,6 +36420,10 @@
 	  });
 	};
 
+	var updatePicture = function updatePicture(user) {
+	  _users[user.id].profile_picture_url = user.profile_picture_url;
+	};
+
 	var resetUser = function resetUser(user) {
 	  _users[user.id] = user;
 	};
@@ -36480,6 +36477,10 @@
 	      removeFollower(payload.relationship);
 	      this.__emitChange();
 	      break;
+	    case ProfileConstants.UPDATE_PIC:
+	      updatePicture(payload.user);
+	      this.__emitChange();
+	      break;
 	  }
 	};
 
@@ -36495,7 +36496,8 @@
 	  RECEIVE_USER: "RECEIVE_USER",
 	  RECEIVE_USERS: "RECEIVE_USERS",
 	  FOLLOW_RECEIVED: "FOLLOW_RECEIVED",
-	  FOLLOW_REMOVED: "FOLLOW_REMOVED"
+	  FOLLOW_REMOVED: "FOLLOW_REMOVED",
+	  UPDATE_PIC: "UPDATE_PIC"
 	};
 
 /***/ },
@@ -36540,6 +36542,17 @@
 	      actionType: ProfileConstants.RECEIVE_USER,
 	      user: user
 	    });
+	  },
+
+	  updatePic: function updatePic(picture, currentUser) {
+	    ProfileUtil.updateProfile(picture, currentUser, this.receiveUpdatedUser);
+	  },
+
+	  receiveUpdatedUser: function receiveUpdatedUser(user) {
+	    AppDispatcher.dispatch({
+	      actionType: ProfileConstants.UPDATE_PIC,
+	      user: user
+	    });
 	  }
 
 	};
@@ -36574,6 +36587,15 @@
 	      url: "api/relationships/" + relationship.id,
 	      data: { relationship: relationship },
 	      type: "DELETE",
+	      success: cb
+	    });
+	  },
+
+	  updateProfile: function updateProfile(picture, currentUser, cb) {
+	    $.ajax({
+	      url: "users/" + currentUser.id,
+	      data: { user: picture },
+	      type: "PATCH",
 	      success: cb
 	    });
 	  }
@@ -36613,19 +36635,34 @@
 /* 297 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var React = __webpack_require__(1);
+	var ProfileActions = __webpack_require__(294);
+	var SessionStore = __webpack_require__(256);
 
 	var UserProfilePic = React.createClass({
-	  displayName: "UserProfilePic",
+	  displayName: 'UserProfilePic',
 
+	  //
+	  updatePic: function updatePic(e) {
+	    e.preventDefault();
+	    if (this.props.user.id === SessionStore.currentUser().id) {
+	      cloudinary.openUploadWidget(window.cloudinary_options, function (error, images) {
+	        if (error, images) {
+	          var picture = { profile_picture_url: images[0].url };
+	          var currentUser = SessionStore.currentUser();
+	          ProfileActions.updatePic(picture, currentUser);
+	        }
+	      });
+	    }
+	  },
 
 	  render: function render() {
 	    return React.createElement(
-	      "div",
-	      { className: "user-profile-pic-container" },
-	      React.createElement("img", { src: this.props.user.profile_picture_url })
+	      'div',
+	      { className: 'user-profile-pic-container' },
+	      React.createElement('img', { onClick: this.updatePic, src: this.props.user.profile_picture_url })
 	    );
 	  }
 

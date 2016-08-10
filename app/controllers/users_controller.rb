@@ -9,7 +9,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @user.profile_image_url = params[:user][:profile_picture_url]
+    @user.profile_picture_url = params[:user][:profile_picture_url]
     @user.save
     render :show
   end

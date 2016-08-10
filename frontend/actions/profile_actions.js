@@ -35,7 +35,20 @@ module.exports = {
       actionType: ProfileConstants.RECEIVE_USER,
       user: user
     });
+  },
+
+  updatePic: function(picture, currentUser){
+    ProfileUtil.updateProfile(picture, currentUser, this.receiveUpdatedUser);
+  },
+
+  receiveUpdatedUser: function(user){
+    AppDispatcher.dispatch({
+      actionType: ProfileConstants.UPDATE_PIC,
+      user: user
+    });
   }
+
+
 
 
 };

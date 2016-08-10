@@ -15,6 +15,10 @@ var resetUsers = function(users){
   });
 };
 
+var updatePicture = function(user){
+  _users[user.id].profile_picture_url = user.profile_picture_url;
+};
+
 var resetUser = function(user){
   _users[user.id] = user;
 };
@@ -23,6 +27,8 @@ var addFollower = function(relationship){
   var user = _users[relationship.followed_id];
   user.followers.push(SessionStore.currentUser());
 };
+
+
 
 var removeFollower = function(relationship) {
   var user = ProfileStore.findById(relationship.followed_id);
@@ -68,6 +74,10 @@ ProfileStore.__onDispatch = function(payload){
       break;
     case ProfileConstants.FOLLOW_REMOVED:
       removeFollower(payload.relationship);
+      this.__emitChange();
+      break;
+    case ProfileConstants.UPDATE_PIC:
+      updatePicture(payload.user);
       this.__emitChange();
       break;
   }
