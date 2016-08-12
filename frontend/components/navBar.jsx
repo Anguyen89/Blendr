@@ -8,7 +8,7 @@ var Upload = require('./upload');
 module.exports = React.createClass({
 
   navRight: function(){
-    if (SessionStore.currentUser()){
+    if (SessionStore.isUserLoggedIn()){
       return (
         <div className="nav-right">
           <img onClick={this.rootToProfile} src="https://image.freepik.com/free-icon/user-male-silhouette_318-55563.png"></img>
@@ -17,13 +17,19 @@ module.exports = React.createClass({
         </div>
       );
     } else {
-      return <div></div>;
+      return <div className="nav-right">
+          <img onClick={this.rootToLogin} src="https://image.freepik.com/free-icon/standby--power-button_318-48023.jpg"></img>
+      </div>;
     }
   },
 
 
   logout: function(){
     SessionActions.logOut();
+  },
+
+  rootToLogin: function(){
+    hashHistory.push('/login');
   },
 
   rootToIndex: function(){

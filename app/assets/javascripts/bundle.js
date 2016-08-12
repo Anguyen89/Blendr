@@ -28720,47 +28720,45 @@
 
 	var App = React.createClass({
 	  displayName: 'App',
-	  componentDidMount: function componentDidMount() {
-	    SessionStore.addListener(this.forceUpdate.bind(this));
-	  },
-	  _handleLogOut: function _handleLogOut() {
-	    SessionActions.logOut();
-	  },
-	  pushToSignUp: function pushToSignUp() {
-	    HashHistory.push('/signup');
-	  },
-	  pushToLogin: function pushToLogin() {
-	    HashHistory.push('/login');
-	  },
+
+
+	  // componentDidMount() {
+	  //   SessionStore.addListener(this.forceUpdate.bind(this));
+	  // },
+	  //
+	  // _handleLogOut(){
+	  //   SessionActions.logOut();
+	  // },
+	  //
+	  // pushToSignUp(){
+	  //   HashHistory.push('/signup');
+	  // },
+	  //
+	  // pushToLogin(){
+	  //   HashHistory.push('/login');
+	  // },
+
+
 	  greeting: function greeting() {
+	    //
+	    // if (SessionStore.isUserLoggedIn()) {
 
-	    if (SessionStore.isUserLoggedIn()) {
-
-	      return React.createElement(
-	        'hgroup',
-	        { className: 'header-group' },
-	        React.createElement(NavBar, null)
-	      );
-	    } else if (!["/login", "/signup"].includes(this.props.location.pathname)) {
-	      return React.createElement(
-	        'nav',
-	        { className: 'login-signup' },
-	        React.createElement(
-	          'div',
-	          { className: 'landing' },
-	          React.createElement(
-	            'button',
-	            { className: 'landing-button', onClick: this.pushToSignUp },
-	            'Get Started'
-	          ),
-	          React.createElement(
-	            'button',
-	            { className: 'landing-button', onClick: this.pushToLogin },
-	            'Log In'
-	          )
-	        )
-	      );
-	    }
+	    return React.createElement(
+	      'hgroup',
+	      { className: 'header-group' },
+	      React.createElement(NavBar, null)
+	    );
+	    // }
+	    // else if ( !["/login", "/signup"].includes(this.props.location.pathname) ) {
+	    //   return (
+	    //     <nav className="login-signup">
+	    //       <div className="landing">
+	    //         <button className="landing-button" onClick={this.pushToSignUp}>Get Started</button>
+	    //         <button className="landing-button" onClick={this.pushToLogin}>Log In</button>
+	    //       </div>
+	    //     </nav>
+	    //   );
+	    // }
 	  },
 	  render: function render() {
 	    return React.createElement(
@@ -28771,6 +28769,7 @@
 	        null,
 	        this.greeting()
 	      ),
+	      React.createElement('div', { className: 'app-splash-container' }),
 	      this.props.children
 	    );
 	  }
@@ -35764,7 +35763,7 @@
 
 
 	  navRight: function navRight() {
-	    if (SessionStore.currentUser()) {
+	    if (SessionStore.isUserLoggedIn()) {
 	      return React.createElement(
 	        'div',
 	        { className: 'nav-right' },
@@ -35773,12 +35772,20 @@
 	        React.createElement('img', { onClick: this.logout, src: 'https://image.freepik.com/free-icon/standby--power-button_318-48023.jpg' })
 	      );
 	    } else {
-	      return React.createElement('div', null);
+	      return React.createElement(
+	        'div',
+	        { className: 'nav-right' },
+	        React.createElement('img', { onClick: this.rootToLogin, src: 'https://image.freepik.com/free-icon/standby--power-button_318-48023.jpg' })
+	      );
 	    }
 	  },
 
 	  logout: function logout() {
 	    SessionActions.logOut();
+	  },
+
+	  rootToLogin: function rootToLogin() {
+	    hashHistory.push('/login');
 	  },
 
 	  rootToIndex: function rootToIndex() {
@@ -36015,145 +36022,318 @@
 
 	"use strict";
 
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 	var React = __webpack_require__(1);
 	var Link = __webpack_require__(192).Link;
 	var SessionActions = __webpack_require__(279);
 	var SessionStore = __webpack_require__(256);
 	var ErrorStore = __webpack_require__(289);
+	var hashHistory = __webpack_require__(192).hashHistory;
+	//
+	// var LoginForm = React.createClass({
+	//
+	// 	contextTypes: {
+	// 		router: React.PropTypes.object.isRequired
+	// 	},
+	//
+	//   getInitialState() {
+	//     return {
+	//       username: "",
+	//       password: ""
+	//     };
+	//   },
+	//
+	//   componentDidMount() {
+	//     this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+	//     this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
+	//   },
+	//
+	//   componentWillUnmount() {
+	//     this.errorListener.remove();
+	//     this.sessionListener.remove();
+	//   },
+	//
+	//   redirectIfLoggedIn() {
+	//     if (SessionStore.isUserLoggedIn()) {
+	//       this.context.router.push("/");
+	//     }
+	//   },
+	//
+	// 	handleSubmit(e) {
+	// 		e.preventDefault();
+	//
+	// 		const formData = {
+	// 			username: this.state.username,
+	// 			password: this.state.password
+	// 		};
+	//
+	//     if (this.props.location.pathname === "/login") {
+	//       SessionActions.logIn(formData);
+	//     } else {
+	//       SessionActions.signUp(formData);
+	//     }
+	// 	},
+	//
+	//   fieldErrors(field) {
+	//     const errors = ErrorStore.formErrors(this.formType());
+	//
+	//     if (!errors[field]) { return; }
+	//
+	//     const messages = errors[field].map( (errorMsg, i) => {
+	//       return <li key={ i }>{ errorMsg }</li>;
+	//     });
+	//
+	//     return <ul>{ messages }</ul>;
+	//   },
+	//
+	//   formType() {
+	//     return this.props.location.pathname.slice(1);
+	//   },
+	//
+	//   update(property) {
+	//     return (e) => this.setState({[property]: e.target.value});
+	//   },
+	//
+	// 	render() {
+	//
+	//     let navLink;
+	//     if (this.formType() === "login") {
+	//       navLink = <Link to="/signup">Sign Up</Link>;
+	//     } else {
+	//       navLink = <Link to="/login">Login</Link>;
+	//     }
+	//
+	// 		return (
+	//
+	// 			<div className="login-form-container">
+	// 				<form onSubmit={this.handleSubmit} className="login-form-box">
+	// 					<br/>
+	// 					{ this.formType() } or { navLink }
+	//
+	// 	        { this.fieldErrors("base") }
+	// 					<div className="login-form">
+	// 		        <br />
+	// 						<label> Username:
+	// 		          { this.fieldErrors("username") }
+	// 							<input type="text"
+	// 		            value={this.state.username}
+	// 		            onChange={this.update("username")}
+	// 								className="login-input" />
+	// 						</label>
+	//
+	// 		        <br />
+	// 						<label> Password:
+	// 		          { this.fieldErrors("password") }
+	// 		          <input type="password"
+	// 		            value={this.state.password}
+	// 		            onChange={this.update("password")}
+	// 								className="login-input" />
+	// 						</label>
+	//
+	// 		        <br />
+	// 						<input type="submit" value="Submit" />
+	// 					</div>
+	// 				</form>
+	//
+	// 			</div>
+	// 		);
+	// 	}
+	// });
+	//
+	// module.exports = LoginForm;
 
 	var LoginForm = React.createClass({
-	  displayName: 'LoginForm',
+		displayName: 'LoginForm',
 
 
-	  contextTypes: {
-	    router: React.PropTypes.object.isRequired
-	  },
+		getInitialState: function getInitialState() {
+			return { username: "", password: "" };
+		},
 
-	  getInitialState: function getInitialState() {
-	    return {
-	      username: "",
-	      password: ""
-	    };
-	  },
-	  componentDidMount: function componentDidMount() {
-	    this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
-	    this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.errorListener.remove();
-	    this.sessionListener.remove();
-	  },
-	  redirectIfLoggedIn: function redirectIfLoggedIn() {
-	    if (SessionStore.isUserLoggedIn()) {
-	      this.context.router.push("/");
-	    }
-	  },
-	  handleSubmit: function handleSubmit(e) {
-	    e.preventDefault();
+		componentWillUnmount: function componentWillUnmount() {
+			this.errorListener.remove();
+			this.sessionListener.remove();
+		},
+		redirectIfLoggedIn: function redirectIfLoggedIn() {
+			hashHistory.push("/");
+		},
 
-	    var formData = {
-	      username: this.state.username,
-	      password: this.state.password
-	    };
 
-	    if (this.props.location.pathname === "/login") {
-	      SessionActions.logIn(formData);
-	    } else {
-	      SessionActions.signUp(formData);
-	    }
-	  },
-	  fieldErrors: function fieldErrors(field) {
-	    var errors = ErrorStore.formErrors(this.formType());
+		handleLogin: function handleLogin(e) {
+			// there will be no event for the guest login
+			if (e) {
+				e.preventDefault();
+			}
 
-	    if (!errors[field]) {
-	      return;
-	    }
+			SessionActions.logIn({
+				username: this.state.username,
+				password: this.state.password
+			});
+		},
 
-	    var messages = errors[field].map(function (errorMsg, i) {
-	      return React.createElement(
-	        'li',
-	        { key: i },
-	        errorMsg
-	      );
-	    });
+		handleSignUp: function handleSignUp(e) {
+			e.preventDefault();
+			SessionActions.signUp({
+				username: this.state.username,
+				password: this.state.password
+			});
+		},
 
-	    return React.createElement(
-	      'ul',
-	      null,
-	      messages
-	    );
-	  },
-	  formType: function formType() {
-	    return this.props.location.pathname.slice(1);
-	  },
-	  update: function update(property) {
-	    var _this = this;
+		handleGuest: function handleGuest(e) {
+			e.preventDefault();
 
-	    return function (e) {
-	      return _this.setState(_defineProperty({}, property, e.target.value));
-	    };
-	  },
-	  render: function render() {
+			this.setState({ username: "", password: "" });
 
-	    var navLink = void 0;
-	    if (this.formType() === "login") {
-	      navLink = React.createElement(
-	        Link,
-	        { to: '/signup' },
-	        'Sign Up'
-	      );
-	    } else {
-	      navLink = React.createElement(
-	        Link,
-	        { to: '/login' },
-	        'Login'
-	      );
-	    }
+			var username = "guest".split("");
+			var password = "password".split("");
+			var time = 50;
 
-	    return React.createElement(
-	      'div',
-	      { className: 'login-form-container' },
-	      React.createElement(
-	        'form',
-	        { onSubmit: this.handleSubmit, className: 'login-form-box' },
-	        React.createElement('br', null),
-	        this.formType(),
-	        ' or ',
-	        navLink,
-	        this.fieldErrors("base"),
-	        React.createElement(
-	          'div',
-	          { className: 'login-form' },
-	          React.createElement('br', null),
-	          React.createElement(
-	            'label',
-	            null,
-	            ' Username:',
-	            this.fieldErrors("username"),
-	            React.createElement('input', { type: 'text',
-	              value: this.state.username,
-	              onChange: this.update("username"),
-	              className: 'login-input' })
-	          ),
-	          React.createElement('br', null),
-	          React.createElement(
-	            'label',
-	            null,
-	            ' Password:',
-	            this.fieldErrors("password"),
-	            React.createElement('input', { type: 'password',
-	              value: this.state.password,
-	              onChange: this.update("password"),
-	              className: 'login-input' })
-	          ),
-	          React.createElement('br', null),
-	          React.createElement('input', { type: 'submit', value: 'Submit' })
-	        )
-	      )
-	    );
-	  }
+			var self = this;
+			username.forEach(function (letter) {
+				time += 100;
+				setTimeout(function () {
+					self.setState({ username: self.state.username + letter });
+				}, time);
+			});
+
+			time += 400;
+
+			password.forEach(function (letter) {
+				time += 100;
+				setTimeout(function () {
+					self.setState({ password: self.state.password + letter });
+				}, time);
+			});
+
+			time += 400;
+
+			setTimeout(this.handleLogin, time);
+		},
+
+		handleUsernameChange: function handleUsernameChange(e) {
+			this.setState({ username: e.target.value });
+		},
+
+		handlePasswordChange: function handlePasswordChange(e) {
+			this.setState({ password: e.target.value });
+		},
+
+		formType: function formType() {
+			return this.props.location.pathname.slice(1);
+		},
+		fieldErrors: function fieldErrors(field) {
+			var errors = ErrorStore.formErrors(this.formType());
+
+			if (!errors[field]) {
+				return;
+			}
+
+			var messages = errors[field].map(function (errorMsg, i) {
+				return React.createElement(
+					'li',
+					{ key: i },
+					errorMsg
+				);
+			});
+
+			return React.createElement(
+				'ul',
+				null,
+				messages
+			);
+		},
+
+
+		form: function form() {
+			return React.createElement(
+				'form',
+				{ onSubmit: this.handleSubmit, className: 'login-form-box' },
+				React.createElement(
+					'section',
+					null,
+					React.createElement('input', {
+						placeholder: 'Username',
+						onChange: this.handleUsernameChange,
+						value: this.state.username,
+						className: 'login-input' }),
+					React.createElement('br', null),
+					React.createElement('input', {
+						type: 'password',
+						placeholder: 'Password',
+						onChange: this.handlePasswordChange,
+						value: this.state.password,
+						className: 'login-input' })
+				),
+				React.createElement(
+					'section',
+					null,
+					React.createElement(
+						'button',
+						{
+							className: 'login-signup-button',
+							onClick: this.handleLogin },
+						'Sign In'
+					),
+					React.createElement(
+						'button',
+						{
+							className: 'login-signup-button',
+							onClick: this.handleSignUp },
+						'Sign Up'
+					)
+				),
+				React.createElement(
+					'section',
+					null,
+					React.createElement(
+						'button',
+						{
+							className: 'guest-button',
+							onClick: this.handleGuest },
+						'Log In As Guest'
+					)
+				)
+			);
+		},
+
+		componentDidMount: function componentDidMount() {
+
+			$('.login-logo, .login-message, .login-form').hide();
+			$('.login-logo').fadeIn("slow");
+
+			setTimeout(function () {
+				$('.login-message').fadeIn("slow");
+			}, 250);
+
+			setTimeout(function () {
+				$('.login-form').fadeIn("slow");
+			}, 500);
+
+			this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+			this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
+		},
+
+		render: function render() {
+			return React.createElement(
+				'div',
+				{ className: 'login-form-container' },
+				React.createElement(
+					'header',
+					null,
+					React.createElement(
+						'h1',
+						{ className: 'login-logo' },
+						'Instagr'
+					),
+					React.createElement(
+						'p',
+						{ className: 'login-message' },
+						'Share some Experiences'
+					)
+				),
+				this.fieldErrors(),
+				this.form()
+			);
+		}
 	});
 
 	module.exports = LoginForm;
