@@ -35770,7 +35770,7 @@
 	  },
 
 	  rootToIndex: function rootToIndex() {
-	    hashHistory.push("/");
+	    hashHistory.push("/postfeed");
 	  },
 
 	  rootToProfile: function rootToProfile() {
@@ -36003,12 +36003,17 @@
 
 	"use strict";
 
+	var _React$createClass;
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 	var React = __webpack_require__(1);
 	var Link = __webpack_require__(192).Link;
 	var SessionActions = __webpack_require__(279);
 	var SessionStore = __webpack_require__(256);
 	var ErrorStore = __webpack_require__(289);
 	var hashHistory = __webpack_require__(192).hashHistory;
+	var PostActions = __webpack_require__(285);
 	//
 	// var LoginForm = React.createClass({
 	//
@@ -36122,7 +36127,7 @@
 	//
 	// module.exports = LoginForm;
 
-	var LoginForm = React.createClass({
+	var LoginForm = React.createClass((_React$createClass = {
 		displayName: 'LoginForm',
 
 
@@ -36130,10 +36135,10 @@
 			return { username: "", password: "" };
 		},
 
-		componentWillUnmount: function componentWillUnmount() {
-			this.errorListener.remove();
-			this.sessionListener.remove();
+		componentDidMount: function componentDidMount() {
+			PostActions.fetchPosts();
 		},
+
 		redirectIfLoggedIn: function redirectIfLoggedIn() {
 			hashHistory.push("/");
 		},
@@ -36164,7 +36169,7 @@
 
 			this.setState({ username: "", password: "" });
 
-			var username = "guest".split("");
+			var username = "al_nguyen".split("");
 			var password = "password".split("");
 			var time = 50;
 
@@ -36264,47 +36269,44 @@
 					)
 				)
 			);
-		},
-
-		componentDidMount: function componentDidMount() {
-
-			$('.login-logo, .login-message, .login-form').hide();
-			$('.login-logo').fadeIn("slow");
-
-			setTimeout(function () {
-				$('.login-message').fadeIn("slow");
-			}, 250);
-
-			setTimeout(function () {
-				$('.login-form').fadeIn("slow");
-			}, 500);
-
-			this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
-			this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
-		},
-
-		render: function render() {
-			return React.createElement(
-				'div',
-				{ className: 'login-form-container' },
-				React.createElement(
-					'header',
-					null,
-					React.createElement(
-						'h1',
-						{ className: 'login-logo' },
-						'Instagr'
-					),
-					React.createElement(
-						'p',
-						{ className: 'login-message' },
-						'Share some Experiences'
-					)
-				),
-				this.form()
-			);
 		}
-	});
+
+	}, _defineProperty(_React$createClass, 'componentDidMount', function componentDidMount() {
+
+		$('.login-logo, .login-message, .login-form').hide();
+		$('.login-logo').fadeIn("slow");
+
+		setTimeout(function () {
+			$('.login-message').fadeIn("slow");
+		}, 250);
+
+		setTimeout(function () {
+			$('.login-form').fadeIn("slow");
+		}, 500);
+
+		this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+		this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
+	}), _defineProperty(_React$createClass, 'render', function render() {
+		return React.createElement(
+			'div',
+			{ className: 'login-form-container' },
+			React.createElement(
+				'header',
+				null,
+				React.createElement(
+					'h1',
+					{ className: 'login-logo' },
+					'Blendr'
+				),
+				React.createElement(
+					'p',
+					{ className: 'login-message' },
+					'Share some Experiences'
+				)
+			),
+			this.form()
+		);
+	}), _React$createClass));
 
 	module.exports = LoginForm;
 
@@ -36377,6 +36379,8 @@
 	var ProfileStore = __webpack_require__(292);
 	var ProfileActions = __webpack_require__(294);
 	var SessionStore = __webpack_require__(256);
+	var Login = __webpack_require__(288);
+	var HashHistory = __webpack_require__(192).hashHistory;
 
 	var ProfileHeader = __webpack_require__(296);
 	var ProfilePictureIndex = __webpack_require__(300);
@@ -36405,13 +36409,17 @@
 	    return { user: {} };
 	  },
 
+	  componentWillMount: function componentWillMount() {
+	    ProfileActions.fetchUser(this.props.params.profileId);
+	  },
+
 	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
 	    ProfileActions.fetchUser(newProps.params.profileId);
 	  },
 
 	  componentDidMount: function componentDidMount() {
 	    this.profileListener = ProfileStore.addListener(this.onChange);
-	    ProfileActions.fetchUser(this.props.params.profileId);
+	    // ProfileActions.fetchUser(this.props.params.profileId);
 	  },
 
 	  componentWillUnmount: function componentWillUnmount() {

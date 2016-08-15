@@ -33,7 +33,7 @@ module.exports = React.createClass({
   },
 
   rootToIndex: function(){
-    hashHistory.push("/");
+    hashHistory.push("/postfeed");
   },
 
   rootToProfile: function(){

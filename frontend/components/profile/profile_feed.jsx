@@ -3,6 +3,8 @@ var PostStore = require('../../stores/post_store');
 var ProfileStore = require('../../stores/profile_store');
 var ProfileActions = require('../../actions/profile_actions');
 var SessionStore = require('../../stores/session_store');
+var Login = require('../login_form');
+var HashHistory = require('react-router').hashHistory;
 
 var ProfileHeader = require('./profile_header');
 var ProfilePictureIndex = require('./profile_picture_index');
@@ -29,13 +31,17 @@ var ProfileFeed = React.createClass({
     return { user: {} };
   },
 
+  componentWillMount: function(){
+    ProfileActions.fetchUser(this.props.params.profileId);
+  },
+
   componentWillReceiveProps: function(newProps){
     ProfileActions.fetchUser(newProps.params.profileId);
   },
 
   componentDidMount: function(){
     this.profileListener = ProfileStore.addListener(this.onChange);
-    ProfileActions.fetchUser(this.props.params.profileId);
+    // ProfileActions.fetchUser(this.props.params.profileId);
   },
 
   componentWillUnmount: function(){
@@ -45,7 +51,7 @@ var ProfileFeed = React.createClass({
   render: function(){
     var userProfile;
         if (!SessionStore.isUserLoggedIn() || Object.keys(this.state.user).length === 0) {
-           userProfile = (<div/>);
+           userProfile = <div></div>;
          } else {
            userProfile = (
              <div className="profile-feed">

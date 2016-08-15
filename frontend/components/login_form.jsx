@@ -6,6 +6,7 @@ var SessionActions = require('../actions/session_actions');
 var SessionStore = require('../stores/session_store');
 var ErrorStore = require('../stores/error_store');
 var hashHistory = require('react-router').hashHistory;
+var PostActions = require('../actions/post_actions');
 //
 // var LoginForm = React.createClass({
 //
@@ -126,15 +127,13 @@ var LoginForm = React.createClass({
 		return {username: "", password: ""};
 	},
 
+	componentDidMount: function(){
+		PostActions.fetchPosts();
+	},
 
-	  componentWillUnmount() {
-	    this.errorListener.remove();
-	    this.sessionListener.remove();
-	  },
-
-	  redirectIfLoggedIn() {
-	      hashHistory.push("/");
-	  },
+	redirectIfLoggedIn() {
+	  hashHistory.push("/");
+	},
 
   handleLogin: function(e){
 		// there will be no event for the guest login
@@ -159,7 +158,7 @@ var LoginForm = React.createClass({
 
 		this.setState({username: "", password: ""});
 
-		var username = "guest".split("");
+		var username = "al_nguyen".split("");
 		var password = "password".split("");
 		var time = 50;
 
@@ -276,7 +275,7 @@ var LoginForm = React.createClass({
 		return (
 			<div className="login-form-container">
 				<header>
-					<h1 className="login-logo">Instagr</h1>
+					<h1 className="login-logo">Blendr</h1>
 					<p className="login-message">Share some Experiences</p>
 				</header>
 				{this.form()}
