@@ -3,6 +3,7 @@ var PostStore = require('../../stores/post_store');
 var SessionStore = require('../../stores/session_store');
 var PostActions = require('../../actions/post_actions');
 var PostFeedItem = require('./post_feed_item');
+var Login = require('../login_form');
 
 var PostFeed = React.createClass({
 
@@ -56,7 +57,9 @@ var PostFeed = React.createClass({
       );
     } else{
       return (
-        <div></div>
+        <div>
+          <Login/>
+        </div>
       );
     }
   }

@@ -193,21 +193,21 @@ var LoginForm = React.createClass({
 		this.setState({password: e.target.value});
 	},
 
-	  formType() {
-	    return this.props.location.pathname.slice(1);
-	  },
-
-	  fieldErrors(field) {
-	    const errors = ErrorStore.formErrors(this.formType());
-
-	    if (!errors[field]) { return; }
-
-	    const messages = errors[field].map( (errorMsg, i) => {
-	      return <li key={ i }>{ errorMsg }</li>;
-	    });
-
-	    return <ul>{ messages }</ul>;
-	  },
+	  // formType() {
+	  //   return this.props.location.pathname.slice(1);
+	  // },
+		//
+	  // fieldErrors(field) {
+	  //   const errors = ErrorStore.formErrors(this.formType());
+		//
+	  //   if (!errors[field]) { return; }
+		//
+	  //   const messages = errors[field].map( (errorMsg, i) => {
+	  //     return <li key={ i }>{ errorMsg }</li>;
+	  //   });
+		//
+	  //   return <ul>{ messages }</ul>;
+	  // },
 
 	form: function(){
 		return(
@@ -279,7 +279,6 @@ var LoginForm = React.createClass({
 					<h1 className="login-logo">Instagr</h1>
 					<p className="login-message">Share some Experiences</p>
 				</header>
-				{this.fieldErrors()}
 				{this.form()}
 			</div>
 		);

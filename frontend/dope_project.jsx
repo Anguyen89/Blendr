@@ -30,6 +30,7 @@ var SessionActions = require('./actions/session_actions');
        <IndexRoute component={PostFeed}/>
        <Route path="signup" component={SignUp}/>
        <Route path="login" component={Login}/>
+       <Route path="PostFeed" component={PostFeed}/>
        <Route path="profile/:profileId" component={ProfileFeed} />
      </Route>
    </Router>

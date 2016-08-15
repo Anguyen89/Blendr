@@ -78,6 +78,7 @@
 	    React.createElement(IndexRoute, { component: PostFeed }),
 	    React.createElement(Route, { path: 'signup', component: SignUp }),
 	    React.createElement(Route, { path: 'login', component: Login }),
+	    React.createElement(Route, { path: 'PostFeed', component: PostFeed }),
 	    React.createElement(Route, { path: 'profile/:profileId', component: ProfileFeed })
 	  )
 	);
@@ -28717,6 +28718,7 @@
 	var SessionActions = __webpack_require__(279);
 	var NavBar = __webpack_require__(283);
 	var HashHistory = __webpack_require__(192).hashHistory;
+	var Login = __webpack_require__(288);
 
 	var App = React.createClass({
 	  displayName: 'App',
@@ -28734,12 +28736,13 @@
 	  //   HashHistory.push('/signup');
 	  // },
 	  //
-	  // pushToLogin(){
-	  //   HashHistory.push('/login');
+	  // pushToIndex(){
+	  //   HashHistory.push('/');
 	  // },
 
 
 	  render: function render() {
+
 	    return React.createElement(
 	      'div',
 	      null,
@@ -28748,7 +28751,6 @@
 	        null,
 	        React.createElement(NavBar, null)
 	      ),
-	      React.createElement('div', { className: 'app-splash-container' }),
 	      this.props.children
 	    );
 	  }
@@ -36196,31 +36198,21 @@
 			this.setState({ password: e.target.value });
 		},
 
-		formType: function formType() {
-			return this.props.location.pathname.slice(1);
-		},
-		fieldErrors: function fieldErrors(field) {
-			var errors = ErrorStore.formErrors(this.formType());
-
-			if (!errors[field]) {
-				return;
-			}
-
-			var messages = errors[field].map(function (errorMsg, i) {
-				return React.createElement(
-					'li',
-					{ key: i },
-					errorMsg
-				);
-			});
-
-			return React.createElement(
-				'ul',
-				null,
-				messages
-			);
-		},
-
+		// formType() {
+		//   return this.props.location.pathname.slice(1);
+		// },
+		//
+		// fieldErrors(field) {
+		//   const errors = ErrorStore.formErrors(this.formType());
+		//
+		//   if (!errors[field]) { return; }
+		//
+		//   const messages = errors[field].map( (errorMsg, i) => {
+		//     return <li key={ i }>{ errorMsg }</li>;
+		//   });
+		//
+		//   return <ul>{ messages }</ul>;
+		// },
 
 		form: function form() {
 			return React.createElement(
@@ -36309,7 +36301,6 @@
 						'Share some Experiences'
 					)
 				),
-				this.fieldErrors(),
 				this.form()
 			);
 		}
@@ -37568,6 +37559,7 @@
 	var SessionStore = __webpack_require__(256);
 	var PostActions = __webpack_require__(285);
 	var PostFeedItem = __webpack_require__(313);
+	var Login = __webpack_require__(288);
 
 	var PostFeed = React.createClass({
 	  displayName: 'PostFeed',
@@ -37616,7 +37608,11 @@
 	        )
 	      );
 	    } else {
-	      return React.createElement('div', null);
+	      return React.createElement(
+	        'div',
+	        null,
+	        React.createElement(Login, null)
+	      );
 	    }
 	  }
 

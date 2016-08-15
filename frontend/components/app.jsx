@@ -6,6 +6,7 @@ var SessionStore = require('../stores/session_store');
 var SessionActions = require('../actions/session_actions');
 var NavBar = require('./navBar.jsx');
 var HashHistory = require('react-router').hashHistory;
+var Login = require('./login_form');
 
 var App = React.createClass({
 
@@ -21,20 +22,21 @@ var App = React.createClass({
   //   HashHistory.push('/signup');
   // },
   //
-  // pushToLogin(){
-  //   HashHistory.push('/login');
+  // pushToIndex(){
+  //   HashHistory.push('/');
   // },
 
 
+
+
   render() {
+
+
     return (
       <div>
         <header>
           <NavBar/>
         </header>
-        <div className="app-splash-container">
-
-        </div>
         {this.props.children}
       </div>
     );
