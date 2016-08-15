@@ -26,33 +26,11 @@ var App = React.createClass({
   // },
 
 
-  greeting() {
-  //
-  // if (SessionStore.isUserLoggedIn()) {
-
-      return (
-        <hgroup className="header-group">
-          <NavBar />
-        </hgroup>
-    );
-    // }
-    // else if ( !["/login", "/signup"].includes(this.props.location.pathname) ) {
-    //   return (
-    //     <nav className="login-signup">
-    //       <div className="landing">
-    //         <button className="landing-button" onClick={this.pushToSignUp}>Get Started</button>
-    //         <button className="landing-button" onClick={this.pushToLogin}>Log In</button>
-    //       </div>
-    //     </nav>
-    //   );
-    // }
-  },
-
   render() {
     return (
       <div>
         <header>
-          {this.greeting()}
+          <NavBar/>
         </header>
         <div className="app-splash-container">
 

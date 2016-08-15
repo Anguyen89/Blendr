@@ -28739,27 +28739,6 @@
 	  // },
 
 
-	  greeting: function greeting() {
-	    //
-	    // if (SessionStore.isUserLoggedIn()) {
-
-	    return React.createElement(
-	      'hgroup',
-	      { className: 'header-group' },
-	      React.createElement(NavBar, null)
-	    );
-	    // }
-	    // else if ( !["/login", "/signup"].includes(this.props.location.pathname) ) {
-	    //   return (
-	    //     <nav className="login-signup">
-	    //       <div className="landing">
-	    //         <button className="landing-button" onClick={this.pushToSignUp}>Get Started</button>
-	    //         <button className="landing-button" onClick={this.pushToLogin}>Log In</button>
-	    //       </div>
-	    //     </nav>
-	    //   );
-	    // }
-	  },
 	  render: function render() {
 	    return React.createElement(
 	      'div',
@@ -28767,7 +28746,7 @@
 	      React.createElement(
 	        'header',
 	        null,
-	        this.greeting()
+	        React.createElement(NavBar, null)
 	      ),
 	      React.createElement('div', { className: 'app-splash-container' }),
 	      this.props.children
