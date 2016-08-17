@@ -44,7 +44,7 @@ module.exports = React.createClass({
     return (
       <div className="navbar">
         <div className="nav-left">
-          <img onClick={this.rootToIndex}className="logo" src="https://image.freepik.com/free-icon/instagram-logo_318-53344.png"></img>
+          <img onClick={this.rootToIndex}className="logo" src="http://www.billyjacksdesign.com/wp-content/uploads/2014/03/b-logo3-C3.png"></img>
         </div>
         {this.navRight()}
       </div>

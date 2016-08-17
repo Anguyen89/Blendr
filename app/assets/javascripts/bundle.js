@@ -35784,7 +35784,7 @@
 	      React.createElement(
 	        'div',
 	        { className: 'nav-left' },
-	        React.createElement('img', { onClick: this.rootToIndex, className: 'logo', src: 'https://image.freepik.com/free-icon/instagram-logo_318-53344.png' })
+	        React.createElement('img', { onClick: this.rootToIndex, className: 'logo', src: 'http://www.billyjacksdesign.com/wp-content/uploads/2014/03/b-logo3-C3.png' })
 	      ),
 	      this.navRight()
 	    );
@@ -36003,10 +36003,6 @@
 
 	"use strict";
 
-	var _React$createClass;
-
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 	var React = __webpack_require__(1);
 	var Link = __webpack_require__(192).Link;
 	var SessionActions = __webpack_require__(279);
@@ -36127,7 +36123,7 @@
 	//
 	// module.exports = LoginForm;
 
-	var LoginForm = React.createClass((_React$createClass = {
+	var LoginForm = React.createClass({
 		displayName: 'LoginForm',
 
 
@@ -36135,14 +36131,13 @@
 			return { username: "", password: "" };
 		},
 
-		componentDidMount: function componentDidMount() {
-			PostActions.fetchPosts();
-		},
+		// onSubmit: function(){
+		// 	PostActions.fetchPosts();
+		// },
 
 		redirectIfLoggedIn: function redirectIfLoggedIn() {
-			hashHistory.push("/");
+			hashHistory.push("/postfeed");
 		},
-
 
 		handleLogin: function handleLogin(e) {
 			// there will be no event for the guest login
@@ -36269,44 +36264,47 @@
 					)
 				)
 			);
-		}
+		},
 
-	}, _defineProperty(_React$createClass, 'componentDidMount', function componentDidMount() {
+		componentDidMount: function componentDidMount() {
 
-		$('.login-logo, .login-message, .login-form').hide();
-		$('.login-logo').fadeIn("slow");
+			$('.login-logo, .login-message, .login-form').hide();
+			$('.login-logo').fadeIn("slow");
 
-		setTimeout(function () {
-			$('.login-message').fadeIn("slow");
-		}, 250);
+			setTimeout(function () {
+				$('.login-message').fadeIn("slow");
+			}, 250);
 
-		setTimeout(function () {
-			$('.login-form').fadeIn("slow");
-		}, 500);
+			setTimeout(function () {
+				$('.login-form').fadeIn("slow");
+			}, 500);
 
-		this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
-		this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
-	}), _defineProperty(_React$createClass, 'render', function render() {
-		return React.createElement(
-			'div',
-			{ className: 'login-form-container' },
-			React.createElement(
-				'header',
-				null,
+			this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
+			this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
+		},
+
+		render: function render() {
+			return React.createElement(
+				'div',
+				{ className: 'login-form-container' },
 				React.createElement(
-					'h1',
-					{ className: 'login-logo' },
-					'Blendr'
+					'header',
+					null,
+					React.createElement(
+						'h1',
+						{ className: 'login-logo' },
+						'Blendr'
+					),
+					React.createElement(
+						'p',
+						{ className: 'login-message' },
+						'Share some Experiences'
+					)
 				),
-				React.createElement(
-					'p',
-					{ className: 'login-message' },
-					'Share some Experiences'
-				)
-			),
-			this.form()
-		);
-	}), _React$createClass));
+				this.form()
+			);
+		}
+	});
 
 	module.exports = LoginForm;
 

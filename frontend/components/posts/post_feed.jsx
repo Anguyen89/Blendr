@@ -12,7 +12,7 @@ var PostFeed = React.createClass({
   },
 
   componentDidMount(){
-    this.PostStoreListener = PostStore.addListener(this._onChange)
+    this.PostStoreListener = PostStore.addListener(this._onChange);
     this.scrollListener = window.addEventListener("scroll", this.addPosts);
     PostActions.fetchPosts();
   },
@@ -35,9 +35,6 @@ var PostFeed = React.createClass({
   _onChange(){
     this.setState({posts: PostStore.all()})
   },
-
-
-
 
   render: function(){
 

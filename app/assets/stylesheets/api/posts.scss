@@ -28,8 +28,8 @@
 }
 
 .logo {
-  width: 50px;
-  height: 45px;
+  width: 60px;
+  height: 50px;
   margin-left: 200px;
 }
 
@@ -98,6 +98,7 @@
 .user-post-image {
   width: inherit;
   height: inherit;
+  cursor: pointer;
 }
 
 .user-image-description {
@@ -151,6 +152,7 @@
   margin-right: 10px;
   margin-left: 10px;
   font-weight: bolder;
+  cursor: pointer;
 }
 
 .comment-index-item-body {

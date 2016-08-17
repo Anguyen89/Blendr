@@ -127,12 +127,12 @@ var LoginForm = React.createClass({
 		return {username: "", password: ""};
 	},
 
-	componentDidMount: function(){
-		PostActions.fetchPosts();
-	},
+	// onSubmit: function(){
+	// 	PostActions.fetchPosts();
+	// },
 
-	redirectIfLoggedIn() {
-	  hashHistory.push("/");
+	redirectIfLoggedIn: function() {
+	  hashHistory.push("/postfeed");
 	},
 
   handleLogin: function(e){
