@@ -49,8 +49,7 @@ var ProfileFeed = React.createClass({
   render: function(){
     var userProfile;
         if (!SessionStore.isUserLoggedIn() || Object.keys(this.state.user).length === 0) {
-           userProfile = <Login/>;
-
+           <div></div>
          } else {
            userProfile = (
              <div className="profile-feed">

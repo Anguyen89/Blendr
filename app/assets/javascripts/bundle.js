@@ -36425,7 +36425,7 @@
 	  render: function render() {
 	    var userProfile;
 	    if (!SessionStore.isUserLoggedIn() || Object.keys(this.state.user).length === 0) {
-	      userProfile = React.createElement(Login, null);
+	      React.createElement('div', null);
 	    } else {
 	      userProfile = React.createElement(
 	        'div',
