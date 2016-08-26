@@ -36387,14 +36387,6 @@
 	  displayName: 'ProfileFeed',
 
 
-	  // getInititalState: function(){
-	  //   return { user: {}};
-	  // },
-	  //
-	  // onChange: function(){
-	  //   this.setState({ user: ProfileStore.findById(this.props.params.profileId)});
-	  // },
-
 	  getStateFromStore: function getStateFromStore() {
 	    return { user: ProfileStore.findById(this.props.params.profileId) };
 	  },
@@ -36402,6 +36394,10 @@
 	  onChange: function onChange() {
 	    this.setState(this.getStateFromStore());
 	  },
+
+	  // updatePost: function(){
+	  //   this.getStateFromStore();
+	  // },
 
 	  getInitialState: function getInitialState() {
 	    return { user: {} };
@@ -36417,17 +36413,19 @@
 
 	  componentDidMount: function componentDidMount() {
 	    this.profileListener = ProfileStore.addListener(this.onChange);
+	    // this.postListenter = PostStore.addListener(this.updatePost);
 	    // ProfileActions.fetchUser(this.props.params.profileId);
 	  },
 
 	  componentWillUnmount: function componentWillUnmount() {
+	    // this.postListenter.remove();
 	    this.profileListener.remove();
 	  },
 
 	  render: function render() {
 	    var userProfile;
 	    if (!SessionStore.isUserLoggedIn() || Object.keys(this.state.user).length === 0) {
-	      userProfile = React.createElement('div', null);
+	      userProfile = React.createElement(Login, null);
 	    } else {
 	      userProfile = React.createElement(
 	        'div',
@@ -37536,7 +37534,7 @@
 
 	  likeCount: function likeCount() {
 	    if (this.props.post.likes < 1) {
-	      return "0 likes";
+	      return " ";
 	    } else {
 	      return this.props.post.likes.length + " likes";
 	    }

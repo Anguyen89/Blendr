@@ -11,14 +11,6 @@ var ProfilePictureIndex = require('./profile_picture_index');
 
 var ProfileFeed = React.createClass({
 
-  // getInititalState: function(){
-  //   return { user: {}};
-  // },
-  //
-  // onChange: function(){
-  //   this.setState({ user: ProfileStore.findById(this.props.params.profileId)});
-  // },
-
   getStateFromStore: function () {
     return {user: ProfileStore.findById(this.props.params.profileId)};
   },
@@ -26,6 +18,10 @@ var ProfileFeed = React.createClass({
   onChange: function () {
     this.setState(this.getStateFromStore() );
   },
+
+  // updatePost: function(){
+  //   this.getStateFromStore();
+  // },
 
   getInitialState: function () {
     return { user: {} };
@@ -41,17 +37,20 @@ var ProfileFeed = React.createClass({
 
   componentDidMount: function(){
     this.profileListener = ProfileStore.addListener(this.onChange);
+    // this.postListenter = PostStore.addListener(this.updatePost);
     // ProfileActions.fetchUser(this.props.params.profileId);
   },
 
   componentWillUnmount: function(){
+    // this.postListenter.remove();
     this.profileListener.remove();
   },
 
   render: function(){
     var userProfile;
         if (!SessionStore.isUserLoggedIn() || Object.keys(this.state.user).length === 0) {
-           userProfile = <div></div>;
+           userProfile = <Login/>;
+
          } else {
            userProfile = (
              <div className="profile-feed">
