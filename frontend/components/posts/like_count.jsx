@@ -6,7 +6,7 @@ var LikeCount = React.createClass({
 
   likeCount: function(){
     if (this.props.post.likes < 1){
-      return "0 likes";
+      return " ";
     }else{
       return this.props.post.likes.length + " likes";
     }
