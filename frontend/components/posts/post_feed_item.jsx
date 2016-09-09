@@ -20,7 +20,7 @@ var PostFeedItem = React.createClass({
         <div className="user-info-container">
           <div className="user-photo-name">
             <img className="user-photo" onClick={this.pushToProfile} src={this.props.post.user.profile_picture_url}></img>
-            <h2 className="post-author">{this.props.post.user.username}</h2>
+            <h2 className="post-author" onClick={this.pushToProfile}>{this.props.post.user.username}</h2>
           </div>
         </div>
 

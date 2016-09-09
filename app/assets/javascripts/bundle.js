@@ -37656,7 +37656,7 @@
 	          React.createElement('img', { className: 'user-photo', onClick: this.pushToProfile, src: this.props.post.user.profile_picture_url }),
 	          React.createElement(
 	            'h2',
-	            { className: 'post-author' },
+	            { className: 'post-author', onClick: this.pushToProfile },
 	            this.props.post.user.username
 	          )
 	        )
