@@ -9,9 +9,9 @@ var ModalHeader = React.createClass({
         </div>
         <div className="modal-profile-info">
           <div className="modal-profile-header-name">
-            <h1>{this.props.post.user_id}</h1>
+            <div>{this.props.post.user_id}</div>
           </div>
-          <h3>@{this.props.post.user_id}</h3>
+          <div>@{this.props.post.user_id}</div>
         </div>
       </div>
     );

@@ -1,6 +1,6 @@
 var React = require('react');
 var ModalHeader = require('../posts/modal_header');
-var CommentBox = require('../posts/comment_box');
+var ModalCommentBox = require('../profile/modal_comment_box');
 
 var ModalPost = React.createClass({
 
@@ -8,7 +8,7 @@ var ModalPost = React.createClass({
     return(
       <div className="modal-post-info">
         <ModalHeader post={this.props.post}/>
-        <CommentBox post={this.props.post}/>
+        <ModalCommentBox post={this.props.post}/>
       </div>
     );
   }

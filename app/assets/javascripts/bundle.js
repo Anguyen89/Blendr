@@ -37120,7 +37120,7 @@
 
 	var React = __webpack_require__(1);
 	var ModalHeader = __webpack_require__(314);
-	var CommentBox = __webpack_require__(304);
+	var ModalCommentBox = __webpack_require__(315);
 
 	var ModalPost = React.createClass({
 	  displayName: 'ModalPost',
@@ -37131,7 +37131,7 @@
 	      'div',
 	      { className: 'modal-post-info' },
 	      React.createElement(ModalHeader, { post: this.props.post }),
-	      React.createElement(CommentBox, { post: this.props.post })
+	      React.createElement(ModalCommentBox, { post: this.props.post })
 	    );
 	  }
 
@@ -37657,13 +37657,13 @@
 	          "div",
 	          { className: "modal-profile-header-name" },
 	          React.createElement(
-	            "h1",
+	            "div",
 	            null,
 	            this.props.post.user_id
 	          )
 	        ),
 	        React.createElement(
-	          "h3",
+	          "div",
 	          null,
 	          "@",
 	          this.props.post.user_id
@@ -37675,6 +37675,42 @@
 	});
 
 	module.exports = ModalHeader;
+
+/***/ },
+/* 315 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+
+	var CommentIndex = __webpack_require__(305);
+	var CommentForm = __webpack_require__(307);
+	var CommentIndexHeader = __webpack_require__(310);
+
+	var ModalCommentBox = React.createClass({
+	  displayName: 'ModalCommentBox',
+
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      { className: 'modal-comment-box' },
+	      React.createElement(
+	        'div',
+	        null,
+	        React.createElement(CommentIndexHeader, { post: this.props.post }),
+	        React.createElement(CommentIndex, { post: this.props.post })
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'modal-comment-form' },
+	        React.createElement(CommentForm, { post: this.props.post })
+	      )
+	    );
+	  }
+	});
+
+	module.exports = ModalCommentBox;
 
 /***/ }
 /******/ ]);

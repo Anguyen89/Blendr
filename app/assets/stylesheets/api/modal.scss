@@ -19,13 +19,6 @@
 }
 
 
-//
-// .modal-pic-item {
-//   height: 500px;
-//   width: 500px;
-// }
-//
-//
 .modal-post-container {
   display: flex;
   justify-content: space-between;
@@ -34,24 +27,42 @@
   height: 500px;
 }
 
+
 .modal-post-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background: white;
   height: 100%;
 }
 //
-// .modal-post-header {
-//   display: flex;
-//   height: 100px;
-// }
-//
-//
-// .modal-comments-container{
-//   height: 400px;
-// }
+.modal-post-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  // background: blue;
+  height: 100px;
+  width: 100%;
+  margin: 10px;
+}
 
 
-// .comment-box {
-//   display: flex;
-//   justify-content: flex-end;
-//   background: yellow;
-// }
+
+.modal-comment-box {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 100%;
+  margin-bottom: 10px;
+}
+
+.comment-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-direction: row;
+  margin-left: 10px;
+  padding-top: 10px;
+}
