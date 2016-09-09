@@ -15,7 +15,9 @@ var ModalHeader = React.createClass({
           <div className="modal-profile-header-name">
             <div>{user.name}</div>
           </div>
-          <div>@{user.username}</div>
+          <div className="modal-profile-handle">
+            @{user.username}
+          </div>
         </div>
       </div>
     );

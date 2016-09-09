@@ -37122,8 +37122,6 @@
 
 	var ModalPost = React.createClass({
 	  displayName: 'ModalPost',
-
-
 	  render: function render() {
 	    return React.createElement(
 	      'div',
@@ -37132,7 +37130,6 @@
 	      React.createElement(ModalCommentBox, { post: this.props.post })
 	    );
 	  }
-
 	});
 
 	module.exports = ModalPost;
@@ -37180,12 +37177,6 @@
 
 
 	  render: function render() {
-	    // var self = this;
-	    // var comments = this.props.post.comments.map(function(comment){
-	    //   return (
-	    //     <CommentIndexItem key={comment.id} post={self.props.post} comment={comment}/>
-	    //   );
-	    // });
 
 	    var self = this;
 	    var comments = this.props.post.comments.map(function (comment) {
@@ -37368,11 +37359,11 @@
 	    var currentUser = SessionStore.currentUser();
 	    var post = this.props.post;
 
-	    var likeButton = React.createElement('i', { id: 'unfilled', onClick: this.handleLike, className: 'fa fa-birthday-cake' });
+	    var likeButton = React.createElement('i', { id: 'unfilled', onClick: this.handleLike, className: 'fa fa-thumbs-o-up' });
 
 	    post.likes.forEach(function (like) {
 	      if (like.user_id === currentUser.id) {
-	        likeButton = React.createElement('i', { id: 'filled', onClick: self.handleUnlike, className: 'fa fa-birthday-cake' });
+	        likeButton = React.createElement('i', { id: 'filled', onClick: self.handleUnlike, className: 'fa fa-thumbs-o-up' });
 	      }
 	    });
 
@@ -37383,56 +37374,6 @@
 	    );
 	  }
 	});
-	// var LikeButton = React.createClass({
-	//
-	//   getInitialState: function(){
-	//     return { liked: ""};
-	//   },
-	//
-	//   _postIsLiked: function(){
-	//     return PostStore.postIsLiked(this.props.post);
-	//   },
-	//
-	//
-	//   _toggleLike: function(e){
-	//
-	//     e.preventDefault();
-	//
-	//     var likeData = {
-	//       user_id: SessionStore.currentUser().id,
-	//       picture_id: this.props.post.id
-	//     };
-	//
-	//     if (this._postIsLiked()){
-	//       PostActions.removeLike(likeData);
-	//     }else{
-	//       PostActions.createLike(likeData);
-	//     }
-	//     this.setState({ liked: PostStore.postIsLiked(this.props.post)});
-	//   },
-	// //
-	// //   render: function() {
-	// //   var className = this._isLiked() ? "fa fa-heart fa-2x filled-heart" :
-	// //                                      "fa fa-heart-o fa-2x empty-heart";
-	// //   return (
-	// //     <div className="like-button">
-	// //       <i onClick={this._toggleLike} className={className}></i>
-	// //     </div>
-	// //   );
-	// // }
-	//
-	//   render: function(){
-	//     var buttonText = this._postIsLiked() ? "UnLike" : "Like";
-	//     return (
-	//       <div className="like_button-container">
-	//         <button onClick={this._toggleLike} className="like-button">{buttonText}</button>
-	//       </div>
-	//     );
-	//   }
-	// });
-
-	//
-	// module.exports = LikeButton;
 
 /***/ },
 /* 310 */
@@ -37661,7 +37602,7 @@
 	        ),
 	        React.createElement(
 	          'div',
-	          null,
+	          { className: 'modal-profile-handle' },
 	          '@',
 	          user.username
 	        )
@@ -37683,9 +37624,26 @@
 	var CommentIndex = __webpack_require__(305);
 	var CommentForm = __webpack_require__(307);
 	var CommentIndexHeader = __webpack_require__(310);
+	var PostStore = __webpack_require__(291);
+	var ProfileStore = __webpack_require__(292);
 
 	var ModalCommentBox = React.createClass({
 	  displayName: 'ModalCommentBox',
+
+
+	  // componentDidMount(){
+	  //   this.PostStoreListener = PostStore.addListener(this._onChange);
+	  //   this.ProfileStoreListener = ProfileStore.addListener(this._onChange);
+	  // },
+	  //
+	  // componentWillUnmount(){
+	  //   this.PostStoreListener.remove();
+	  //   this.ProfileStoreListener.remove();
+	  // },
+	  //
+	  // _onChange(){
+	  //   this.forceUpdate();
+	  // },
 
 	  render: function render() {
 	    return React.createElement(

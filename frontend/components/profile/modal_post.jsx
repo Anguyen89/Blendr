@@ -4,7 +4,8 @@ var ModalCommentBox = require('../profile/modal_comment_box');
 
 var ModalPost = React.createClass({
 
-  render: function(){
+
+  render(){
     return(
       <div className="modal-post-info">
         <ModalHeader post={this.props.post}/>
