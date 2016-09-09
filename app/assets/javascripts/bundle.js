@@ -37077,7 +37077,7 @@
 	          'div',
 	          { className: 'modal-post-container' },
 	          React.createElement('img', { className: 'modal-picture', src: this.props.post.url }),
-	          React.createElement(ModalPost, { post: this.props.post })
+	          React.createElement(ModalPost, { post: this.state.post })
 	        )
 	      )
 	    );
@@ -37133,7 +37133,6 @@
 	  displayName: 'ModalPost',
 	  componentDidMount: function componentDidMount() {
 	    this.PostStoreListener = PostStore.addListener(this._onChange);
-	    PostActions.fetchPosts();
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.PostStoreListener.remove();

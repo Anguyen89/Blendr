@@ -44,7 +44,7 @@ var ProfilePostPicture = React.createClass({
 
             <div className="modal-post-container">
               <img className="modal-picture" src={this.props.post.url} />
-              <ModalPost post={this.props.post} />
+              <ModalPost post={this.state.post} />
             </div>
 
           </Modal>

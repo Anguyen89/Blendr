@@ -9,7 +9,6 @@ var ModalPost = React.createClass({
 
   componentDidMount(){
     this.PostStoreListener = PostStore.addListener(this._onChange);
-    PostActions.fetchPosts();
   },
 
   componentWillUnmount(){
