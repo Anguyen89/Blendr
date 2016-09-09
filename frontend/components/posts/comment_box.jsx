@@ -4,7 +4,10 @@ var CommentIndex = require('./comment_index');
 var CommentForm = require('./comment_form');
 var CommentIndexHeader = require('./comment_index_header');
 
+
 var CommentBox = React.createClass({
+
+
   render: function(){
     return(
     <div className="comment-box">

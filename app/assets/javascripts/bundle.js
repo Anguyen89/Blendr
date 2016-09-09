@@ -36472,11 +36472,15 @@
 	};
 
 	var setComment = function setComment(comment) {
+	  console.log("coming from " + comment);
+	  console.log(_posts);
 	  var post = _posts[comment.picture_id];
 	  post.comments.push(comment);
 	};
 
 	var setLike = function setLike(like) {
+	  console.log("coming from " + like);
+	  console.log(_posts);
 	  var post = _posts[like.picture_id];
 	  post.likes.push(like);
 	};
@@ -36490,7 +36494,9 @@
 
 	var removeLike = function removeLike(like) {
 	  console.log(like.picture_id);
+	  console.log(_posts[like.picture_id]);
 	  console.log(_posts);
+	  console.log("coming from " + like.picture_id);
 	  var allLikes = _posts[like.picture_id].likes.slice();
 	  var idx;
 	  for (var i = 0; i < allLikes.length; i++) {
@@ -37032,7 +37038,7 @@
 
 
 	  getInitialState: function getInitialState() {
-	    return { modalOpen: false };
+	    return { modalOpen: false, post: {} };
 	  },
 
 	  onChange: function onChange() {
@@ -37119,25 +37125,22 @@
 	var React = __webpack_require__(1);
 	var ModalHeader = __webpack_require__(314);
 	var ModalCommentBox = __webpack_require__(315);
-	// var PostActions = require('../../actions/post_actions');
-	// var PostStore = require('../../stores/post_store');
+	var PostActions = __webpack_require__(285);
+	var PostStore = __webpack_require__(291);
+	var ProfileStore = __webpack_require__(292);
 
 	var ModalPost = React.createClass({
 	  displayName: 'ModalPost',
-
-	  // componentDidMount(){
-	  //   this.PostStoreListener = PostStore.addListener(this._onChange);
-	  //   PostActions.fetchPosts();
-	  // },
-	  //
-	  // componentWillUnmount(){
-	  //   this.PostStoreListener.remove();
-	  // },
-	  //
-	  // _onChange(){
-	  //   this.forceUpdate();
-	  // },
-
+	  componentDidMount: function componentDidMount() {
+	    this.PostStoreListener = PostStore.addListener(this._onChange);
+	    PostActions.fetchPosts();
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.PostStoreListener.remove();
+	  },
+	  _onChange: function _onChange() {
+	    this.forceUpdate();
+	  },
 	  render: function render() {
 	    return React.createElement(
 	      'div',
@@ -37165,6 +37168,7 @@
 
 	var CommentBox = React.createClass({
 	  displayName: 'CommentBox',
+
 
 	  render: function render() {
 	    return React.createElement(
@@ -37640,21 +37644,9 @@
 	var CommentIndex = __webpack_require__(305);
 	var CommentForm = __webpack_require__(307);
 	var CommentIndexHeader = __webpack_require__(310);
-	var PostActions = __webpack_require__(285);
-	var PostStore = __webpack_require__(291);
 
 	var ModalCommentBox = React.createClass({
 	  displayName: 'ModalCommentBox',
-	  componentDidMount: function componentDidMount() {
-	    this.PostStoreListener = PostStore.addListener(this._onChange);
-	    PostActions.fetchPosts();
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.PostStoreListener.remove();
-	  },
-	  _onChange: function _onChange() {
-	    this.forceUpdate();
-	  },
 
 
 	  render: function render() {

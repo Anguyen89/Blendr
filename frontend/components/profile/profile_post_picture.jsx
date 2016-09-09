@@ -7,7 +7,7 @@ var ModalPost = require('./modal_post');
 var ProfilePostPicture = React.createClass({
 
   getInitialState: function () {
-    return { modalOpen: false };
+    return { modalOpen: false, post: {}};
   },
 
   onChange: function() {
