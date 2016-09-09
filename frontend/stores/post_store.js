@@ -23,33 +23,17 @@ var addPost = function(post){
 };
 
 var setComment = function(comment){
-  console.log("coming from " + comment);
-    console.log(_posts);
   var post = _posts[comment.picture_id];
   post.comments.push(comment);
 };
 
 var setLike = function(like){
-  console.log("coming from " + like);
-    console.log(_posts);
   var post = _posts[like.picture_id];
   post.likes.push(like);
 };
 
 
-// var removeLike = function(like){
-//   var post = PostStore.getById(like.picture_id);
-//   var likeIdx = post.likes.indexOf(SessionStore.currentUser());
-//   post.likes.splice(likeIdx, 1);
-// };
-
-
-
 var removeLike = function(like) {
-  console.log(like.picture_id);
-  console.log(_posts[like.picture_id]);
-  console.log(_posts);
-    console.log("coming from " + like.picture_id);
   var allLikes = _posts[like.picture_id].likes.slice();
   var idx;
   for (var i=0; i<allLikes.length ; i++) {

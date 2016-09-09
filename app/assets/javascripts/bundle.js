@@ -36010,118 +36010,6 @@
 	var ErrorStore = __webpack_require__(289);
 	var hashHistory = __webpack_require__(192).hashHistory;
 	var PostActions = __webpack_require__(285);
-	//
-	// var LoginForm = React.createClass({
-	//
-	// 	contextTypes: {
-	// 		router: React.PropTypes.object.isRequired
-	// 	},
-	//
-	//   getInitialState() {
-	//     return {
-	//       username: "",
-	//       password: ""
-	//     };
-	//   },
-	//
-	//   componentDidMount() {
-	//     this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
-	//     this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
-	//   },
-	//
-	//   componentWillUnmount() {
-	//     this.errorListener.remove();
-	//     this.sessionListener.remove();
-	//   },
-	//
-	//   redirectIfLoggedIn() {
-	//     if (SessionStore.isUserLoggedIn()) {
-	//       this.context.router.push("/");
-	//     }
-	//   },
-	//
-	// 	handleSubmit(e) {
-	// 		e.preventDefault();
-	//
-	// 		const formData = {
-	// 			username: this.state.username,
-	// 			password: this.state.password
-	// 		};
-	//
-	//     if (this.props.location.pathname === "/login") {
-	//       SessionActions.logIn(formData);
-	//     } else {
-	//       SessionActions.signUp(formData);
-	//     }
-	// 	},
-	//
-	//   fieldErrors(field) {
-	//     const errors = ErrorStore.formErrors(this.formType());
-	//
-	//     if (!errors[field]) { return; }
-	//
-	//     const messages = errors[field].map( (errorMsg, i) => {
-	//       return <li key={ i }>{ errorMsg }</li>;
-	//     });
-	//
-	//     return <ul>{ messages }</ul>;
-	//   },
-	//
-	//   formType() {
-	//     return this.props.location.pathname.slice(1);
-	//   },
-	//
-	//   update(property) {
-	//     return (e) => this.setState({[property]: e.target.value});
-	//   },
-	//
-	// 	render() {
-	//
-	//     let navLink;
-	//     if (this.formType() === "login") {
-	//       navLink = <Link to="/signup">Sign Up</Link>;
-	//     } else {
-	//       navLink = <Link to="/login">Login</Link>;
-	//     }
-	//
-	// 		return (
-	//
-	// 			<div className="login-form-container">
-	// 				<form onSubmit={this.handleSubmit} className="login-form-box">
-	// 					<br/>
-	// 					{ this.formType() } or { navLink }
-	//
-	// 	        { this.fieldErrors("base") }
-	// 					<div className="login-form">
-	// 		        <br />
-	// 						<label> Username:
-	// 		          { this.fieldErrors("username") }
-	// 							<input type="text"
-	// 		            value={this.state.username}
-	// 		            onChange={this.update("username")}
-	// 								className="login-input" />
-	// 						</label>
-	//
-	// 		        <br />
-	// 						<label> Password:
-	// 		          { this.fieldErrors("password") }
-	// 		          <input type="password"
-	// 		            value={this.state.password}
-	// 		            onChange={this.update("password")}
-	// 								className="login-input" />
-	// 						</label>
-	//
-	// 		        <br />
-	// 						<input type="submit" value="Submit" />
-	// 					</div>
-	// 				</form>
-	//
-	// 			</div>
-	// 		);
-	// 	}
-	// });
-	//
-	// module.exports = LoginForm;
 
 	var LoginForm = React.createClass({
 		displayName: 'LoginForm',
@@ -36131,16 +36019,12 @@
 			return { username: "", password: "" };
 		},
 
-		// onSubmit: function(){
-		// 	PostActions.fetchPosts();
-		// },
-
 		redirectIfLoggedIn: function redirectIfLoggedIn() {
 			hashHistory.push("/postfeed");
 		},
 
 		handleLogin: function handleLogin(e) {
-			// there will be no event for the guest login
+
 			if (e) {
 				e.preventDefault();
 			}
@@ -36164,7 +36048,7 @@
 
 			this.setState({ username: "", password: "" });
 
-			var username = "al_nguyen".split("");
+			var username = "guest".split("");
 			var password = "password".split("");
 			var time = 50;
 
@@ -36197,22 +36081,6 @@
 		handlePasswordChange: function handlePasswordChange(e) {
 			this.setState({ password: e.target.value });
 		},
-
-		// formType() {
-		//   return this.props.location.pathname.slice(1);
-		// },
-		//
-		// fieldErrors(field) {
-		//   const errors = ErrorStore.formErrors(this.formType());
-		//
-		//   if (!errors[field]) { return; }
-		//
-		//   const messages = errors[field].map( (errorMsg, i) => {
-		//     return <li key={ i }>{ errorMsg }</li>;
-		//   });
-		//
-		//   return <ul>{ messages }</ul>;
-		// },
 
 		form: function form() {
 			return React.createElement(
@@ -36267,18 +36135,6 @@
 		},
 
 		componentDidMount: function componentDidMount() {
-
-			$('.login-logo, .login-message, .login-form').hide();
-			$('.login-logo').fadeIn("slow");
-
-			setTimeout(function () {
-				$('.login-message').fadeIn("slow");
-			}, 250);
-
-			setTimeout(function () {
-				$('.login-form').fadeIn("slow");
-			}, 500);
-
 			this.errorListener = ErrorStore.addListener(this.forceUpdate.bind(this));
 			this.sessionListener = SessionStore.addListener(this.redirectIfLoggedIn);
 		},
@@ -36472,31 +36328,16 @@
 	};
 
 	var setComment = function setComment(comment) {
-	  console.log("coming from " + comment);
-	  console.log(_posts);
 	  var post = _posts[comment.picture_id];
 	  post.comments.push(comment);
 	};
 
 	var setLike = function setLike(like) {
-	  console.log("coming from " + like);
-	  console.log(_posts);
 	  var post = _posts[like.picture_id];
 	  post.likes.push(like);
 	};
 
-	// var removeLike = function(like){
-	//   var post = PostStore.getById(like.picture_id);
-	//   var likeIdx = post.likes.indexOf(SessionStore.currentUser());
-	//   post.likes.splice(likeIdx, 1);
-	// };
-
-
 	var removeLike = function removeLike(like) {
-	  console.log(like.picture_id);
-	  console.log(_posts[like.picture_id]);
-	  console.log(_posts);
-	  console.log("coming from " + like.picture_id);
 	  var allLikes = _posts[like.picture_id].likes.slice();
 	  var idx;
 	  for (var i = 0; i < allLikes.length; i++) {
@@ -37131,15 +36972,6 @@
 
 	var ModalPost = React.createClass({
 	  displayName: 'ModalPost',
-	  componentDidMount: function componentDidMount() {
-	    this.PostStoreListener = PostStore.addListener(this._onChange);
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.PostStoreListener.remove();
-	  },
-	  _onChange: function _onChange() {
-	    this.forceUpdate();
-	  },
 	  render: function render() {
 	    return React.createElement(
 	      'div',

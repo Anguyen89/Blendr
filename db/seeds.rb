@@ -8,7 +8,7 @@
 
 guest = User.create!([
   {username: "M_Thorton", password: "password", name: "Mark Thorton", profile_picture_url: "https://hd.unsplash.com/photo-1445282804813-123ac28fe498"},
-  {username: "al_nguyen", password: "password", name: "Albert Nguyen", profile_picture_url: "https://s-media-cache-ak0.pinimg.com/564x/4d/3d/2b/4d3d2ba3ecc8592f8e64a54d25ca9dc7.jpg"},
+  {username: "guest", password: "password", name: "Guest", profile_picture_url: "https://s-media-cache-ak0.pinimg.com/564x/4d/3d/2b/4d3d2ba3ecc8592f8e64a54d25ca9dc7.jpg"},
   {username: "j_priuq", password: "password", name: "Jennifer Proque", profile_picture_url: "https://hd.unsplash.com/photo-1432601866219-29141ada44f9"},
   {username: "truari", password: "password", name: "Gavin Newsom", profile_picture_url: "https://hd.unsplash.com/photo-1463453091185-61582044d556"},
   {username: "oprah", password: "password", name: "Oprah Winfrey", profile_picture_url: "http://thinklink.in/wp-content/uploads/oprahwinfrey.jpg"},
@@ -274,7 +274,7 @@ posts = Picture.create!([
 
 
 
-# 
+#
 # (1..User.all.length).each do |follower_id|
 #   #say each user follows between 7 and 10 people
 #   total_following = rand(7..10)

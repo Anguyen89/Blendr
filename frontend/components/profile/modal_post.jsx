@@ -7,18 +7,6 @@ var ProfileStore = require('../../stores/profile_store');
 
 var ModalPost = React.createClass({
 
-  componentDidMount(){
-    this.PostStoreListener = PostStore.addListener(this._onChange);
-  },
-
-  componentWillUnmount(){
-    this.PostStoreListener.remove();
-  },
-
-  _onChange(){
-    this.forceUpdate();
-  },
-
   render(){
     return(
       <div className="modal-post-info">
