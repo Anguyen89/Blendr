@@ -37056,8 +37056,6 @@
 	    this.setState({ modalOpen: false });
 	  },
 
-	  // <ModalPost post={this.props.post} /> add to the modal to display user info
-
 	  render: function render() {
 	    return React.createElement(
 	      'div',
@@ -37138,8 +37136,6 @@
 	});
 
 	module.exports = ModalPost;
-
-	//remove if unused
 
 /***/ },
 /* 303 */,
@@ -37634,44 +37630,44 @@
 /* 314 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var React = __webpack_require__(1);
+	var ProfileStore = __webpack_require__(292);
 
 	var ModalHeader = React.createClass({
-	  displayName: "ModalHeader",
-
+	  displayName: 'ModalHeader',
 	  render: function render() {
+	    var user = ProfileStore.findById(this.props.post.user_id);
 	    return React.createElement(
-	      "div",
-	      { className: "modal-post-header" },
+	      'div',
+	      { className: 'modal-post-header' },
 	      React.createElement(
-	        "div",
-	        { className: "modal-pic-url" },
-	        React.createElement("img", { src: this.props.post.user })
+	        'div',
+	        { className: 'modal-pic-url' },
+	        React.createElement('img', { src: user.profile_picture_url })
 	      ),
 	      React.createElement(
-	        "div",
-	        { className: "modal-profile-info" },
+	        'div',
+	        { className: 'modal-profile-info' },
 	        React.createElement(
-	          "div",
-	          { className: "modal-profile-header-name" },
+	          'div',
+	          { className: 'modal-profile-header-name' },
 	          React.createElement(
-	            "div",
+	            'div',
 	            null,
-	            this.props.post.user_id
+	            user.name
 	          )
 	        ),
 	        React.createElement(
-	          "div",
+	          'div',
 	          null,
-	          "@",
-	          this.props.post.user_id
+	          '@',
+	          user.username
 	        )
 	      )
 	    );
 	  }
-
 	});
 
 	module.exports = ModalHeader;

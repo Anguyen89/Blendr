@@ -16,5 +16,3 @@ var ModalPost = React.createClass({
 });
 
 module.exports = ModalPost;
-
-//remove if unused

@@ -32,8 +32,6 @@ var ProfilePostPicture = React.createClass({
   },
 
 
-            // <ModalPost post={this.props.post} /> add to the modal to display user info
-
   render: function() {
     return (
       <div className="profile-post-picture">
