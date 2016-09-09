@@ -11,8 +11,8 @@ var CommentIndexItem = React.createClass({
   render: function(){
     return (
       <div className="comment-index-item">
-        <div onClick={this.rootToProfile} className="comment-index-item-name">{this.props.comment.user}</div>
-        <div className="comment-index-item-body">{this.props.comment.body}</div>
+          <div onClick={this.rootToProfile} className="comment-index-item-name">{this.props.comment.user}</div>
+          <div className="comment-index-item-body">{this.props.comment.body}</div>
       </div>
     );
   }

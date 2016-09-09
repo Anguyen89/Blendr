@@ -3,24 +3,24 @@ var React = require('react');
 var CommentIndex = require('../posts/comment_index');
 var CommentForm = require('../posts/comment_form');
 var CommentIndexHeader = require('../posts/comment_index_header');
+var PostActions = require('../../actions/post_actions');
 var PostStore = require('../../stores/post_store');
-var ProfileStore = require('../../stores/profile_store');
 
 var ModalCommentBox = React.createClass({
 
-  // componentDidMount(){
-  //   this.PostStoreListener = PostStore.addListener(this._onChange);
-  //   this.ProfileStoreListener = ProfileStore.addListener(this._onChange);
-  // },
-  //
-  // componentWillUnmount(){
-  //   this.PostStoreListener.remove();
-  //   this.ProfileStoreListener.remove();
-  // },
-  //
-  // _onChange(){
-  //   this.forceUpdate();
-  // },
+  componentDidMount(){
+    this.PostStoreListener = PostStore.addListener(this._onChange);
+    PostActions.fetchPosts();
+  },
+
+  componentWillUnmount(){
+    this.PostStoreListener.remove();
+  },
+
+  _onChange(){
+    this.forceUpdate();
+  },
+
 
   render: function(){
     return(

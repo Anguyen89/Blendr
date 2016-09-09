@@ -37119,9 +37119,25 @@
 	var React = __webpack_require__(1);
 	var ModalHeader = __webpack_require__(314);
 	var ModalCommentBox = __webpack_require__(315);
+	// var PostActions = require('../../actions/post_actions');
+	// var PostStore = require('../../stores/post_store');
 
 	var ModalPost = React.createClass({
 	  displayName: 'ModalPost',
+
+	  // componentDidMount(){
+	  //   this.PostStoreListener = PostStore.addListener(this._onChange);
+	  //   PostActions.fetchPosts();
+	  // },
+	  //
+	  // componentWillUnmount(){
+	  //   this.PostStoreListener.remove();
+	  // },
+	  //
+	  // _onChange(){
+	  //   this.forceUpdate();
+	  // },
+
 	  render: function render() {
 	    return React.createElement(
 	      'div',
@@ -37624,26 +37640,22 @@
 	var CommentIndex = __webpack_require__(305);
 	var CommentForm = __webpack_require__(307);
 	var CommentIndexHeader = __webpack_require__(310);
+	var PostActions = __webpack_require__(285);
 	var PostStore = __webpack_require__(291);
-	var ProfileStore = __webpack_require__(292);
 
 	var ModalCommentBox = React.createClass({
 	  displayName: 'ModalCommentBox',
+	  componentDidMount: function componentDidMount() {
+	    this.PostStoreListener = PostStore.addListener(this._onChange);
+	    PostActions.fetchPosts();
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.PostStoreListener.remove();
+	  },
+	  _onChange: function _onChange() {
+	    this.forceUpdate();
+	  },
 
-
-	  // componentDidMount(){
-	  //   this.PostStoreListener = PostStore.addListener(this._onChange);
-	  //   this.ProfileStoreListener = ProfileStore.addListener(this._onChange);
-	  // },
-	  //
-	  // componentWillUnmount(){
-	  //   this.PostStoreListener.remove();
-	  //   this.ProfileStoreListener.remove();
-	  // },
-	  //
-	  // _onChange(){
-	  //   this.forceUpdate();
-	  // },
 
 	  render: function render() {
 	    return React.createElement(
