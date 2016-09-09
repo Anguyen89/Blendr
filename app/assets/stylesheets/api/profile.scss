@@ -47,6 +47,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
 }
 
 .profile-post-picture {
@@ -56,6 +57,7 @@
 .profile-post-picture img {
   height: 475px;
   width: 475px;
+
 }
 
 .follow-button-container {
