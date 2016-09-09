@@ -44,8 +44,9 @@ var ProfilePostPicture = React.createClass({
             onRequestClose={this.closeModal}
             style={customStyle}>
 
-            <div className="modal-picture">
-              <img src={this.props.post.url} />
+            <div className="modal-post-container">
+              <img className="modal-picture" src={this.props.post.url} />
+              <ModalPost post={this.props.post} />
             </div>
 
           </Modal>

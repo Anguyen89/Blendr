@@ -37071,8 +37071,9 @@
 	          style: customStyle },
 	        React.createElement(
 	          'div',
-	          { className: 'modal-picture' },
-	          React.createElement('img', { src: this.props.post.url })
+	          { className: 'modal-post-container' },
+	          React.createElement('img', { className: 'modal-picture', src: this.props.post.url }),
+	          React.createElement(ModalPost, { post: this.props.post })
 	        )
 	      )
 	    );
@@ -37118,7 +37119,7 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var PostHeader = __webpack_require__(303);
+	var ModalHeader = __webpack_require__(314);
 	var CommentBox = __webpack_require__(304);
 
 	var ModalPost = React.createClass({
@@ -37128,8 +37129,8 @@
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { className: 'modal-post-container' },
-	      React.createElement(PostHeader, { post: this.props.post }),
+	      { className: 'modal-post-info' },
+	      React.createElement(ModalHeader, { post: this.props.post }),
 	      React.createElement(CommentBox, { post: this.props.post })
 	    );
 	  }
@@ -37141,56 +37142,7 @@
 	//remove if unused
 
 /***/ },
-/* 303 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
-	var UserProfilePic = __webpack_require__(297);
-	var UserProfileInfo = __webpack_require__(298);
-
-	var PostHeader = React.createClass({
-	  displayName: 'PostHeader',
-
-
-	  render: function render() {
-	    return React.createElement(
-	      'div',
-	      { className: 'post-header' },
-	      React.createElement(
-	        'div',
-	        { className: 'modal-pic-url' },
-	        React.createElement('img', { src: this.props.post.user })
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'profile-info' },
-	        React.createElement(
-	          'div',
-	          { className: 'profile-header-name' },
-	          React.createElement(
-	            'h1',
-	            null,
-	            this.props.post.user_id
-	          )
-	        ),
-	        React.createElement(
-	          'h3',
-	          null,
-	          '@',
-	          this.props.post.user_id
-	        )
-	      )
-	    );
-	  }
-	});
-
-	module.exports = PostHeader;
-
-	//delete if unused
-
-/***/ },
+/* 303 */,
 /* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -37677,6 +37629,52 @@
 	});
 
 	module.exports = PostFeedItem;
+
+/***/ },
+/* 314 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var React = __webpack_require__(1);
+
+	var ModalHeader = React.createClass({
+	  displayName: "ModalHeader",
+
+	  render: function render() {
+	    return React.createElement(
+	      "div",
+	      { className: "modal-post-header" },
+	      React.createElement(
+	        "div",
+	        { className: "modal-pic-url" },
+	        React.createElement("img", { src: this.props.post.user })
+	      ),
+	      React.createElement(
+	        "div",
+	        { className: "modal-profile-info" },
+	        React.createElement(
+	          "div",
+	          { className: "modal-profile-header-name" },
+	          React.createElement(
+	            "h1",
+	            null,
+	            this.props.post.user_id
+	          )
+	        ),
+	        React.createElement(
+	          "h3",
+	          null,
+	          "@",
+	          this.props.post.user_id
+	        )
+	      )
+	    );
+	  }
+
+	});
+
+	module.exports = ModalHeader;
 
 /***/ }
 /******/ ]);

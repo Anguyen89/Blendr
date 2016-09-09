@@ -1,0 +1,57 @@
+//
+// .modal-post {
+//   display: flex;
+//   flex-direction: row;
+// }
+//
+
+// .profile-post-picture {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
+
+.modal-picture {
+  display: flex;
+  justify-content: center;
+  height: 500px;
+  width: 500px;
+}
+
+
+//
+// .modal-pic-item {
+//   height: 500px;
+//   width: 500px;
+// }
+//
+//
+.modal-post-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  height: 500px;
+}
+
+.modal-post-info {
+  background: white;
+  height: 100%;
+}
+//
+// .modal-post-header {
+//   display: flex;
+//   height: 100px;
+// }
+//
+//
+// .modal-comments-container{
+//   height: 400px;
+// }
+
+
+// .comment-box {
+//   display: flex;
+//   justify-content: flex-end;
+//   background: yellow;
+// }
