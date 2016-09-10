@@ -133,7 +133,7 @@ var LoginForm = React.createClass({
 		return (
 			<div className="login-form-container">
 				<header>
-					<h1 className="login-logo">Blendr</h1>
+					<h1 className="login-logo">blendr</h1>
 					<p className="login-message">Share some Experiences</p>
 				</header>
 				{this.form()}

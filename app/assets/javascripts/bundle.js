@@ -35765,7 +35765,11 @@
 	      React.createElement(
 	        'div',
 	        { className: 'nav-left' },
-	        React.createElement('img', { onClick: this.rootToIndex, className: 'logo', src: 'http://www.billyjacksdesign.com/wp-content/uploads/2014/03/b-logo3-C3.png' })
+	        React.createElement(
+	          'div',
+	          { onClick: this.rootToIndex, className: 'logo' },
+	          'blendr'
+	        )
 	      ),
 	      this.navRight()
 	    );
@@ -36130,7 +36134,7 @@
 					React.createElement(
 						'h1',
 						{ className: 'login-logo' },
-						'Blendr'
+						'blendr'
 					),
 					React.createElement(
 						'p',
