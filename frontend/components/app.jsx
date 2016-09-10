@@ -10,27 +10,8 @@ var Login = require('./login_form');
 
 var App = React.createClass({
 
-  // componentDidMount() {
-  //   SessionStore.addListener(this.forceUpdate.bind(this));
-  // },
-  //
-  // _handleLogOut(){
-  //   SessionActions.logOut();
-  // },
-  //
-  // pushToSignUp(){
-  //   HashHistory.push('/signup');
-  // },
-  //
-  // pushToIndex(){
-  //   HashHistory.push('/');
-  // },
-
-
-
 
   render() {
-
 
     return (
       <div>

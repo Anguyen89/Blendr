@@ -1,5 +1,6 @@
 var React = require('react');
 var ProfileStore = require('../../stores/profile_store');
+var FollowButton = require('../profile/post_follow_button');
 
 var ModalHeader = React.createClass({
 
@@ -19,6 +20,9 @@ var ModalHeader = React.createClass({
             @{user.username}
           </div>
         </div>
+
+        <FollowButton user={user}/>
+
       </div>
     );
   }

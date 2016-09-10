@@ -54,7 +54,7 @@ var PostFeed = React.createClass({
       );
     } else{
       return (
-        <div>
+        <div className="feed-login">
           <Login/>
         </div>
       );

@@ -28722,25 +28722,6 @@
 
 	var App = React.createClass({
 	  displayName: 'App',
-
-
-	  // componentDidMount() {
-	  //   SessionStore.addListener(this.forceUpdate.bind(this));
-	  // },
-	  //
-	  // _handleLogOut(){
-	  //   SessionActions.logOut();
-	  // },
-	  //
-	  // pushToSignUp(){
-	  //   HashHistory.push('/signup');
-	  // },
-	  //
-	  // pushToIndex(){
-	  //   HashHistory.push('/');
-	  // },
-
-
 	  render: function render() {
 
 	    return React.createElement(
@@ -36788,51 +36769,6 @@
 
 	module.exports = FollowButton;
 
-	// var FollowButton = React.createClass({
-	//
-	//   _toggleFollow: function() {
-	//     var relationshipData = {
-	//       follower_id: SessionStore.currentUser().id,
-	//       followed_id: this.props.user.id
-	//     };
-	//
-	//     if (this.userIsFollowed()) {
-	//       ProfileActions.deleteFollow(relationshipData);
-	//     } else {
-	//       ProfileActions.createFollow(relationshipData);
-	//     }
-	//   },
-	//
-	//   userIsFollowed: function() {
-	//     return ProfileStore.userIsFollowed(this.props.user);
-	//   },
-	//
-	//   _buttonDisplay: function (){
-	//     if (this.props.user.id === SessionStore.currentUser().id) {
-	//       //don't render anything if user is at their own page
-	//       return;
-	//     } else {
-	//       return (
-	//         <input type="checkbox"
-	//                checked={this.userIsFollowed()}
-	//                onChange={this._toggleFollow}
-	//                className="follow-button"/>
-	//       );
-	//     }
-	//   },
-	//
-	//   render: function() {
-	//     return (
-	//       <div className="follow-button-container">
-	//         {this._buttonDisplay()}
-	//       </div>
-	//     );
-	//   }
-	//
-	// });
-	//
-	// module.exports = FollowButton;
-
 /***/ },
 /* 300 */
 /***/ function(module, exports, __webpack_require__) {
@@ -36964,8 +36900,8 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var ModalHeader = __webpack_require__(314);
-	var ModalCommentBox = __webpack_require__(315);
+	var ModalHeader = __webpack_require__(303);
+	var ModalCommentBox = __webpack_require__(304);
 	var PostActions = __webpack_require__(285);
 	var PostStore = __webpack_require__(291);
 	var ProfileStore = __webpack_require__(292);
@@ -36985,7 +36921,54 @@
 	module.exports = ModalPost;
 
 /***/ },
-/* 303 */,
+/* 303 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(1);
+	var ProfileStore = __webpack_require__(292);
+	var FollowButton = __webpack_require__(299);
+
+	var ModalHeader = React.createClass({
+	  displayName: 'ModalHeader',
+	  render: function render() {
+	    var user = ProfileStore.findById(this.props.post.user_id);
+	    return React.createElement(
+	      'div',
+	      { className: 'modal-post-header' },
+	      React.createElement(
+	        'div',
+	        { className: 'modal-pic-url' },
+	        React.createElement('img', { src: user.profile_picture_url })
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'modal-profile-info' },
+	        React.createElement(
+	          'div',
+	          { className: 'modal-profile-header-name' },
+	          React.createElement(
+	            'div',
+	            null,
+	            user.name
+	          )
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'modal-profile-handle' },
+	          '@',
+	          user.username
+	        )
+	      ),
+	      React.createElement(FollowButton, { user: user })
+	    );
+	  }
+	});
+
+	module.exports = ModalHeader;
+
+/***/ },
 /* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -36997,22 +36980,30 @@
 	var CommentForm = __webpack_require__(307);
 	var CommentIndexHeader = __webpack_require__(310);
 
-	var CommentBox = React.createClass({
-	  displayName: 'CommentBox',
+	var ModalCommentBox = React.createClass({
+	  displayName: 'ModalCommentBox',
 
 
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { className: 'comment-box' },
-	      React.createElement(CommentIndexHeader, { post: this.props.post }),
-	      React.createElement(CommentIndex, { post: this.props.post }),
-	      React.createElement(CommentForm, { post: this.props.post })
+	      { className: 'modal-comment-box' },
+	      React.createElement(
+	        'div',
+	        null,
+	        React.createElement(CommentIndexHeader, { post: this.props.post }),
+	        React.createElement(CommentIndex, { post: this.props.post })
+	      ),
+	      React.createElement(
+	        'div',
+	        { className: 'modal-comment-form' },
+	        React.createElement(CommentForm, { post: this.props.post })
+	      )
 	    );
 	  }
 	});
 
-	module.exports = CommentBox;
+	module.exports = ModalCommentBox;
 
 /***/ },
 /* 305 */
@@ -37354,7 +37345,7 @@
 	    } else {
 	      return React.createElement(
 	        'div',
-	        null,
+	        { className: 'feed-login' },
 	        React.createElement(Login, null)
 	      );
 	    }
@@ -37372,7 +37363,7 @@
 
 	var React = __webpack_require__(1);
 	var HashHistory = __webpack_require__(192).hashHistory;
-	var CommentBox = __webpack_require__(304);
+	var CommentBox = __webpack_require__(314);
 
 	var PostFeedItem = React.createClass({
 	  displayName: 'PostFeedItem',
@@ -37425,81 +37416,27 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
-	var ProfileStore = __webpack_require__(292);
-
-	var ModalHeader = React.createClass({
-	  displayName: 'ModalHeader',
-	  render: function render() {
-	    var user = ProfileStore.findById(this.props.post.user_id);
-	    return React.createElement(
-	      'div',
-	      { className: 'modal-post-header' },
-	      React.createElement(
-	        'div',
-	        { className: 'modal-pic-url' },
-	        React.createElement('img', { src: user.profile_picture_url })
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'modal-profile-info' },
-	        React.createElement(
-	          'div',
-	          { className: 'modal-profile-header-name' },
-	          React.createElement(
-	            'div',
-	            null,
-	            user.name
-	          )
-	        ),
-	        React.createElement(
-	          'div',
-	          { className: 'modal-profile-handle' },
-	          '@',
-	          user.username
-	        )
-	      )
-	    );
-	  }
-	});
-
-	module.exports = ModalHeader;
-
-/***/ },
-/* 315 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var React = __webpack_require__(1);
 
 	var CommentIndex = __webpack_require__(305);
 	var CommentForm = __webpack_require__(307);
 	var CommentIndexHeader = __webpack_require__(310);
 
-	var ModalCommentBox = React.createClass({
-	  displayName: 'ModalCommentBox',
+	var CommentBox = React.createClass({
+	  displayName: 'CommentBox',
 
 
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { className: 'modal-comment-box' },
-	      React.createElement(
-	        'div',
-	        null,
-	        React.createElement(CommentIndexHeader, { post: this.props.post }),
-	        React.createElement(CommentIndex, { post: this.props.post })
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'modal-comment-form' },
-	        React.createElement(CommentForm, { post: this.props.post })
-	      )
+	      { className: 'comment-box' },
+	      React.createElement(CommentIndexHeader, { post: this.props.post }),
+	      React.createElement(CommentIndex, { post: this.props.post }),
+	      React.createElement(CommentForm, { post: this.props.post })
 	    );
 	  }
 	});
 
-	module.exports = ModalCommentBox;
+	module.exports = CommentBox;
 
 /***/ }
 /******/ ]);
