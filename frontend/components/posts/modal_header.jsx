@@ -1,9 +1,10 @@
 var React = require('react');
 var ProfileStore = require('../../stores/profile_store');
 var FollowButton = require('../profile/post_follow_button');
+var hashHistory = require('react-router').hashHistory;
+
 
 var ModalHeader = React.createClass({
-
 
   render(){
     var user = ProfileStore.findById(this.props.post.user_id);
@@ -14,7 +15,7 @@ var ModalHeader = React.createClass({
         </div>
         <div className="modal-profile-info">
           <div className="modal-profile-header-name">
-            <div>{user.name}</div>
+            <div onClick={this.rootToProfile}>{user.name}</div>
           </div>
           <div className="modal-profile-handle">
             @{user.username}

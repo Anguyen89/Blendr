@@ -36933,6 +36933,7 @@
 	var React = __webpack_require__(1);
 	var ProfileStore = __webpack_require__(292);
 	var FollowButton = __webpack_require__(299);
+	var hashHistory = __webpack_require__(192).hashHistory;
 
 	var ModalHeader = React.createClass({
 	  displayName: 'ModalHeader',
@@ -36954,7 +36955,7 @@
 	          { className: 'modal-profile-header-name' },
 	          React.createElement(
 	            'div',
-	            null,
+	            { onClick: this.rootToProfile },
 	            user.name
 	          )
 	        ),
