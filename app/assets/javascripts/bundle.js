@@ -35987,7 +35987,7 @@
 		},
 
 		redirectIfLoggedIn: function redirectIfLoggedIn() {
-			hashHistory.push("/postfeed");
+			hashHistory.push("/profile/" + SessionStore.currentUser().id);
 		},
 
 		handleLogin: function handleLogin(e) {

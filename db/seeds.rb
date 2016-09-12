@@ -13,9 +13,9 @@ guest = User.create!([
   {username: "truari", password: "password", name: "Gavin Newsom", profile_picture_url: "https://hd.unsplash.com/photo-1463453091185-61582044d556"},
   {username: "oprah", password: "password", name: "Oprah Winfrey", profile_picture_url: "http://thinklink.in/wp-content/uploads/oprahwinfrey.jpg"},
   {username: "WillF", password: "password", name: "Will Ferrel", profile_picture_url: "https://pbs.twimg.com/media/By0GBdCCcAABJ7V.jpg"},
-  {username: "Kobe24", password: "password", name: "Kobe Bryant", profile_picture_url: "http://www.gannett-cdn.com/-mm-/e10d3c17a74f180e5589eb4e4cf3895ea9c3458f/c=0-0-4596-2597&r=x1683&c=3200x1680/local/-/media/2015/11/29/USATODAY/USATODAY/635844229246165574-2015-11-29-Kobe-Bryant1.jpg"},
-  {username: "TruwarierQb", password: "password", name: "Metta World Peace", profile_picture_url: "http://ima.ulximg.com/image/src/cover/1404745646_353bddbf3deb86bf6f36fa71b4897ffa.jpg/3b71e6ee1f172d8d68e01392388fcdfc/1404745646_metta_world_peace_29.jpg"},
-  {username: "S.Curry", password: "password", name: "Steph Curry", profile_picture_url: "http://www.ibabuzz.com/warriors/files/2015/12/SJM-WARRIORS-1125-68.jpg"},
+  {username: "Wilma", password: "password", name: "Wilma Felder", profile_picture_url: "http://res.cloudinary.com/dkieltxya/image/upload/v1473710385/article-0-1C91BEE700000578-336_306x393_g7ddaw.jpg"},
+  {username: "Jay E.", password: "password", name: "Jay", profile_picture_url: "http://res.cloudinary.com/dkieltxya/image/upload/v1473710348/recent-and-random-portraits_8_p4oooy.jpg"},
+  {username: "Ali89", password: "password", name: "Ali R.", profile_picture_url: "http://res.cloudinary.com/dkieltxya/image/upload/v1473710327/BduTxWnIUAAKT_5_y7xowg.jpg"},
   {username: "Jose_Lopez", password: "password", name: "Jose Lopez",  profile_picture_url: "https://hd.unsplash.com/photo-1454046931706-e0f055de21d8"},
   {username: "Matt_j", password: "password", name: "Matt Jensen",  profile_picture_url: "https://hd.unsplash.com/photo-1469026140142-cb239ea68152"},
   {username: "gerbs22", password: "password", name: "Jean Gerber",  profile_picture_url: "https://hd.unsplash.com/photo-1443381301867-5a36ffaafc42"}
