@@ -35926,7 +35926,6 @@
 	  },
 
 	  createLike: function createLike(like, cb) {
-	    console.log(like);
 	    $.ajax({
 	      url: "api/likes",
 	      type: "POST",

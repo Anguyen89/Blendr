@@ -37,7 +37,6 @@ createComment: function(comment, cb){
 },
 
 createLike: function(like, cb){
-  console.log(like);
   $.ajax({
     url: "api/likes",
     type: "POST",

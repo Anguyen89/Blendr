@@ -46,8 +46,10 @@
 .profile-post-index {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  // justify-content: center;
+  align-items: flex-start;
+  text-align: center;
+  margin-left: 90px;
 }
 
 .profile-post-picture {
