@@ -35983,7 +35983,7 @@
 
 
 		getInitialState: function getInitialState() {
-			return { username: "", password: "" };
+			return { username: "", password: "", errors: [] };
 		},
 
 		redirectIfLoggedIn: function redirectIfLoggedIn() {
@@ -36107,6 +36107,10 @@
 		},
 
 		render: function render() {
+			// var errors = this.state.errors.map(function(error){
+			// 	return <li key={error}>{error}</li>;
+			// });
+
 			return React.createElement(
 				'div',
 				{ className: 'login-form-container' },

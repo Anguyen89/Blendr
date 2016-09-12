@@ -13,7 +13,7 @@ var LoginForm = React.createClass({
 
 
 	getInitialState: function() {
-		return {username: "", password: ""};
+		return {username: "", password: "", errors: []};
 	},
 
 
@@ -130,6 +130,10 @@ var LoginForm = React.createClass({
 	},
 
 	render: function(){
+		// var errors = this.state.errors.map(function(error){
+		// 	return <li key={error}>{error}</li>;
+		// });
+
 		return (
 			<div className="login-form-container">
 				<header>
