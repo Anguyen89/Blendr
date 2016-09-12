@@ -28726,7 +28726,7 @@
 
 	    return React.createElement(
 	      'div',
-	      { className: 'app-container' },
+	      null,
 	      React.createElement(
 	        'header',
 	        null,
@@ -35924,15 +35924,6 @@
 	      success: cb
 	    });
 	  },
-	  //
-	  // createLike: function(like, cb){
-	  //   $.ajax({
-	  //     url: "api/pictures/" + like.picture_id + "/likes",
-	  //     type: "POST",
-	  //     data: {like: like},
-	  //     success: cb
-	  //   });
-	  // },
 
 	  createLike: function createLike(like, cb) {
 	    console.log(like);
@@ -35943,15 +35934,6 @@
 	      success: cb
 	    });
 	  },
-
-	  // removeLike: function(like, cb){
-	  //   $.ajax({
-	  //     url: "api/pictures/" + like.picture_id + "/likes/" + like.id,
-	  //     type: "DELETE",
-	  //     data: {like: like},
-	  //     success: cb
-	  //   });
-	  // }
 
 	  removeLike: function removeLike(like, cb) {
 	    $.ajax({

@@ -5,7 +5,6 @@ class Api::PicturesController < ApplicationController
 
     @pictures = Picture.where("user_id IN (?) OR user_id = ?",
             following_ids, current_user.id).limit(count * 3).order('id desc')
-    # @pictures = Picture.all.limit(count * 3)
   end
 
   def create
@@ -35,7 +34,6 @@ class Api::PicturesController < ApplicationController
   end
 
   def count
-    # for the first render, use a count of 1
     params[:count] ? params[:count].to_i : 1
   end
 end
