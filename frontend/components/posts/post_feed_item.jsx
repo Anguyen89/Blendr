@@ -3,9 +3,6 @@ var HashHistory = require('react-router').hashHistory;
 var CommentBox = require('./comment_box');
 
 
-
-
-
 var PostFeedItem = React.createClass({
 
   pushToProfile: function(e){
