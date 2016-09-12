@@ -28726,7 +28726,7 @@
 
 	    return React.createElement(
 	      'div',
-	      null,
+	      { className: 'app-container' },
 	      React.createElement(
 	        'header',
 	        null,

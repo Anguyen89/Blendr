@@ -14,7 +14,7 @@ var App = React.createClass({
   render() {
 
     return (
-      <div>
+      <div className="app-container">
         <header>
           <NavBar/>
         </header>

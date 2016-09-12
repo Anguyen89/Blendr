@@ -274,18 +274,18 @@ posts = Picture.create!([
 
 
 
-#
-# (1..User.all.length).each do |follower_id|
-#   #say each user follows between 7 and 10 people
-#   total_following = rand(7..10)
-#
-#   users = (1..User.all.length).to_a - [follower_id]
-#
-#   total_following.times do
-#     followed_id = users.shuffle!.pop
-#     Relationship.create({follower_id: follower_id, followed_id: followed_id})
-#   end
-# end
+
+(1..User.all.length).each do |follower_id|
+  #say each user follows between 7 and 10 people
+  total_following = rand(7..10)
+
+  users = (1..User.all.length).to_a - [follower_id]
+
+  total_following.times do
+    followed_id = users.shuffle!.pop
+    Relationship.create({follower_id: follower_id, followed_id: followed_id})
+  end
+end
 
 (1..User.all.length).each do |user_id|
   #say each user likes 20 posts
