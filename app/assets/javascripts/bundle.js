@@ -36221,10 +36221,6 @@
 	    this.setState(this.getStateFromStore());
 	  },
 
-	  // updatePost: function(){
-	  //   this.getStateFromStore();
-	  // },
-
 	  getInitialState: function getInitialState() {
 	    return { user: {} };
 	  },
@@ -36239,8 +36235,6 @@
 
 	  componentDidMount: function componentDidMount() {
 	    this.profileListener = ProfileStore.addListener(this.onChange);
-	    // this.postListenter = PostStore.addListener(this.updatePost);
-	    // ProfileActions.fetchUser(this.props.params.profileId);
 	  },
 
 	  componentWillUnmount: function componentWillUnmount() {

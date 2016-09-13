@@ -19,10 +19,6 @@ var ProfileFeed = React.createClass({
     this.setState(this.getStateFromStore() );
   },
 
-  // updatePost: function(){
-  //   this.getStateFromStore();
-  // },
-
   getInitialState: function () {
     return { user: {} };
   },
@@ -37,8 +33,6 @@ var ProfileFeed = React.createClass({
 
   componentDidMount: function(){
     this.profileListener = ProfileStore.addListener(this.onChange);
-    // this.postListenter = PostStore.addListener(this.updatePost);
-    // ProfileActions.fetchUser(this.props.params.profileId);
   },
 
   componentWillUnmount: function(){
