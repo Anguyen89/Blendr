@@ -17,7 +17,19 @@ var PostActions = {
   },
   fetchPost: function(postId) {
     PostUtil.fetchPost(postId, this.receivePost);
-},
+  },
+
+  deletePost: function(postId) {
+    PostUtil.deletePost(postId, this.removePost)
+  },
+
+  removePost: function(post){
+    AppDispatcher.dispatch({
+      actionType: PostConstants.DELETE_POST,
+      post: post
+    });
+  },
+
 
   receivePost: function(post){
     AppDispatcher.dispatch({

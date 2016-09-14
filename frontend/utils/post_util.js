@@ -17,6 +17,14 @@ fetchPost: function(postId, cb) {
   });
 },
 
+deletePost: function(postId, cb) {
+  $.ajax({
+    url: 'api/pictures/' + postId,
+    type: "DELETE",
+    success: cb
+  });
+},
+
 createPost: function(post, cb) {
   console.log(post);
   $.ajax({

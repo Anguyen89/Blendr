@@ -35833,6 +35833,17 @@
 	    PostUtil.fetchPost(postId, this.receivePost);
 	  },
 
+	  deletePost: function deletePost(postId) {
+	    PostUtil.deletePost(postId, this.removePost);
+	  },
+
+	  removePost: function removePost(post) {
+	    AppDispatcher.dispatch({
+	      actionType: PostConstants.DELETE_POST,
+	      post: post
+	    });
+	  },
+
 	  receivePost: function receivePost(post) {
 	    AppDispatcher.dispatch({
 	      actionType: PostConstants.RECEIVE_POST,
@@ -35906,6 +35917,14 @@
 	    });
 	  },
 
+	  deletePost: function deletePost(postId, cb) {
+	    $.ajax({
+	      url: 'api/pictures/' + postId,
+	      type: "DELETE",
+	      success: cb
+	    });
+	  },
+
 	  createPost: function createPost(post, cb) {
 	    console.log(post);
 	    $.ajax({
@@ -35960,7 +35979,8 @@
 	  FETCH_ONE_POST: "FETCH_ONE_POST",
 	  RECEIVE_COMMENT: "RECEIVE_COMMENT",
 	  RECEIVE_LIKE: "RECEIVE_LIKE",
-	  REMOVE_LIKE: "REMOVE_LIKE"
+	  REMOVE_LIKE: "REMOVE_LIKE",
+	  DELETE_POST: "DELETE_POST"
 	};
 
 /***/ },
@@ -36273,6 +36293,7 @@
 	var AppDispatcher = __webpack_require__(257);
 	var PostConstants = __webpack_require__(287);
 	var SessionStore = __webpack_require__(256);
+	var hashHistory = __webpack_require__(192).hashHistory;
 
 	var Store = __webpack_require__(261).Store;
 
@@ -36299,6 +36320,11 @@
 	var setLike = function setLike(like) {
 	  var post = _posts[like.picture_id];
 	  post.likes.push(like);
+	};
+
+	var removePost = function removePost(post) {
+	  delete _posts[post.id];
+	  hashHistory.push('/profile/' + SessionStore.currentUser().id);
 	};
 
 	var removeLike = function removeLike(like) {
@@ -36355,6 +36381,10 @@
 	      break;
 	    case PostConstants.REMOVE_LIKE:
 	      removeLike(payload.like);
+	      this.__emitChange();
+	      break;
+	    case PostConstants.DELETE_POST:
+	      removePost(payload.post);
 	      this.__emitChange();
 	      break;
 	  }
@@ -36917,10 +36947,25 @@
 	var ProfileStore = __webpack_require__(292);
 	var FollowButton = __webpack_require__(299);
 	var hashHistory = __webpack_require__(192).hashHistory;
+	var PostActions = __webpack_require__(285);
+	var SessionStore = __webpack_require__(256);
 
 	var ModalHeader = React.createClass({
 	  displayName: 'ModalHeader',
+	  deletePost: function deletePost() {
+	    PostActions.deletePost(this.props.post.id);
+	  },
 	  render: function render() {
+	    var deleteIcon;
+	    if (this.props.post.user_id == SessionStore.currentUser().id) {
+	      deleteIcon = React.createElement(
+	        'div',
+	        { onClick: this.deletePost },
+	        'x'
+	      );
+	    } else {
+	      deleteIcon = React.createElement('div', null);
+	    }
 	    var user = ProfileStore.findById(this.props.post.user_id);
 	    return React.createElement(
 	      'div',
@@ -36949,7 +36994,12 @@
 	          user.username
 	        )
 	      ),
-	      React.createElement(FollowButton, { user: user })
+	      React.createElement(FollowButton, { className: 'modal-follow-button', user: user }),
+	      React.createElement(
+	        'div',
+	        { className: 'modal-post-delete' },
+	        deleteIcon
+	      )
 	    );
 	  }
 	});

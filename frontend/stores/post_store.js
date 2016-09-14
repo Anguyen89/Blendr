@@ -1,6 +1,7 @@
 var AppDispatcher = require('../dispatcher/dispatcher');
 var PostConstants = require('../constants/post_constants');
 var SessionStore = require('./session_store');
+var hashHistory = require('react-router').hashHistory;
 
 var Store = require('flux/utils').Store;
 
@@ -30,6 +31,12 @@ var setComment = function(comment){
 var setLike = function(like){
   var post = _posts[like.picture_id];
   post.likes.push(like);
+};
+
+var removePost = function(post){
+  delete _posts[post.id];
+  hashHistory.push('/profile/' + SessionStore.currentUser().id);
+
 };
 
 
@@ -91,6 +98,10 @@ PostStore.__onDispatch = function(payload){
       break;
     case PostConstants.REMOVE_LIKE:
       removeLike(payload.like);
+      this.__emitChange();
+      break;
+    case PostConstants.DELETE_POST:
+      removePost(payload.post);
       this.__emitChange();
       break;
   }
