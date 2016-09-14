@@ -36774,7 +36774,11 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'profile-post-index' },
-	      posts
+	      React.createElement(
+	        'div',
+	        { className: 'profile-post-items' },
+	        posts
+	      )
 	    );
 	  }
 	});

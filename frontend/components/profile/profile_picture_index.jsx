@@ -14,7 +14,9 @@ var ProfilePictureIndex = React.createClass({
 
     return(
       <div className="profile-post-index">
-        {posts}
+        <div className="profile-post-items">
+          {posts}
+        </div>
       </div>
     );
   }
