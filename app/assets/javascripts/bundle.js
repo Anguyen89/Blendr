@@ -37328,6 +37328,41 @@
 	          posts.map(function (post) {
 	            return React.createElement(PostFeedItem, { post: post, userId: post.user_id, key: post.id });
 	          })
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'post-feed-footer' },
+	          React.createElement(
+	            'ul',
+	            { className: 'footer-content' },
+	            React.createElement(
+	              'li',
+	              null,
+	              React.createElement(
+	                'a',
+	                { href: 'https://www.linkedin.com/in/albert-nguyen-52240933' },
+	                React.createElement('img', { src: 'https://image.freepik.com/free-icon/linkedin-logo_318-50643.png' })
+	              )
+	            ),
+	            React.createElement(
+	              'li',
+	              null,
+	              React.createElement(
+	                'a',
+	                { href: 'http://www.albertnguyencodes.com' },
+	                React.createElement('img', { src: 'http://res.cloudinary.com/dkieltxya/image/upload/v1473876653/headshot_lwnx22.jpg' })
+	              )
+	            ),
+	            React.createElement(
+	              'li',
+	              null,
+	              React.createElement(
+	                'a',
+	                { href: 'https://github.com/Anguyen89' },
+	                React.createElement('img', { src: 'http://image.flaticon.com/icons/svg/23/23957.svg' })
+	              )
+	            )
+	          )
 	        )
 	      );
 	    } else {
