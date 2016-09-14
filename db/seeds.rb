@@ -181,7 +181,7 @@ posts = Picture.create!([
 
 (1..User.all.length).each do |follower_id|
   #say each user follows between 7 and 10 people
-  total_following = rand(7..10)
+  total_following = rand(2..3)
 
   users = (1..User.all.length).to_a - [follower_id]
 
