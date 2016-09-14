@@ -53,9 +53,9 @@ var ProfileFeed = React.createClass({
            );
          }
     return (
-      <div>
+      <footer>
         {userProfile}
-      </div>
+      </footer>
     );
   }
 });

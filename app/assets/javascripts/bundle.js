@@ -36295,7 +36295,7 @@
 	      );
 	    }
 	    return React.createElement(
-	      'div',
+	      'footer',
 	      null,
 	      userProfile
 	    );
