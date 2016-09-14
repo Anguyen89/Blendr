@@ -8,7 +8,7 @@
 
 guest = User.create!([
   {username: "M_Thorton", password: "password", name: "Mark Thorton", profile_picture_url: "https://hd.unsplash.com/photo-1445282804813-123ac28fe498"},
-  {username: "guest", password: "password", name: "Guest", profile_picture_url: "https://s-media-cache-ak0.pinimg.com/564x/4d/3d/2b/4d3d2ba3ecc8592f8e64a54d25ca9dc7.jpg"},
+  {username: "guest", password: "password", name: "Guest", profile_picture_url: "http://res.cloudinary.com/dkieltxya/image/upload/v1473880308/or8vyvwkwmtpzcnrdrxe.jpg"},
   {username: "j_priuq", password: "password", name: "Jennifer Proque", profile_picture_url: "https://hd.unsplash.com/photo-1432601866219-29141ada44f9"},
   {username: "truari", password: "password", name: "Gavin Newsom", profile_picture_url: "https://hd.unsplash.com/photo-1463453091185-61582044d556"},
   {username: "oprah", password: "password", name: "Oprah Winfrey", profile_picture_url: "http://thinklink.in/wp-content/uploads/oprahwinfrey.jpg"},
