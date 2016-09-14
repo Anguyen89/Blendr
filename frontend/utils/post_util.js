@@ -53,6 +53,14 @@ createLike: function(like, cb){
   });
 },
 
+removeComment: function(commentId, cb){
+  $.ajax({
+    url: 'api/comments/' + commentId,
+    type: "DELETE",
+    success: cb
+  });
+},
+
 
 removeLike: function (like, cb) {
     $.ajax({

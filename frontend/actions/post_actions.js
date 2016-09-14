@@ -20,13 +20,24 @@ var PostActions = {
   },
 
   deletePost: function(postId) {
-    PostUtil.deletePost(postId, this.removePost)
+    PostUtil.deletePost(postId, this.removePost);
   },
 
   removePost: function(post){
     AppDispatcher.dispatch({
       actionType: PostConstants.DELETE_POST,
       post: post
+    });
+  },
+
+  deleteComment: function(commentId) {
+    PostUtil.removeComment(commentId, this.removeComment);
+  },
+
+  removeComment: function(comment){
+    AppDispatcher.dispatch({
+      actionType: PostConstants.DELETE_COMMENT,
+      comment: comment
     });
   },
 

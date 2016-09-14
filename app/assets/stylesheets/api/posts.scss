@@ -146,9 +146,15 @@
 
 .comment-index-item {
   display: flex;
+  justify-content: space-between;
   flex-direction: row;
   font-size: 15px;
   padding: 0px 5px 5px 5px;
+}
+
+.comment-index-info {
+  display: flex;
+  flex-direction: row;
 }
 
 .comment-index-item-name{
@@ -183,6 +189,12 @@
 
 .comment-index-container {
   overflow-y: scroll
+}
+
+.comment-index-delete {
+  padding: 3px;
+  color: #A9A9A9;
+  cursor: pointer;
 }
 
 .post-feed-footer {

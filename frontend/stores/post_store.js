@@ -36,7 +36,18 @@ var setLike = function(like){
 var removePost = function(post){
   delete _posts[post.id];
   hashHistory.push('/profile/' + SessionStore.currentUser().id);
+};
 
+var removeComment = function(comment){
+  var allComments = _posts[comment.picture_id].comments.slice();
+  var idx;
+  for (var i = 0; i < allComments.length; i++){
+    if (allComments[i].id === comment.id){
+      idx = i;
+      allComments.splice(idx, 1);
+    }
+    _posts[comment.picture_id].comments = allComments;
+  }
 };
 
 
@@ -90,6 +101,10 @@ PostStore.__onDispatch = function(payload){
       break;
     case PostConstants.RECEIVE_COMMENT:
       setComment(payload.comment);
+      this.__emitChange();
+      break;
+    case PostConstants.DELETE_COMMENT:
+      removeComment(payload.comment);
       this.__emitChange();
       break;
     case PostConstants.RECEIVE_LIKE:

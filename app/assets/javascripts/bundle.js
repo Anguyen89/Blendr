@@ -35844,6 +35844,17 @@
 	    });
 	  },
 
+	  deleteComment: function deleteComment(commentId) {
+	    PostUtil.removeComment(commentId, this.removeComment);
+	  },
+
+	  removeComment: function removeComment(comment) {
+	    AppDispatcher.dispatch({
+	      actionType: PostConstants.DELETE_COMMENT,
+	      comment: comment
+	    });
+	  },
+
 	  receivePost: function receivePost(post) {
 	    AppDispatcher.dispatch({
 	      actionType: PostConstants.RECEIVE_POST,
@@ -35953,6 +35964,14 @@
 	    });
 	  },
 
+	  removeComment: function removeComment(commentId, cb) {
+	    $.ajax({
+	      url: 'api/comments/' + commentId,
+	      type: "DELETE",
+	      success: cb
+	    });
+	  },
+
 	  removeLike: function removeLike(like, cb) {
 	    $.ajax({
 	      url: "api/likes/" + like.id,
@@ -35980,7 +35999,8 @@
 	  RECEIVE_COMMENT: "RECEIVE_COMMENT",
 	  RECEIVE_LIKE: "RECEIVE_LIKE",
 	  REMOVE_LIKE: "REMOVE_LIKE",
-	  DELETE_POST: "DELETE_POST"
+	  DELETE_POST: "DELETE_POST",
+	  DELETE_COMMENT: "DELETE_COMMENT"
 	};
 
 /***/ },
@@ -36327,6 +36347,18 @@
 	  hashHistory.push('/profile/' + SessionStore.currentUser().id);
 	};
 
+	var removeComment = function removeComment(comment) {
+	  var allComments = _posts[comment.picture_id].comments.slice();
+	  var idx;
+	  for (var i = 0; i < allComments.length; i++) {
+	    if (allComments[i].id === comment.id) {
+	      idx = i;
+	      allComments.splice(idx, 1);
+	    }
+	    _posts[comment.picture_id].comments = allComments;
+	  }
+	};
+
 	var removeLike = function removeLike(like) {
 	  var allLikes = _posts[like.picture_id].likes.slice();
 	  var idx;
@@ -36373,6 +36405,10 @@
 	      break;
 	    case PostConstants.RECEIVE_COMMENT:
 	      setComment(payload.comment);
+	      this.__emitChange();
+	      break;
+	    case PostConstants.DELETE_COMMENT:
+	      removeComment(payload.comment);
 	      this.__emitChange();
 	      break;
 	    case PostConstants.RECEIVE_LIKE:
@@ -37085,6 +37121,8 @@
 
 	var React = __webpack_require__(1);
 	var HashHistory = __webpack_require__(192).hashHistory;
+	var SessionStore = __webpack_require__(256);
+	var PostActions = __webpack_require__(285);
 
 	var CommentIndexItem = React.createClass({
 	  displayName: 'CommentIndexItem',
@@ -37094,19 +37132,42 @@
 	    HashHistory.push('/profile/' + this.props.comment.user_id);
 	  },
 
+	  deleteUserComment: function deleteUserComment() {
+	    PostActions.deleteComment(this.props.comment.id);
+	  },
+
 	  render: function render() {
+	    var deleteComment;
+	    if (this.props.comment.user_id === SessionStore.currentUser().id) {
+	      deleteComment = React.createElement(
+	        'div',
+	        { className: 'comment-index-delete', onClick: this.deleteUserComment },
+	        'x'
+	      );
+	    } else {
+	      deleteComment = React.createElement('div', null);
+	    }
 	    return React.createElement(
 	      'div',
 	      { className: 'comment-index-item' },
 	      React.createElement(
 	        'div',
-	        { onClick: this.rootToProfile, className: 'comment-index-item-name' },
-	        this.props.comment.user
+	        { className: 'comment-index-info' },
+	        React.createElement(
+	          'div',
+	          { onClick: this.rootToProfile, className: 'comment-index-item-name' },
+	          this.props.comment.user
+	        ),
+	        React.createElement(
+	          'div',
+	          { className: 'comment-index-item-body' },
+	          this.props.comment.body
+	        )
 	      ),
 	      React.createElement(
 	        'div',
-	        { className: 'comment-index-item-body' },
-	        this.props.comment.body
+	        { className: 'comment-index-delete' },
+	        deleteComment
 	      )
 	    );
 	  }
