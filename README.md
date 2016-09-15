@@ -20,12 +20,12 @@ Users have the ability to create post, like posts, leave comments on posts and f
 post also has like and comment functionality which will trigger an action which will trigger an Ajax request to update backend database and update associated tables accordingly via Active Record which will also trigger a
 re-rendering of applicable components on the front end.
 
-[general-view]: ./app/assets/images/feed-view
+[general-view]: ./app/assets/images/feed-view.png
 ![general-view]
 
 ### Creating Posts
 
-Users are able to create new posts through the use of the Cloudinary upload widget. URLS returned from the Cloudinary upload widget will be saved on the backend as well as in the PostStore.
+Users are able to create new posts through the use of the Cloudinary upload widget. Post Image URL'S returned from the Cloudinary upload widget will be saved on the backend as well as in the PostStore.
 
 
 ### Viewing Profile Posts
