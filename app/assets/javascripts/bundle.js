@@ -71,6 +71,8 @@
 
 	window.PostStore = __webpack_require__(291);
 	window.PostActions = __webpack_require__(285);
+	window.ProfileActions = __webpack_require__(294);
+	window.ProfileStore = __webpack_require__(292);
 
 	var appRouter = React.createElement(
 	  Router,
@@ -36257,7 +36259,7 @@
 
 
 	  getStateFromStore: function getStateFromStore() {
-	    return { user: ProfileStore.findById(this.props.params.profileId), posts: PostStore.getPostsByUserId(SessionStore.currentUser()) };
+	    return { user: ProfileStore.findById(this.props.params.profileId), posts: PostStore.getPostsByUser(ProfileStore.findById(this.props.params.profileId)) };
 	  },
 
 	  onChange: function onChange() {
@@ -36275,11 +36277,14 @@
 
 	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
 	    ProfileActions.fetchUser(newProps.params.profileId);
+	    this.forceUpdate();
 	  },
 
 	  componentDidMount: function componentDidMount() {
 	    this.profileListener = ProfileStore.addListener(this.onChange);
 	    this.postListener = PostStore.addListener(this.onChange);
+	    // ProfileActions.fetchUser(this.props.params.profileId);
+	    PostActions.fetchPosts();
 	  },
 
 	  componentWillUnmount: function componentWillUnmount() {
@@ -36398,7 +36403,23 @@
 	  return _posts[postId];
 	};
 
-	PostStore.getPostsByUserId = function (user) {
+	PostStore.getPosts = function (user) {
+	  var posts = [];
+
+	  Object.keys(_posts).forEach(function (key) {
+	    var followingIds = _posts[key].followers.map(function (el) {
+	      return el.id;
+	    });
+	    if (_posts[key].user_id === user.id) {
+	      posts.push(_posts[key]);
+	    } else if (followingIds.indexOf(user.id) !== -1) {
+	      posts.push(_posts[key]);
+	    }
+	  });
+	  return posts;
+	};
+
+	PostStore.getPostsByUser = function (user) {
 	  var posts = [];
 	  Object.keys(_posts).forEach(function (key) {
 	    if (_posts[key].user_id === user.id) {
@@ -37435,7 +37456,7 @@
 	  },
 
 	  _onChange: function _onChange() {
-	    this.setState({ posts: PostStore.all() });
+	    this.setState({ posts: PostStore.getPosts(SessionStore.currentUser()) });
 	  },
 
 

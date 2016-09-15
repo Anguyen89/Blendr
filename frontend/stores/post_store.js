@@ -87,7 +87,23 @@ PostStore.getById = function(postId){
   return _posts[postId];
 };
 
-PostStore.getPostsByUserId = function(user){
+PostStore.getPosts = function(user){
+  var posts = [];
+
+  Object.keys(_posts).forEach(function(key){
+    var followingIds = _posts[key].followers.map(function(el){
+      return el.id;
+    });
+    if (_posts[key].user_id === user.id){
+      posts.push(_posts[key]);
+    } else if (followingIds.indexOf(user.id) !== -1){
+      posts.push(_posts[key]);
+    }
+  });
+  return posts;
+};
+
+PostStore.getPostsByUser = function(user){
   var posts = [];
   Object.keys(_posts).forEach(function(key){
     if (_posts[key].user_id === user.id){

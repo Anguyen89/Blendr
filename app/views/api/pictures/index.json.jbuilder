@@ -17,7 +17,18 @@ json.array! @pictures do |picture|
   json.name picture.user.name
   json.username picture.user.username
   json.user picture.user
+
+  json.following picture.user.following do |followed_user|
+    json.id followed_user.id
+  end
+
+  json.followers picture.user.followers do |follower|
+    json.id follower.id
+  end
+
+
   json.created_time_ago time
+
 
 
   json.comments picture.comments do |comment|
@@ -25,8 +36,8 @@ json.array! @pictures do |picture|
     json.user_id comment.user_id
     json.user comment.user.username
     json.body comment.body
-end
 
+end
 
 
 json.likes picture.likes do |like|

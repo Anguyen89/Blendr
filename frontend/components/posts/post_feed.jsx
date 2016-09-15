@@ -33,7 +33,7 @@ var PostFeed = React.createClass({
   },
 
   _onChange(){
-    this.setState({posts: PostStore.all()})
+    this.setState({posts: PostStore.getPosts(SessionStore.currentUser())})
   },
 
   render: function(){

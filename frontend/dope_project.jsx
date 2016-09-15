@@ -24,6 +24,8 @@ var SessionActions = require('./actions/session_actions');
 
  window.PostStore = require('./stores/post_store');
  window.PostActions = require('./actions/post_actions');
+ window.ProfileActions = require('./actions/profile_actions');
+ window.ProfileStore = require('./stores/profile_store');
 
 
 

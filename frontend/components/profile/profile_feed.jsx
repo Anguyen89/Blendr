@@ -13,7 +13,7 @@ var ProfilePictureIndex = require('./profile_picture_index');
 var ProfileFeed = React.createClass({
 
   getStateFromStore: function () {
-    return {user: ProfileStore.findById(this.props.params.profileId), posts: PostStore.getPostsByUserId(SessionStore.currentUser())};
+    return {user: ProfileStore.findById(this.props.params.profileId), posts: PostStore.getPostsByUser(ProfileStore.findById(this.props.params.profileId))};
   },
 
   onChange: function () {
@@ -31,11 +31,14 @@ var ProfileFeed = React.createClass({
 
   componentWillReceiveProps: function(newProps){
     ProfileActions.fetchUser(newProps.params.profileId);
+    this.forceUpdate();
   },
 
   componentDidMount: function(){
     this.profileListener = ProfileStore.addListener(this.onChange);
     this.postListener = PostStore.addListener(this.onChange);
+    // ProfileActions.fetchUser(this.props.params.profileId);
+    PostActions.fetchPosts();
   },
 
   componentWillUnmount: function(){
