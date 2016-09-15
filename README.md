@@ -3,9 +3,13 @@
 [Live Site][live]
 [live]: https://blendr.herokuapp.com
 
-Blendr is an Instagram-Inspired full stack web application that utilizes Ruby on Rails backend, a PostgreSQL database and React.js with Flux Architecture front-end.
+Blendr is an Instagram-Inspired full stack web application that features Hand rolled authentication, Ruby on Rails backend, a PostgreSQL database and React.js with Flux Architecture front-end.
 
 ## Features & Implementation
+
+### Hand Rolled Authentication
+
+Blendr features hand rolled user authentication through the use of BCrypt salting hashing algorithm and cookies to store current sessions.
 
 ### Single Page with RESTful Architecture
 
