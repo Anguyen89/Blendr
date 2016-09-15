@@ -39,3 +39,6 @@ comments, current viewers like status on a post and current users follow status 
 
 [profile-view]: ./app/assets/images/profile-view.png
 ![profile-view]
+
+[modal-view]: ./app/assets/images/modal-view.png
+![modal-view]
