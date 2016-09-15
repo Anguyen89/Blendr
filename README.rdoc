@@ -1,28 +1,34 @@
-== README
+# Blendr
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[Live Site][live]
+[live]: http://www.blendr.herokuapp.com
 
-Things you may want to cover:
+Blendr is an Instagram-Inspired full stack web application that utilizes Ruby on Rails backend, a PostgreSQL database and React.js with Flux Architecture front-end.
 
-* Ruby version
+## Features & Implementation
 
-* System dependencies
+### Single Page with RESTful Architecture
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Blendr is a Single Page web application app that is projected through a single static page. Data flows from Rails API to a separate node app with Flux and React.js.
+Data is fetched via actions and dispatched via dispatchers which will update applicable stores and in turn update elements as the state of the application changes.  Thanks to the use of a
+'virtual DOM', this process is just as fast as isolating the changing element.
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+### Posts, Follows, Comments and Likes
+
+Users have the ability to create post, like posts, leave comments on posts and follow other users. Upon creation of a post, not only will the authors profile feed update with the post but every user that is following the post author will see the authors post in their post feed. Every
+post also has like and comment functionality which will trigger an action which will trigger an Ajax request to update backend database and update associated tables accordingly via Active Record which will also trigger a
+re-rendering of applicable components on the front end.
+
+[general-view]: ./app/assets/images/feed-view
+![general-view]
+
+### Creating Posts
+
+Users are able to create new posts through the use of the Cloudinary upload widget. URLS returned from the Cloudinary upload widget will be saved on the backend as well as in the PostStore.
+
+
+### Viewing Profile Posts
+
+Users can view other users posts via their profile. Clicking on a post in the profile view will trigger a modal to open and display details of a post which includes
+comments, current viewers like status on a post and current users follow status of profile owner.

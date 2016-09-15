@@ -13,24 +13,24 @@ var PostFeed = React.createClass({
 
   componentDidMount(){
     this.PostStoreListener = PostStore.addListener(this._onChange);
-    this.scrollListener = window.addEventListener("scroll", this.addPosts);
+    // this.scrollListener = window.addEventListener("scroll", this.addPosts);
     PostActions.fetchPosts();
   },
 
   componentWillUnmount(){
     this.PostStoreListener.remove();
-     window.removeEventListener("scroll", this.addPosts);
+    //  window.removeEventListener("scroll", this.addPosts);
   },
-  addPosts: function() {
-    if (window.innerHeight + window.scrollY + 1 >= document.body.offsetHeight
-      && this.state.time + 1000 < Date.now() ) {
-        $('.fa-spinner').show();
-
-        this.state.scrollCount += 1;
-        this.state.time = Date.now();
-        PostActions.fetchPosts(this.state.scrollCount);
-      }
-  },
+  // addPosts: function() {
+  //   if (window.innerHeight + window.scrollY + 1 >= document.body.offsetHeight
+  //     && this.state.time + 1000 < Date.now() ) {
+  //       $('.fa-spinner').show();
+  //
+  //       this.state.scrollCount += 1;
+  //       this.state.time = Date.now();
+  //       PostActions.fetchPosts(this.state.scrollCount);
+  //     }
+  // },
 
   _onChange(){
     this.setState({posts: PostStore.getPosts(SessionStore.currentUser())})

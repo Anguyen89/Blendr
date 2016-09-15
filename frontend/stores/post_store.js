@@ -7,9 +7,6 @@ var Store = require('flux/utils').Store;
 
 var PostStore = new Store(AppDispatcher);
 
-
-
-
 var _posts = {};
 
 var resetPosts = function(posts){

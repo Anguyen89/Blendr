@@ -37,7 +37,6 @@ var ProfileFeed = React.createClass({
   componentDidMount: function(){
     this.profileListener = ProfileStore.addListener(this.onChange);
     this.postListener = PostStore.addListener(this.onChange);
-    // ProfileActions.fetchUser(this.props.params.profileId);
     PostActions.fetchPosts();
   },
 
