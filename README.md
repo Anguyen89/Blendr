@@ -33,12 +33,12 @@ Users are able to create new posts through the use of the Cloudinary upload widg
 
 ### Viewing Profile Posts
 
-Users can view other users posts via their profile. 
+Users can view other users posts via their profile.
 
 [profile-view]: ./app/assets/images/profile-view.png
 ![profile-view]
 
-Clicking on a post in the profile view will trigger a modal to open and display details of a post which includes comments, current viewers like status on a post and current users follow status of profile owner.
+Clicking on a post in the profile view will trigger a modal to open and display details of a post which includes comments, current viewers like status on a post and current users follow status of post owner.
 
 [modal-view]: ./app/assets/images/modal-view.png
 ![modal-view]
