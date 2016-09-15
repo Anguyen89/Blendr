@@ -27,8 +27,15 @@ re-rendering of applicable components on the front end.
 
 Users are able to create new posts through the use of the Cloudinary upload widget. Post Image URL'S returned from the Cloudinary upload widget will be saved on the backend as well as in the PostStore.
 
+[post-creation-view]: ./app/assets/images/cloudinary-view.png
+![post-creation-view]
+
 
 ### Viewing Profile Posts
 
 Users can view other users posts via their profile. Clicking on a post in the profile view will trigger a modal to open and display details of a post which includes
 comments, current viewers like status on a post and current users follow status of profile owner.
+
+
+[profile-view]: ./app/assets/images/profile-view.png
+![profile-view]
