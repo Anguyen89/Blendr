@@ -1,10 +1,9 @@
 class Api::PicturesController < ApplicationController
   def index
-
     following_ids = current_user.following_ids
-
     @pictures = Picture.where("user_id IN (?) OR user_id = ?",
-            following_ids, current_user.id).limit(count * 3)
+            following_ids, current_user.id)
+            # .limit(count * 3)
   end
 
   def create

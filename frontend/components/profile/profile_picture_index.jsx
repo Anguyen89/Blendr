@@ -5,8 +5,7 @@ var ProfilePostPicture = require('./profile_post_picture');
 var ProfilePictureIndex = React.createClass({
 
   render: function(){
-
-  var posts =  this.props.user.pictures.map(function(picture){
+  var posts =  this.props.posts.map(function(picture){
       return (
         <ProfilePostPicture post={picture} key={picture.id}/>
       );

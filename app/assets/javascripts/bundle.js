@@ -69,6 +69,9 @@
 
 	var PostFeed = __webpack_require__(312);
 
+	window.PostStore = __webpack_require__(291);
+	window.PostActions = __webpack_require__(285);
+
 	var appRouter = React.createElement(
 	  Router,
 	  { history: hashHistory },
@@ -35937,7 +35940,6 @@
 	  },
 
 	  createPost: function createPost(post, cb) {
-	    console.log(post);
 	    $.ajax({
 	      url: "api/pictures",
 	      type: "POST",
@@ -36242,6 +36244,7 @@
 	var PostStore = __webpack_require__(291);
 	var ProfileStore = __webpack_require__(292);
 	var ProfileActions = __webpack_require__(294);
+	var PostActions = __webpack_require__(285);
 	var SessionStore = __webpack_require__(256);
 	var Login = __webpack_require__(288);
 	var HashHistory = __webpack_require__(192).hashHistory;
@@ -36254,7 +36257,7 @@
 
 
 	  getStateFromStore: function getStateFromStore() {
-	    return { user: ProfileStore.findById(this.props.params.profileId) };
+	    return { user: ProfileStore.findById(this.props.params.profileId), posts: PostStore.getPostsByUserId(SessionStore.currentUser()) };
 	  },
 
 	  onChange: function onChange() {
@@ -36262,11 +36265,12 @@
 	  },
 
 	  getInitialState: function getInitialState() {
-	    return { user: {} };
+	    return { user: {}, posts: [] };
 	  },
 
 	  componentWillMount: function componentWillMount() {
 	    ProfileActions.fetchUser(this.props.params.profileId);
+	    PostActions.fetchPosts();
 	  },
 
 	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
@@ -36275,10 +36279,11 @@
 
 	  componentDidMount: function componentDidMount() {
 	    this.profileListener = ProfileStore.addListener(this.onChange);
+	    this.postListener = PostStore.addListener(this.onChange);
 	  },
 
 	  componentWillUnmount: function componentWillUnmount() {
-	    // this.postListenter.remove();
+	    this.postListener.remove();
 	    this.profileListener.remove();
 	  },
 
@@ -36291,7 +36296,7 @@
 	        'div',
 	        { className: 'profile-feed' },
 	        React.createElement(ProfileHeader, { user: this.state.user }),
-	        React.createElement(ProfilePictureIndex, { user: this.state.user })
+	        React.createElement(ProfilePictureIndex, { user: this.state.user, posts: this.state.posts })
 	      );
 	    }
 	    return React.createElement(
@@ -36391,6 +36396,16 @@
 
 	PostStore.getById = function (postId) {
 	  return _posts[postId];
+	};
+
+	PostStore.getPostsByUserId = function (user) {
+	  var posts = [];
+	  Object.keys(_posts).forEach(function (key) {
+	    if (_posts[key].user_id === user.id) {
+	      posts.push(_posts[key]);
+	    }
+	  });
+	  return posts;
 	};
 
 	PostStore.__onDispatch = function (payload) {
@@ -36832,8 +36847,7 @@
 
 
 	  render: function render() {
-
-	    var posts = this.props.user.pictures.map(function (picture) {
+	    var posts = this.props.posts.map(function (picture) {
 	      return React.createElement(ProfilePostPicture, { post: picture, key: picture.id });
 	    });
 

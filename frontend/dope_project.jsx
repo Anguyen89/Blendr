@@ -22,6 +22,9 @@ var SessionActions = require('./actions/session_actions');
 
  var PostFeed = require('./components/posts/post_feed');
 
+ window.PostStore = require('./stores/post_store');
+ window.PostActions = require('./actions/post_actions');
+
 
 
  var appRouter = (

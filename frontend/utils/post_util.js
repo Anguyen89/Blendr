@@ -26,7 +26,6 @@ deletePost: function(postId, cb) {
 },
 
 createPost: function(post, cb) {
-  console.log(post);
   $.ajax({
     url: "api/pictures",
     type: "POST",

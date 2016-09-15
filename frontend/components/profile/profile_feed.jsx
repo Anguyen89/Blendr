@@ -2,6 +2,7 @@ var React = require('react');
 var PostStore = require('../../stores/post_store');
 var ProfileStore = require('../../stores/profile_store');
 var ProfileActions = require('../../actions/profile_actions');
+var PostActions = require('../../actions/post_actions');
 var SessionStore = require('../../stores/session_store');
 var Login = require('../login_form');
 var HashHistory = require('react-router').hashHistory;
@@ -12,7 +13,7 @@ var ProfilePictureIndex = require('./profile_picture_index');
 var ProfileFeed = React.createClass({
 
   getStateFromStore: function () {
-    return {user: ProfileStore.findById(this.props.params.profileId)};
+    return {user: ProfileStore.findById(this.props.params.profileId), posts: PostStore.getPostsByUserId(SessionStore.currentUser())};
   },
 
   onChange: function () {
@@ -20,11 +21,12 @@ var ProfileFeed = React.createClass({
   },
 
   getInitialState: function () {
-    return { user: {} };
+    return { user: {}, posts: [] };
   },
 
   componentWillMount: function(){
     ProfileActions.fetchUser(this.props.params.profileId);
+    PostActions.fetchPosts();
   },
 
   componentWillReceiveProps: function(newProps){
@@ -33,10 +35,11 @@ var ProfileFeed = React.createClass({
 
   componentDidMount: function(){
     this.profileListener = ProfileStore.addListener(this.onChange);
+    this.postListener = PostStore.addListener(this.onChange);
   },
 
   componentWillUnmount: function(){
-    // this.postListenter.remove();
+    this.postListener.remove();
     this.profileListener.remove();
   },
 
@@ -48,7 +51,7 @@ var ProfileFeed = React.createClass({
            userProfile = (
              <div className="profile-feed">
                <ProfileHeader user={this.state.user} />
-               <ProfilePictureIndex user={this.state.user} />
+               <ProfilePictureIndex user={this.state.user} posts={this.state.posts} />
              </div>
            );
          }

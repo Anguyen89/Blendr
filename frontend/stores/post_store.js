@@ -87,7 +87,15 @@ PostStore.getById = function(postId){
   return _posts[postId];
 };
 
-
+PostStore.getPostsByUserId = function(user){
+  var posts = [];
+  Object.keys(_posts).forEach(function(key){
+    if (_posts[key].user_id === user.id){
+      posts.push(_posts[key]);
+    }
+  });
+  return posts;
+};
 
 PostStore.__onDispatch = function(payload){
   switch(payload.actionType){
