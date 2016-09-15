@@ -11,6 +11,9 @@ Blendr is an Instagram-Inspired full stack web application that features Hand ro
 
 Blendr features hand rolled user authentication through the use of BCrypt salting hashing algorithm and cookies to store current sessions.
 
+[auth-view]: ./app/assets/images/auth-view.png
+![auth-view]
+
 ### Single Page with RESTful Architecture
 
 Blendr is a Single Page web application app that is projected through a single static page. Data flows from Rails API to a separate node app with Flux and React.js.
