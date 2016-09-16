@@ -2,7 +2,7 @@ class Api::LikesController < ApplicationController
   def create
     @like = Like.new(like_params)
     #make sure like belongs to current user (otherwise susceptible to hacks)
-    @like.user = current_user
+    # @like.user = current_user
 
     if @like.save
       render :create

@@ -26,18 +26,19 @@ var ProfileFeed = React.createClass({
 
   componentWillMount: function(){
     ProfileActions.fetchUser(this.props.params.profileId);
-    PostActions.fetchPosts();
+    // PostActions.fetchPosts();
   },
 
   componentWillReceiveProps: function(newProps){
     ProfileActions.fetchUser(newProps.params.profileId);
-    this.forceUpdate();
+    // this.forceUpdate();
   },
 
   componentDidMount: function(){
     this.profileListener = ProfileStore.addListener(this.onChange);
     this.postListener = PostStore.addListener(this.onChange);
     PostActions.fetchPosts();
+    ProfileActions.fetchUser(this.props.params.profileId);
   },
 
   componentWillUnmount: function(){

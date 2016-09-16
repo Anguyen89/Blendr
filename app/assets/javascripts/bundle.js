@@ -64,7 +64,7 @@
 	var Login = __webpack_require__(288);
 	var ProfileFeed = __webpack_require__(290);
 	//Auth
-	var SessionStore = __webpack_require__(256);
+	window.SessionStore = __webpack_require__(256);
 	var SessionActions = __webpack_require__(279);
 
 	var PostFeed = __webpack_require__(312);
@@ -35592,7 +35592,11 @@
 	    SessionApiUtil.logIn(formData, SessionActions.receiveCurrentUser, ErrorActions.setErrors);
 	  },
 	  logOut: function logOut() {
-	    SessionApiUtil.logOut(SessionActions.removeCurrentUser);
+	    //This is just a temporary patch for logout. Page is reloading and resetting the session token
+	    //Will need to implement better logout with use of calling SessionApiUtils.Logout();
+	    // SessionApiUtil.logOut(SessionActions.removeCurrentUser);
+	    location.reload();
+	    hashHistory.push("/login");
 	  },
 	  fetchCurrentUser: function fetchCurrentUser(complete) {
 	    SessionApiUtil.fetchCurrentUser(SessionActions.receiveCurrentUser, complete);
@@ -35636,7 +35640,7 @@
 		logOut: function logOut(success) {
 			$.ajax({
 				url: '/api/session',
-				method: 'delete',
+				method: 'DELETE',
 				success: success,
 				error: function error() {
 					console.log("Logout error in SessionApiUtil#logout");
@@ -35799,7 +35803,7 @@
 
 	    cloudinary.openUploadWidget(window.cloudinary_options, function (error, images) {
 	      if (error, images) {
-	        var picture = { url: images[0].url };
+	        var picture = { url: images[0].url, user_id: SessionStore.currentUser().id };
 	        PostActions.createPost(picture);
 	      }
 	    });
@@ -36272,18 +36276,19 @@
 
 	  componentWillMount: function componentWillMount() {
 	    ProfileActions.fetchUser(this.props.params.profileId);
-	    PostActions.fetchPosts();
+	    // PostActions.fetchPosts();
 	  },
 
 	  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
 	    ProfileActions.fetchUser(newProps.params.profileId);
-	    this.forceUpdate();
+	    // this.forceUpdate();
 	  },
 
 	  componentDidMount: function componentDidMount() {
 	    this.profileListener = ProfileStore.addListener(this.onChange);
 	    this.postListener = PostStore.addListener(this.onChange);
 	    PostActions.fetchPosts();
+	    ProfileActions.fetchUser(this.props.params.profileId);
 	  },
 
 	  componentWillUnmount: function componentWillUnmount() {
@@ -36710,14 +36715,15 @@
 	var UserProfilePic = React.createClass({
 	  displayName: 'UserProfilePic',
 
-	  //
+
 	  updatePic: function updatePic(e) {
 	    e.preventDefault();
+	    var self = this;
 	    if (this.props.user.id === SessionStore.currentUser().id) {
 	      cloudinary.openUploadWidget(window.cloudinary_options, function (error, images) {
 	        if (error, images) {
 	          var picture = { profile_picture_url: images[0].url };
-	          var currentUser = SessionStore.currentUser();
+	          var currentUser = self.props.user;
 	          ProfileActions.updatePic(picture, currentUser);
 	        }
 	      });

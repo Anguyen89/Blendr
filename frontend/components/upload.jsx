@@ -10,7 +10,7 @@ var Upload = React.createClass({
     cloudinary.openUploadWidget(window.cloudinary_options,
     function (error, images) {
       if (error, images){
-        var picture = { url: images[0].url};
+        var picture = { url: images[0].url, user_id: SessionStore.currentUser().id};
         PostActions.createPost(picture);
       }
     });

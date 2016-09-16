@@ -5,7 +5,7 @@ class Api::PicturesController < ApplicationController
 
   def create
     @picture = Picture.new(picture_params)
-    @picture.user_id = current_user.id
+    # @picture.user_id = current_user.id
 
     if @picture.save
       render :show
@@ -28,10 +28,10 @@ class Api::PicturesController < ApplicationController
 
   private
   def picture_params
-    params.require(:picture).permit(:url)
+    params.require(:picture).permit(:url, :user_id)
   end
 
-  def count
-    params[:count] ? params[:count].to_i : 1
-  end
+  # def count
+  #   params[:count] ? params[:count].to_i : 1
+  # end
 end

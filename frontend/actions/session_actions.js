@@ -24,7 +24,11 @@ var SessionActions = {
   },
 
   logOut() {
-    SessionApiUtil.logOut(SessionActions.removeCurrentUser);
+    //This is just a temporary patch for logout. Page is reloading and resetting the session token
+    //Will need to implement better logout with use of calling SessionApiUtils.Logout();
+    // SessionApiUtil.logOut(SessionActions.removeCurrentUser);
+    location.reload();
+    hashHistory.push("/login");
   },
 
   fetchCurrentUser(complete){

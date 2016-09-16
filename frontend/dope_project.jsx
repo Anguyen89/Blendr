@@ -17,7 +17,7 @@ var SignUp = require('./components/login_form');
 var Login = require('./components/login_form');
 var ProfileFeed = require('./components/profile/profile_feed');
 //Auth
-var SessionStore = require('./stores/session_store');
+window.SessionStore = require('./stores/session_store');
 var SessionActions = require('./actions/session_actions');
 
  var PostFeed = require('./components/posts/post_feed');
@@ -26,6 +26,7 @@ var SessionActions = require('./actions/session_actions');
  window.PostActions = require('./actions/post_actions');
  window.ProfileActions = require('./actions/profile_actions');
  window.ProfileStore = require('./stores/profile_store');
+
 
 
 
