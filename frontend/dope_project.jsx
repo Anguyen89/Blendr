@@ -17,15 +17,15 @@ var SignUp = require('./components/login_form');
 var Login = require('./components/login_form');
 var ProfileFeed = require('./components/profile/profile_feed');
 //Auth
-window.SessionStore = require('./stores/session_store');
+var SessionStore = require('./stores/session_store');
 var SessionActions = require('./actions/session_actions');
 
  var PostFeed = require('./components/posts/post_feed');
 
- window.PostStore = require('./stores/post_store');
- window.PostActions = require('./actions/post_actions');
- window.ProfileActions = require('./actions/profile_actions');
- window.ProfileStore = require('./stores/profile_store');
+ // window.PostStore = require('./stores/post_store');
+ // window.PostActions = require('./actions/post_actions');
+ // window.ProfileActions = require('./actions/profile_actions');
+ // window.ProfileStore = require('./stores/profile_store');
 
 
 

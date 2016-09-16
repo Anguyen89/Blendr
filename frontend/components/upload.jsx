@@ -1,5 +1,6 @@
 var React = require('react');
 var PostActions = require('../actions/post_actions');
+var SessionStore = require('../stores/session_store');
 
 
 

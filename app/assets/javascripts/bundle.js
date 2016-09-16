@@ -64,15 +64,16 @@
 	var Login = __webpack_require__(288);
 	var ProfileFeed = __webpack_require__(290);
 	//Auth
-	window.SessionStore = __webpack_require__(256);
+	var SessionStore = __webpack_require__(256);
 	var SessionActions = __webpack_require__(279);
 
 	var PostFeed = __webpack_require__(312);
 
-	window.PostStore = __webpack_require__(291);
-	window.PostActions = __webpack_require__(285);
-	window.ProfileActions = __webpack_require__(294);
-	window.ProfileStore = __webpack_require__(292);
+	// window.PostStore = require('./stores/post_store');
+	// window.PostActions = require('./actions/post_actions');
+	// window.ProfileActions = require('./actions/profile_actions');
+	// window.ProfileStore = require('./stores/profile_store');
+
 
 	var appRouter = React.createElement(
 	  Router,
@@ -35794,6 +35795,7 @@
 
 	var React = __webpack_require__(1);
 	var PostActions = __webpack_require__(285);
+	var SessionStore = __webpack_require__(256);
 
 	var Upload = React.createClass({
 	  displayName: 'Upload',
@@ -36409,11 +36411,14 @@
 
 	PostStore.getPosts = function (user) {
 	  var posts = [];
+	  var followingIds = [];
 
 	  Object.keys(_posts).forEach(function (key) {
-	    var followingIds = _posts[key].followers.map(function (el) {
-	      return el.id;
-	    });
+	    if (_posts[key].followers) {
+	      followingIds = _posts[key].followers.map(function (el) {
+	        return el.id;
+	      });
+	    }
 	    if (_posts[key].user_id === user.id) {
 	      posts.push(_posts[key]);
 	    } else if (followingIds.indexOf(user.id) !== -1) {
@@ -37434,6 +37439,7 @@
 	var PostActions = __webpack_require__(285);
 	var PostFeedItem = __webpack_require__(313);
 	var Login = __webpack_require__(288);
+	var ProfileStore = __webpack_require__(292);
 
 	var PostFeed = React.createClass({
 	  displayName: 'PostFeed',
@@ -37442,11 +37448,13 @@
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.PostStoreListener = PostStore.addListener(this._onChange);
+	    this.ProfileStoreListener = ProfileStore.addListener(this._onChange);
 	    // this.scrollListener = window.addEventListener("scroll", this.addPosts);
 	    PostActions.fetchPosts();
 	  },
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.PostStoreListener.remove();
+	    this.ProfileStoreListener.remove();
 	    //  window.removeEventListener("scroll", this.addPosts);
 	  },
 

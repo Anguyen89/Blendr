@@ -4,6 +4,7 @@ var SessionStore = require('../../stores/session_store');
 var PostActions = require('../../actions/post_actions');
 var PostFeedItem = require('./post_feed_item');
 var Login = require('../login_form');
+var ProfileStore = require('../../stores/profile_store');
 
 var PostFeed = React.createClass({
 
@@ -13,12 +14,14 @@ var PostFeed = React.createClass({
 
   componentDidMount(){
     this.PostStoreListener = PostStore.addListener(this._onChange);
+    this.ProfileStoreListener = ProfileStore.addListener(this._onChange);
     // this.scrollListener = window.addEventListener("scroll", this.addPosts);
     PostActions.fetchPosts();
   },
 
   componentWillUnmount(){
     this.PostStoreListener.remove();
+    this.ProfileStoreListener.remove();
     //  window.removeEventListener("scroll", this.addPosts);
   },
   // addPosts: function() {

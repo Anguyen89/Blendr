@@ -86,11 +86,14 @@ PostStore.getById = function(postId){
 
 PostStore.getPosts = function(user){
   var posts = [];
+  var followingIds = [];
 
   Object.keys(_posts).forEach(function(key){
-    var followingIds = _posts[key].followers.map(function(el){
-      return el.id;
-    });
+    if (_posts[key].followers){
+      followingIds = _posts[key].followers.map(function(el){
+        return el.id;
+      });
+    }
     if (_posts[key].user_id === user.id){
       posts.push(_posts[key]);
     } else if (followingIds.indexOf(user.id) !== -1){
