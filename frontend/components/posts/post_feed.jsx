@@ -54,7 +54,7 @@ var PostFeed = React.createClass({
             <ul className="footer-content">
               <li><a href="https://www.linkedin.com/in/albert-nguyen-52240933"><img src="https://image.freepik.com/free-icon/linkedin-logo_318-50643.png"></img></a></li>
               <li><a href="http://www.albertnguyencodes.com"><img src="http://res.cloudinary.com/dkieltxya/image/upload/v1473876653/headshot_lwnx22.jpg"></img></a></li>
-              <li><a href="https://github.com/Anguyen89"><img src="http://image.flaticon.com/icons/svg/23/23957.svg"></img></a></li>
+              <li><a href="https://github.com/Anguyen89/Blendr"><img src="http://image.flaticon.com/icons/svg/23/23957.svg"></img></a></li>
             </ul>
           </div>
         </div>

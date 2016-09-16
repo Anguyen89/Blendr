@@ -36309,7 +36309,7 @@
 	      );
 	    }
 	    return React.createElement(
-	      'footer',
+	      'div',
 	      null,
 	      userProfile
 	    );
@@ -37510,7 +37510,7 @@
 	              null,
 	              React.createElement(
 	                'a',
-	                { href: 'https://github.com/Anguyen89' },
+	                { href: 'https://github.com/Anguyen89/Blendr' },
 	                React.createElement('img', { src: 'http://image.flaticon.com/icons/svg/23/23957.svg' })
 	              )
 	            )
