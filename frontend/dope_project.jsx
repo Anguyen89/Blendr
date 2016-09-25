@@ -22,10 +22,6 @@ var SessionActions = require('./actions/session_actions');
 
  var PostFeed = require('./components/posts/post_feed');
 
- // window.PostStore = require('./stores/post_store');
- // window.PostActions = require('./actions/post_actions');
- // window.ProfileActions = require('./actions/profile_actions');
- // window.ProfileStore = require('./stores/profile_store');
 
 
 
@@ -36,7 +32,7 @@ var SessionActions = require('./actions/session_actions');
        <IndexRoute component={PostFeed}/>
        <Route path="signup" component={SignUp}/>
        <Route path="login" component={Login}/>
-       <Route path="PostFeed" component={PostFeed}/>
+       <Route path="postfeed" component={PostFeed}/>
        <Route path="profile/:profileId" component={ProfileFeed} />
      </Route>
    </Router>

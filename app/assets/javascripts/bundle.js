@@ -69,12 +69,6 @@
 
 	var PostFeed = __webpack_require__(312);
 
-	// window.PostStore = require('./stores/post_store');
-	// window.PostActions = require('./actions/post_actions');
-	// window.ProfileActions = require('./actions/profile_actions');
-	// window.ProfileStore = require('./stores/profile_store');
-
-
 	var appRouter = React.createElement(
 	  Router,
 	  { history: hashHistory },
@@ -84,7 +78,7 @@
 	    React.createElement(IndexRoute, { component: PostFeed }),
 	    React.createElement(Route, { path: 'signup', component: SignUp }),
 	    React.createElement(Route, { path: 'login', component: Login }),
-	    React.createElement(Route, { path: 'PostFeed', component: PostFeed }),
+	    React.createElement(Route, { path: 'postfeed', component: PostFeed }),
 	    React.createElement(Route, { path: 'profile/:profileId', component: ProfileFeed })
 	  )
 	);
@@ -36036,7 +36030,7 @@
 		},
 
 		redirectIfLoggedIn: function redirectIfLoggedIn() {
-			hashHistory.push("/profile/" + SessionStore.currentUser().id);
+			hashHistory.push("/postfeed");
 		},
 
 		handleLogin: function handleLogin(e) {
@@ -37455,20 +37449,7 @@
 	  componentWillUnmount: function componentWillUnmount() {
 	    this.PostStoreListener.remove();
 	    this.ProfileStoreListener.remove();
-	    //  window.removeEventListener("scroll", this.addPosts);
 	  },
-
-	  // addPosts: function() {
-	  //   if (window.innerHeight + window.scrollY + 1 >= document.body.offsetHeight
-	  //     && this.state.time + 1000 < Date.now() ) {
-	  //       $('.fa-spinner').show();
-	  //
-	  //       this.state.scrollCount += 1;
-	  //       this.state.time = Date.now();
-	  //       PostActions.fetchPosts(this.state.scrollCount);
-	  //     }
-	  // },
-
 	  _onChange: function _onChange() {
 	    this.setState({ posts: PostStore.getPosts(SessionStore.currentUser()) });
 	  },
