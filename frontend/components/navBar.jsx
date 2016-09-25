@@ -31,26 +31,20 @@ module.exports = React.createClass({
 
   navLeft: function(){
     var route = this.context.router;
-    if (!SessionStore.isUserLoggedIn() && route.isActive("/")){
-      return (
-        <div className="nav-left">
-          <div onClick={this.rootToIndex} className="logo">blendr</div>
-        </div>
-      );
-    } else if (route.isActive('/profile/' + SessionStore.currentUser().id)){
+    if (route.isActive('/profile/' + SessionStore.currentUser().id)){
       return (
         <div className="nav-left">
           <div onClick={this.rootToIndex} className="logo">Click to View Feed</div>
         </div>
       );
-    } else if (route.isActive('/postfeed')){
+    } else {
       return (
         <div className="nav-left">
-          <div onClick={this.rootToProfile} className="logo">Click to View Profile</div>
+          <div onClick={this.rootToIndex} className="logo">blendr</div>
         </div>
       );
-    }
-  },
+  }
+},
 
 
   logout: function(){

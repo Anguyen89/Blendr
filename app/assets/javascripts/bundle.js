@@ -35752,17 +35752,7 @@
 
 	  navLeft: function navLeft() {
 	    var route = this.context.router;
-	    if (!SessionStore.isUserLoggedIn() && route.isActive("/")) {
-	      return React.createElement(
-	        'div',
-	        { className: 'nav-left' },
-	        React.createElement(
-	          'div',
-	          { onClick: this.rootToIndex, className: 'logo' },
-	          'blendr'
-	        )
-	      );
-	    } else if (route.isActive('/profile/' + SessionStore.currentUser().id)) {
+	    if (route.isActive('/profile/' + SessionStore.currentUser().id)) {
 	      return React.createElement(
 	        'div',
 	        { className: 'nav-left' },
@@ -35772,14 +35762,14 @@
 	          'Click to View Feed'
 	        )
 	      );
-	    } else if (route.isActive('/postfeed')) {
+	    } else {
 	      return React.createElement(
 	        'div',
 	        { className: 'nav-left' },
 	        React.createElement(
 	          'div',
-	          { onClick: this.rootToProfile, className: 'logo' },
-	          'Click to View Profile'
+	          { onClick: this.rootToIndex, className: 'logo' },
+	          'blendr'
 	        )
 	      );
 	    }
