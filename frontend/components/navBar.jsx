@@ -7,6 +7,10 @@ var Upload = require('./upload');
 
 module.exports = React.createClass({
 
+  contextTypes: {
+  router: React.PropTypes.object
+  },
+
   navRight: function(){
     if (SessionStore.isUserLoggedIn()){
       return (
@@ -17,9 +21,34 @@ module.exports = React.createClass({
         </div>
       );
     } else {
-      return <div className="nav-right">
+      return (
+      <div className="nav-right">
           <img onClick={this.rootToLogin} src="https://image.freepik.com/free-icon/standby--power-button_318-48023.jpg"></img>
-      </div>;
+      </div>
+    );
+    }
+  },
+
+  navLeft: function(){
+    var route = this.context.router;
+    if (!SessionStore.isUserLoggedIn() && route.isActive("/")){
+      return (
+        <div className="nav-left">
+          <div onClick={this.rootToIndex} className="logo">blendr</div>
+        </div>
+      );
+    } else if (route.isActive('/profile/' + SessionStore.currentUser().id)){
+      return (
+        <div className="nav-left">
+          <div onClick={this.rootToIndex} className="logo">Click to View Feed</div>
+        </div>
+      );
+    } else if (route.isActive('/postfeed')){
+      return (
+        <div className="nav-left">
+          <div onClick={this.rootToProfile} className="logo">Click to View Profile</div>
+        </div>
+      );
     }
   },
 
@@ -43,9 +72,7 @@ module.exports = React.createClass({
   render: function(){
     return (
       <div className="navbar">
-        <div className="nav-left">
-            <div onClick={this.rootToIndex} className="logo">blendr</div>
-        </div>
+        {this.navLeft()}
         {this.navRight()}
       </div>
     );

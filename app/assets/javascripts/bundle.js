@@ -35728,6 +35728,10 @@
 	  displayName: 'exports',
 
 
+	  contextTypes: {
+	    router: React.PropTypes.object
+	  },
+
 	  navRight: function navRight() {
 	    if (SessionStore.isUserLoggedIn()) {
 	      return React.createElement(
@@ -35742,6 +35746,41 @@
 	        'div',
 	        { className: 'nav-right' },
 	        React.createElement('img', { onClick: this.rootToLogin, src: 'https://image.freepik.com/free-icon/standby--power-button_318-48023.jpg' })
+	      );
+	    }
+	  },
+
+	  navLeft: function navLeft() {
+	    var route = this.context.router;
+	    if (!SessionStore.isUserLoggedIn() && route.isActive("/")) {
+	      return React.createElement(
+	        'div',
+	        { className: 'nav-left' },
+	        React.createElement(
+	          'div',
+	          { onClick: this.rootToIndex, className: 'logo' },
+	          'blendr'
+	        )
+	      );
+	    } else if (route.isActive('/profile/' + SessionStore.currentUser().id)) {
+	      return React.createElement(
+	        'div',
+	        { className: 'nav-left' },
+	        React.createElement(
+	          'div',
+	          { onClick: this.rootToIndex, className: 'logo' },
+	          'Click to View Feed'
+	        )
+	      );
+	    } else if (route.isActive('/postfeed')) {
+	      return React.createElement(
+	        'div',
+	        { className: 'nav-left' },
+	        React.createElement(
+	          'div',
+	          { onClick: this.rootToProfile, className: 'logo' },
+	          'Click to View Profile'
+	        )
 	      );
 	    }
 	  },
@@ -35766,15 +35805,7 @@
 	    return React.createElement(
 	      'div',
 	      { className: 'navbar' },
-	      React.createElement(
-	        'div',
-	        { className: 'nav-left' },
-	        React.createElement(
-	          'div',
-	          { onClick: this.rootToIndex, className: 'logo' },
-	          'blendr'
-	        )
-	      ),
+	      this.navLeft(),
 	      this.navRight()
 	    );
 	  }
@@ -36030,7 +36061,7 @@
 		},
 
 		redirectIfLoggedIn: function redirectIfLoggedIn() {
-			hashHistory.push("/postfeed");
+			hashHistory.push("/profile/" + SessionStore.currentUser().id);
 		},
 
 		handleLogin: function handleLogin(e) {
@@ -37438,12 +37469,11 @@
 	var PostFeed = React.createClass({
 	  displayName: 'PostFeed',
 	  getInitialState: function getInitialState() {
-	    return { posts: [], scrollCount: 1, time: Date.now() };
+	    return { posts: [] };
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.PostStoreListener = PostStore.addListener(this._onChange);
 	    this.ProfileStoreListener = ProfileStore.addListener(this._onChange);
-	    // this.scrollListener = window.addEventListener("scroll", this.addPosts);
 	    PostActions.fetchPosts();
 	  },
 	  componentWillUnmount: function componentWillUnmount() {

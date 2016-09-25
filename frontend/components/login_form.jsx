@@ -18,7 +18,7 @@ var LoginForm = React.createClass({
 
 
 	redirectIfLoggedIn: function() {
-	  hashHistory.push("/postfeed");
+	  hashHistory.push("/profile/" + SessionStore.currentUser().id);
 	},
 
   handleLogin: function(e){

@@ -9,13 +9,12 @@ var ProfileStore = require('../../stores/profile_store');
 var PostFeed = React.createClass({
 
   getInitialState() {
-    return { posts: [], scrollCount: 1, time: Date.now()};
+    return { posts: []};
   },
 
   componentDidMount(){
     this.PostStoreListener = PostStore.addListener(this._onChange);
     this.ProfileStoreListener = ProfileStore.addListener(this._onChange);
-    // this.scrollListener = window.addEventListener("scroll", this.addPosts);
     PostActions.fetchPosts();
   },
 
