@@ -24,8 +24,6 @@ var SessionActions = require('./actions/session_actions');
 
 
 
-
-
  var appRouter = (
    <Router history={hashHistory}>
      <Route path="/" component={App}>

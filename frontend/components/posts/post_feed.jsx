@@ -23,7 +23,6 @@ var PostFeed = React.createClass({
     this.ProfileStoreListener.remove();
   },
 
-
   _onChange(){
     this.setState({posts: PostStore.getPosts(SessionStore.currentUser())})
   },

@@ -76,6 +76,21 @@ comments = Comment.create!([
   {user_id: rand_id, picture_id: 47, body: "I third"},
   {user_id: 1, picture_id: 46, body: "HELLO HELLOW HELLOWW"},
   {user_id: 1, picture_id: 45, body: "COOOLLLio"},
+  {user_id: rand_id, picture_id: 3, body: "Wow. Thats beautiful.."},
+  {user_id: rand_id, picture_id: 2, body: "Beautiful sky"},
+  {user_id: rand_id, picture_id: 2, body: "Wow. Awesome view. Need to check it out! Where is this?"},
+  {user_id: rand_id, picture_id: 3, body: "I can sure use a cup of coffee"},
+  {user_id: rand_id, picture_id: 4, body: "Ive been there.. Nice pic"},
+  {user_id: 8, picture_id: 5, body: "wow man. Really cool"},
+  {user_id: 6, picture_id: 6, body: "Great lighting!"},
+  {user_id: rand_id, picture_id: 7, body: "Florida or California???"},
+  {user_id: rand_id, picture_id: 8, body: "Let me guess..Mekong Delta??"},
+  {user_id: rand_id, picture_id: 9, body: "Day dreaming again??"},
+  {user_id: 1, picture_id: 12, body: "Nice Outfit!"},
+  {user_id: 1, picture_id: 15, body: "Where are you headed now?"},
+  {user_id: rand_id, picture_id: 22, body: "We should go boaring soon!!"},
+  {user_id: 1, picture_id: 33, body: "Are you in a lighthouse??"},
+  {user_id: 1, picture_id: 6, body: "Truly Exceptional Picture"}
   ])
 
 
