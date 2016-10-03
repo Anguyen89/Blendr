@@ -40,7 +40,7 @@ module.exports = React.createClass({
     } else {
       return (
         <div className="nav-left">
-          <div onClick={this.rootToIndex} className="logo">blendr</div>
+          <div onClick={this.rootToProfile} className="logo">blendr</div>
         </div>
       );
   }

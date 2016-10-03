@@ -35768,7 +35768,7 @@
 	        { className: 'nav-left' },
 	        React.createElement(
 	          'div',
-	          { onClick: this.rootToIndex, className: 'logo' },
+	          { onClick: this.rootToProfile, className: 'logo' },
 	          'blendr'
 	        )
 	      );
